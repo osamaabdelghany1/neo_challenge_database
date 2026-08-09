@@ -112,7 +112,7 @@ VALUES
 
 
 
-INSERT INTO user
+INSERT INTO users
 (username,email,password,DOB,height,weight,phone,ssn)
 VALUES
 

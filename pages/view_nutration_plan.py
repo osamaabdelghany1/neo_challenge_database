@@ -27,7 +27,7 @@ for i, challenge in enumerate(challenges):
     with cols[i % 3]:
     
         with st.container():
-            st.header()
+            
             st.text("BMI: {challenge[0]}")
             st.text(f"Category: {challenge[1]}")
             st.text(f"Goal: {challenge[2]}")

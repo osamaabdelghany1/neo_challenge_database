@@ -34,7 +34,7 @@ for i, challenge in enumerate(challenges):
             st.text(f"Number of activities: {challenge[2]}")
             st.text(f"Category: {challenge[3]}")
             
-            st.button("view details", use_container_width=True, key=f"view_details_{challenge[0]}")
+            st.button("view details", use_container_width=True, key=f"view_details_{i}")
 
 
 
