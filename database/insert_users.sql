@@ -1,0 +1,16 @@
+INSERT INTO users (username, email, password, DOB, height, weight, phone, ssn) VALUES
+('ahmed_hassan', 'ahmed.hassan@example.com', '$2b$10$examplehash0000000000001', '1998-03-12', 178.50, 75.20, '+201001234567', '000-00-0001'),
+('sara_ali', 'sara.ali@example.com', '$2b$10$examplehash0000000000002', '2001-07-25', 165.00, 58.30, '+201009876543', '000-00-0002'),
+('mohamed_yousef', 'mohamed.yousef@example.com', '$2b$10$examplehash0000000000003', '1995-11-02', 182.00, 82.10, '+201112223344', '000-00-0003'),
+('layla_ibrahim', 'layla.ibrahim@example.com', '$2b$10$examplehash0000000000004', '1999-01-18', 160.00, 55.00, '+201223334455', '000-00-0004'),
+('omar_khaled', 'omar.khaled@example.com', '$2b$10$examplehash0000000000005', '1993-09-09', 175.00, 79.60, '+201334445566', '000-00-0005'),
+('nour_mostafa', 'nour.mostafa@example.com', '$2b$10$examplehash0000000000006', '2000-05-30', 168.00, 60.50, '+201445556677', '000-00-0006'),
+('karim_fathy', 'karim.fathy@example.com', '$2b$10$examplehash0000000000007', '1997-12-14', 180.00, 85.00, '+201556667788', '000-00-0007'),
+('mariam_saeed', 'mariam.saeed@example.com', '$2b$10$examplehash0000000000008', '2002-02-20', 162.50, 54.80, '+201667778899', '000-00-0008'),
+('youssef_adel', 'youssef.adel@example.com', '$2b$10$examplehash0000000000009', '1996-06-06', 176.20, 73.40, '+201778889900', '000-00-0009'),
+('hana_tarek', 'hana.tarek@example.com', '$2b$10$examplehash0000000000010', '1998-10-11', 170.00, 62.00, '+201889990011', '000-00-0010'),
+('ali_mahmoud', 'ali.mahmoud@example.com', '$2b$10$examplehash0000000000011', '1994-04-04', 183.00, 88.30, '+201990001122', '000-00-0011'),
+('rana_essam', 'rana.essam@example.com', '$2b$10$examplehash0000000000012', '2003-08-08', 158.00, 50.20, '+201001112233', '000-00-0012'),
+('tamer_nabil', 'tamer.nabil@example.com', '$2b$10$examplehash0000000000013', '1992-01-01', 177.80, 80.00, '+201112223345', '000-00-0013'),
+('dina_ashraf', 'dina.ashraf@example.com', '$2b$10$examplehash0000000000014', '2000-03-15', 163.00, 57.70, '+201223334456', '000-00-0014'),
+('hossam_zaki', 'hossam.zaki@example.com', '$2b$10$examplehash0000000000015', '1999-07-07', 179.00, 76.50, '+201334445567', '000-00-0015');
