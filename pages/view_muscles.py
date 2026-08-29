@@ -7,15 +7,17 @@ import sqlite3
 
 
 
-st.set_page_config(page_title="View Challenges", page_icon="📊", layout="wide")
+st.set_page_config(page_title="View muscles", page_icon="📊", layout="wide")
 
 st.title("View muscles")
 
 conn = sqlite3.connect("database/database.db")
 cursor = conn.cursor()
 
-cursor.execute("""
-name, latin_name, description, muscle_group, location, function, origin, insertion, muscle_type, difficulty_to_train, image_url, video_url
+cursor.execute(""" 
+select name, latin_name, description, muscle_group, location, function, origin, insertion, muscle_type, difficulty_to_train, image_url, video_url
+from muscles
+order by name
 
 """)
 
