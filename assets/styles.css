@@ -1,0 +1,106 @@
+/* Custom Styles for Fitness Challenge App */
+
+/* CSS Variables */
+:root {
+    --primary-green: #00F260;
+    --primary-blue: #00C9FF;
+    --dark-green: #00C928;
+    --light-green: #E6F9EB;
+    --dark-blue: #0099CC;
+    --light-blue: #E6F7FF;
+    --text-color: #1a202c;
+    --bg-color: #f7fafc;
+}
+
+/* Main container */
+.main .block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    max-width: 1200px;
+}
+
+/* Headers */
+h1, h2, h3 {
+    color: var(--dark-blue);
+    font-weight: 600;
+}
+
+/* Button styling with gradient */
+div.stButton > button {
+    background: linear-gradient(45deg, #00F260, #00C9FF, #00F260);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5rem 1.5rem;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+div.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+}
+
+div.stButton > button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Input fields */
+.stTextInput > div > div > input,
+.stNumberInput > div > div > input,
+.stTextArea > div > div > textarea {
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Messages */
+.stSuccess, .stError, .stInfo {
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.stSuccess {
+    background-color: var(--light-green);
+    color: var(--dark-green);
+}
+
+.stError {
+    background-color: #fed7d7;
+    color: #c53030;
+}
+
+.stInfo {
+    background-color: var(--light-blue);
+    color: var(--dark-blue);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-green);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-green);
+}
+
+/* Images */
+img {
+    border-radius: 8px;
+    max-width: 100%;
+}
+
+/* Column spacing */
+.stColumns > div {
+    padding: 0.5rem;
+}

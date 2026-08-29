@@ -1,36 +1,68 @@
-from turtle import color
 import streamlit as st
 import sqlite3
+import os
+import sys
 
-st.title("Add Activity")
+# Add parent directory to path to import config
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from assets.config import PRIMARY_GREEN, PRIMARY_BLUE, DIFFICULTY_COLORS
 
-name = st.text_input("Name")
-description = st.text_area("Description")
-category = st.text_input("Category")
-difficulty = st.text_input("Difficulty")
-challenge_id = st.number_input("Challenge ID")
+# Load custom CSS
+def load_css():
+    css_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "styles.css")
+    with open(css_path) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+load_css()
+
+# Header
+st.markdown(f"""
+<div style='text-align: center; padding: 2rem 0;'>
+    <h1 style='color: {PRIMARY_BLUE}; margin-bottom: 0.5rem;'>➕ Create Activity</h1>
+    <p style='color: #718096;'>Add a new workout activity</p>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("---")
+
+# Form
+st.markdown(f"""
+<div style='background: white; padding: 2rem; border-radius: 12px; 
+         border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'>
+    <h2 style='color: {PRIMARY_BLUE}; margin-top: 0;'>Activity Details</h2>
+</div>
+""", unsafe_allow_html=True)
+
+# Form fields in two columns
+col1, col2 = st.columns(2)
+
+with col1:
+    name = st.text_input("🏃 Activity Name")
+    category = st.selectbox("📂 Category", ["Sports", "Language", "General Knowledge"])
+    difficulty = st.selectbox("💪 Difficulty", ["Easy", "Medium", "Hard"])
+
+with col2:
+    challenge_id = st.number_input("🆔 Challenge ID", min_value=1)
+
+description = st.text_area("📝 Description", height=150)
 
 
 
-if st.button("Create Activity", use_container_width=True):
+st.markdown("---")
 
-
-    if not name or not description or not category or not difficulty or not challenge_id:
-
-        st.error("Please enter a valid info")
-
-
-    else:
-
-        conn = sqlite3.connect("database/database.db")
-        cursor = conn.cursor()
-       
-        cursor.execute("""
-        insert into activities (name, description, category, difficulty, challenge_id)
-        values(?, ?, ?, ?, ?)
-        """, (name, description, category, difficulty, challenge_id))
-       
-        conn.commit()
-        conn.close()
-       
-        st.success("Activity created successfully")
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    if st.button("Create Activity", use_container_width=True):
+        if not name or not description or not category or not difficulty or not challenge_id:
+            st.error("❌ Please enter all fields")
+        else:
+            conn = sqlite3.connect("database/database.db")
+            cursor = conn.cursor()
+            cursor.execute("""
+            insert into activities (name, description, category, difficulty, challenge_id)
+            values(?, ?, ?, ?, ?)
+            """, (name, description, category, difficulty, challenge_id))
+            conn.commit()
+            conn.close()
+            st.success("✅ Activity created successfully")
+            st.balloons()
