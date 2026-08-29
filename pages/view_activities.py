@@ -9,7 +9,7 @@ conn = sqlite3.connect("database/database.db")
 cursor = conn.cursor()
 
 cursor.execute("""
-select name, description, category, difficulty from activities order by name
+select id, name, description, category, difficulty from activities order by name
 """)
 
 activities = cursor.fetchall()
@@ -24,14 +24,15 @@ for i, activity in enumerate(activities):
     with cols[i % 3]:
     
         with st.container():
-            st.header(activity[0])
-            st.text("name")
-            st.text(f"Description: {activity[1]}")
-            st.text(f"Category: {activity[2]}")
-            st.text(f"Difficulty: {activity[3]}")
-            
-            st.button("view details", use_container_width=True, key=f"view_details_{activity[0]}")
+            st.header(activity[1])
+            st.text(f"Name: {activity[1]}")
+            st.text(f"Description: {activity[2]}")
+            st.text(f"Category: {activity[3]}")
+            st.text(f"Difficulty: {activity[4]}")
 
+            if st.button("view details", use_container_width=True, key=f"view_details_{i}"):
+                st.session_state.selected_activities_id = activity[0]
+                st.switch_page("pages/activites_details.py")
 
 
 
