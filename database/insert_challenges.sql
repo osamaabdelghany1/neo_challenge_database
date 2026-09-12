@@ -17,4 +17,7 @@ INSERT INTO challenges (name, number_of_levels, number_of_activities, category, 
 ('Business English Challenge', 4, 20, 'Language', 21, 'Daily lessons focused on professional vocabulary and workplace communication skills.'),
 ('Turkish for Travelers Challenge', 2, 12, 'Language', 14, 'Essential everyday phrases and vocabulary for traveling in Turkey.'),
 ('Italian Listening Practice Challenge', 3, 18, 'Language', 21, 'Daily audio lessons and comprehension quizzes to improve Italian listening skills.'),
-('Advanced English Writing Challenge', 5, 25, 'Language', 30, 'Daily writing exercises and feedback to master advanced English composition skills.');
+('Advanced English Writing Challenge', 5, 25, 'Language', 30, 'Daily writing exercises and feedback to master advanced English composition skills.'),
+
+-- General Knowledge
+('General Knowledge Challenge', 3, 15, 'General Knowledge', 21, 'Daily quizzes and trivia questions covering history, science, geography, and culture to expand your general knowledge base.');

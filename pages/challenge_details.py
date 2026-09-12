@@ -22,7 +22,11 @@ with st.container():
     st.text(f"Number of activities: {challenge_data[3]}")
     st.text(f"Category: {challenge_data[4]}")
 
-
-if st.button("Start Challenge"):
-    st.success("Challenge started!")
-    st.balloons()
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Start Challenge"):
+            st.success("Challenge started!")
+            st.balloons()
+    with col2:
+        if st.button("📝 Take Quiz"):
+            st.switch_page("pages/quiz.py")

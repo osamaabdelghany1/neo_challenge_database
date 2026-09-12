@@ -99,3 +99,19 @@ CREATE TABLE exercises(
     video_url VARCHAR(500),
     FOREIGN KEY (muscle_id) REFERENCES muscles(id)
 );
+
+
+CREATE TABLE questions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    question TEXT NOT NULL,
+    option_a TEXT NOT NULL,
+    option_b TEXT NOT NULL,
+    option_c TEXT NOT NULL,
+    option_d TEXT NOT NULL,
+    correct_answer VARCHAR(1) NOT NULL CHECK (correct_answer IN ('A', 'B', 'C', 'D')),
+    level VARCHAR(20) NOT NULL CHECK (level IN ('Easy', 'Medium', 'Hard')),
+    challenge_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (challenge_id) REFERENCES challenges(id)
+);
+                    
