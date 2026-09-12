@@ -8,6 +8,7 @@ CREATE TABLE users (
     weight DECIMAL(3, 2), 
     phone VARCHAR(20), 
     ssn VARCHAR(20),
+    rule VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
