@@ -1,42 +1,42 @@
 """Theme and configuration settings for the Fitness Challenge App"""
 
-# Color scheme - Modern gradient theme
-PRIMARY_GREEN = "#00F260"  # Bright green
-PRIMARY_BLUE = "#00C9FF"  # Cyan blue
-PRIMARY_GRADIENT = "linear-gradient(45deg, #00F260, #00C9FF, #00F260)"
+# Color scheme - Navy Dark Winter Cold Night Sea theme
+PRIMARY_DARKEST = "#1D3E53"  # Darkest navy
+PRIMARY_DARK = "#254B62"  # Dark navy
+PRIMARY_MEDIUM = "#476D7C"  # Medium navy
+PRIMARY_LIGHT = "#77ABB7"  # Light navy
+PRIMARY_GRADIENT = "linear-gradient(45deg, #77ABB7, #254B62, #77ABB7)"
 
 # Derived colors
-DARK_GREEN = "#00C928"  # Darker green for text
-LIGHT_GREEN = "#E6F9EB"  # Light green for backgrounds
-DARK_BLUE = "#0099CC"  # Darker blue for text
-LIGHT_BLUE = "#E6F7FF"  # Light blue for backgrounds
+LIGHT_VARIANT = "#E8F4F6"  # Light variant for backgrounds
+LIGHTER_VARIANT = "#F0F8FA"  # Lighter variant for backgrounds
 
 # Status colors
-SUCCESS_COLOR = "#00F260"  # Green
-INFO_COLOR = "#00C9FF"  # Blue
-WARNING_COLOR = "#FFA500"  # Orange
-ERROR_COLOR = "#FF4444"  # Red
+SUCCESS_COLOR = "#77ABB7"  # Light navy
+INFO_COLOR = "#254B62"  # Dark navy
+WARNING_COLOR = "#476D7C"  # Medium navy
+ERROR_COLOR = "#1D3E53"  # Darkest navy
 
 # Theme colors
-PRIMARY_COLOR = "#00F260"  # Primary green
-SECONDARY_COLOR = "#00C9FF"  # Secondary blue
-ACCENT_COLOR = "#00F260"  # Accent color
+PRIMARY_COLOR = "#77ABB7"  # Primary light navy
+SECONDARY_COLOR = "#254B62"  # Secondary dark navy
+ACCENT_COLOR = "#476D7C"  # Accent medium navy
 BACKGROUND_COLOR = "#f7fafc"  # Light gray background
 TEXT_COLOR = "#1a202c"  # Dark text
 CARD_BACKGROUND = "#ffffff"  # White card background
 
 # Difficulty level colors
 DIFFICULTY_COLORS = {
-    "Easy": "#00F260",  # Bright green
-    "Medium": "#FFA500",  # Orange
-    "Hard": "#FF4444",  # Red
+    "Easy": "#77ABB7",  # Light navy
+    "Medium": "#476D7C",  # Medium navy
+    "Hard": "#1D3E53",  # Darkest navy
 }
 
 # Category colors
 CATEGORY_COLORS = {
-    "Sports": "#00F260",  # Green
-    "Language": "#00C9FF",  # Blue
-    "General Knowledge": "#FFA500",  # Orange
+    "Sports": "#77ABB7",  # Light navy
+    "Language": "#254B62",  # Dark navy
+    "General Knowledge": "#476D7C",  # Medium navy
 }
 
 # Page configuration

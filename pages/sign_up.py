@@ -5,7 +5,7 @@ import sys
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from assets.config import PRIMARY_GREEN, PRIMARY_BLUE
+from assets.config import PRIMARY_LIGHT, PRIMARY_DARK
 
 # Load custom CSS
 def load_css():
@@ -18,7 +18,7 @@ load_css()
 # Header
 st.markdown(f"""
 <div style='text-align: center; padding: 2rem 0;'>
-    <h1 style='color: {PRIMARY_BLUE}; margin-bottom: 0.5rem;'>📝 Register</h1>
+    <h1 style='color: {PRIMARY_DARK}; margin-bottom: 0.5rem;'>📝 Register</h1>
     <p style='color: #718096;'>Create your fitness account</p>
 </div>
 """, unsafe_allow_html=True)

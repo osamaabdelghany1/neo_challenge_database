@@ -1,5 +1,5 @@
 # import streamlit as st
-# from assets.config import PAGE_CONFIG, PRIMARY_GREEN, PRIMARY_BLUE, BACKGROUND_COLOR
+# from assets.config import PAGE_CONFIG, PRIMARY_LIGHT, PRIMARY_DARK, BACKGROUND_COLOR
 # import os
 
 
@@ -31,7 +31,7 @@
 # # Main page
 # st.markdown(f"""
 # <div style='text-align: center; padding: 2rem 0;'>
-#     <h1 style='color: {PRIMARY_BLUE}; margin-bottom: 0.5rem;'>Welcome to Fitness Challenge App</h1>
+#     <h1 style='color: {PRIMARY_DARK}; margin-bottom: 0.5rem;'>Welcome to Fitness Challenge App</h1>
 # </div>
 # """, unsafe_allow_html=True)
 # st.markdown("---")

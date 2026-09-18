@@ -5,7 +5,7 @@ import sys
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from assets.config import PRIMARY_GREEN, PRIMARY_BLUE
+from assets.config import PRIMARY_LIGHT, PRIMARY_DARK
 
 # Load custom CSS
 def load_css():
@@ -18,7 +18,7 @@ load_css()
 # Header
 st.markdown(f"""
 <div style='text-align: center; padding: 2rem 0;'>
-    <h1 style='color: {PRIMARY_BLUE}; margin-bottom: 0.5rem;'>🔐 Login</h1>
+    <h1 style='color: {PRIMARY_DARK}; margin-bottom: 0.5rem;'>🔐 Login</h1>
     <p style='color: #718096;'>Access your fitness account</p>
 </div>
 """, unsafe_allow_html=True)
@@ -29,7 +29,7 @@ st.markdown("---")
 st.markdown(f"""
 <div style='background: white; padding: 2rem; border-radius: 12px; 
          border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'>
-    <h2 style='color: {PRIMARY_BLUE}; margin-top: 0;'>Sign In</h2>
+    <h2 style='color: {PRIMARY_DARK}; margin-top: 0;'>Sign In</h2>
 </div>
 """, unsafe_allow_html=True)
 

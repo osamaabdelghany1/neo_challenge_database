@@ -5,7 +5,7 @@ import sys
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from assets.config import PAGE_CONFIG, PRIMARY_GREEN, PRIMARY_BLUE
+from assets.config import PAGE_CONFIG, PRIMARY_LIGHT, PRIMARY_DARK
 
 st.set_page_config(page_title="View Nutrition Plan", page_icon="🥗", layout="wide")
 
@@ -20,7 +20,7 @@ load_css()
 # Header
 st.markdown(f"""
 <div style='padding: 1rem 0;'>
-    <h1 style='color: {PRIMARY_BLUE}; margin-bottom: 0.5rem;'> View Nutrition Plans</h1>
+    <h1 style='color: {PRIMARY_DARK}; margin-bottom: 0.5rem;'> View Nutrition Plans</h1>
     <p style='color: #718096;'>Browse and explore nutrition plans for different fitness goals</p>
 </div>
 """, unsafe_allow_html=True)
@@ -45,18 +45,18 @@ for i, nutrition_plan in enumerate(nutrition_plans):
 
     with cols[i % 3]:
     
-        goal_color = "#00F260" if nutrition_plan[3] == "Lose Weight" else "#FFA500" if nutrition_plan[3] == "Gain Weight" else PRIMARY_BLUE
-        category_bg = "#E6F9EB" if nutrition_plan[2] == "Normal" else "#FFF5E6" if nutrition_plan[2] == "Underweight" else "#FED7D7"
+        goal_color = "#77ABB7" if nutrition_plan[3] == "Lose Weight" else "#476D7C" if nutrition_plan[3] == "Gain Weight" else PRIMARY_DARK
+        category_bg = "#E8F4F6" if nutrition_plan[2] == "Normal" else "#F0F8FA" if nutrition_plan[2] == "Underweight" else "#FED7D7"
         
         st.markdown(f"""
         <div style='background: white; padding: 1.5rem; border-radius: 12px; 
                  border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: 100%;'>
             <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;'>
-                <h3 style='color: {PRIMARY_BLUE}; margin: 0;'>BMI: {nutrition_plan[1]}</h3>
+                <h3 style='color: {PRIMARY_DARK}; margin: 0;'>BMI: {nutrition_plan[1]}</h3>
                 <span style='background: {goal_color}; color: white; padding: 0.25rem 0.75rem; 
                              border-radius: 9999px; font-size: 0.8rem;'>{nutrition_plan[3]}</span>
             </div>
-            <div style='background: {category_bg}; color: {PRIMARY_BLUE}; padding: 0.5rem; 
+            <div style='background: {category_bg}; color: {PRIMARY_DARK}; padding: 0.5rem; 
                      border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem;'>
                 <strong>Category:</strong> {nutrition_plan[2]}
             </div>
