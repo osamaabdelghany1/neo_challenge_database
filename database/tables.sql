@@ -8,7 +8,7 @@ CREATE TABLE users (
     weight DECIMAL(3, 2), 
     phone VARCHAR(20), 
     ssn VARCHAR(20),
-    rule VARCHAR(255),
+    -- role VARCHAR(255) DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -100,3 +100,7 @@ CREATE TABLE exercises(
     video_url VARCHAR(500),
     FOREIGN KEY (muscle_id) REFERENCES muscles(id)
 );
+
+
+
+drop table if exists muscles;

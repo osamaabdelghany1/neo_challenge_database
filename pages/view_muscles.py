@@ -36,9 +36,7 @@ for i,  muscle in enumerate(muscles):
         with st.container():
             st.header(muscle[0])            
             st.text("name")
-            st.text(f"Number of levels: {muscle[1]}")
-            st.text(f"Number of activities: {muscle[2]}")
-            st.text(f"Category: {muscle[3]}")
+            st.image(muscle[10])
             
             st.button("view details", use_container_width=True, key=f"view_details_{i}")
 

@@ -25,13 +25,7 @@ st.markdown(f"""
 
 st.markdown("---")
 
-# Registration form
-st.markdown(f"""
-<div style='background: white; padding: 2rem; border-radius: 12px; 
-         border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);'>
-    <h2 style='color: {PRIMARY_BLUE}; margin-top: 0;'>Create Account</h2>
-</div>
-""", unsafe_allow_html=True)
+
 
 # Form fields in two columns
 col1, col2 = st.columns(2)
