@@ -1,4 +1,18 @@
 import streamlit as st
+import os
+import sys
+
+# Add parent directory to path to import config
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from assets.config import PRIMARY_LIGHT, PRIMARY_MEDIUM, PRIMARY_DARK
+
+# Load custom CSS
+def load_css():
+    css_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "styles.css")
+    with open(css_path) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+load_css()
 
 
 
@@ -13,20 +27,35 @@ with col2:
     st.image("assets/sport_challenge.png", use_container_width=True)
 
 
+st.title("choose your level") 
+  
+# Add custom CSS for specific button colors
+st.markdown(f"""
+<style>
+div[data-testid="stHorizontalBlock"] > div:nth-child(1) > div > div > button {{
+    background: {PRIMARY_LIGHT} !important;
+}}
+div[data-testid="stHorizontalBlock"] > div:nth-child(2) > div > div > button {{
+    background: {PRIMARY_MEDIUM} !important;
+}}
+div[data-testid="stHorizontalBlock"] > div:nth-child(3) > div > div > button {{
+    background: {PRIMARY_DARK} !important;
+}}
+</style>
+""", unsafe_allow_html=True)
 
-selected_level = create_level_buttons("sports")
-if selected_level:
-    if selected_level == "beginner":
-        challenge_data = BEGINNER_CHALLENGES[0]
-    elif selected_level == "intermediate":
-        challenge_data = INTERMEDIATE_CHALLENGES[0]
-    else:
-        challenge_data = ADVANCED_CHALLENGES[0]
+col1, col2, col3 = st.columns(3)
 
-    st.subheader(
-        f"Day {challenge_data['day']} - {selected_level.capitalize()} Challenge"
-    )
-    display_sports_challenges(challenge_data["exercises"], selected_level)
+with col1:
+    if st.button("Beginner", use_container_width=True):
+        st.session_state.selected_level = "beginner"
+with col2:
+    if st.button("Intermediate", use_container_width=True):
+        st.session_state.selected_level = "intermediate"
+with col3:
+    if st.button("Advanced", use_container_width=True):
+        st.session_state.selected_level = "advanced"
+
 
 
 
