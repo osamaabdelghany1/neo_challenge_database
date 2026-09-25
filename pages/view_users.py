@@ -5,7 +5,7 @@ import sys
 
 # Add parent directory to path to import config
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from assets.config import PAGE_CONFIG, PRIMARY_BLUE
+from assets.config import PAGE_CONFIG, PRIMARY_DARK
 
 st.set_page_config(page_title="View Users", page_icon="👥", layout="wide")
 
@@ -20,7 +20,7 @@ load_css()
 # Header
 st.markdown(f"""
 <div style='padding: 1rem 0;'>
-    <h1 style='color: {PRIMARY_BLUE}; margin-bottom: 0.5rem;'>👥 View Users</h1>
+    <h1 style='color: {PRIMARY_DARK}; margin-bottom: 0.5rem;'>👥 View Users</h1>
     <p style='color: #718096;'>Manage and view all registered users</p>
 </div>
 """, unsafe_allow_html=True)
@@ -59,7 +59,7 @@ for i, user in enumerate(users):
         st.markdown(f"""
         <div style='background: white; padding: 1.5rem; border-radius: 12px; 
                  border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: 100%;'>
-            <h3 style='color: {PRIMARY_BLUE}; margin-top: 0;'>👤 {user[0]}</h3>
+            <h3 style='color: {PRIMARY_DARK}; margin-top: 0;'>👤 {user[0]}</h3>
             <div style='color: #4a5568; font-size: 0.9rem; line-height: 1.6;'>
                 <div>📧 <strong>Email:</strong> {user[1]}</div>
                 <div>🎂 <strong>DOB:</strong> {user[2]}</div>

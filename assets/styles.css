@@ -2,12 +2,12 @@
 
 /* CSS Variables */
 :root {
-    --primary-green: #00F260;
-    --primary-blue: #00C9FF;
-    --dark-green: #00C928;
-    --light-green: #E6F9EB;
-    --dark-blue: #0099CC;
-    --light-blue: #E6F7FF;
+    --primary-darkest: #1D3E53;
+    --primary-dark: #254B62;
+    --primary-medium: #476D7C;
+    --primary-light: #77ABB7;
+    --light-variant: #E8F4F6;
+    --lighter-variant: #F0F8FA;
     --text-color: #1a202c;
     --bg-color: #f7fafc;
 }
@@ -21,13 +21,13 @@
 
 /* Headers */
 h1, h2, h3 {
-    color: var(--dark-blue);
+    color: var(--primary-darkest);
     font-weight: 600;
 }
 
 /* Button styling with gradient */
 div.stButton > button {
-    background: linear-gradient(45deg, #00F260, #00C9FF, #00F260);
+    background: linear-gradient(45deg, #77ABB7, #254B62, #77ABB7);
     color: white;
     border: none;
     border-radius: 10px;
@@ -62,8 +62,8 @@ div.stButton > button:active {
 }
 
 .stSuccess {
-    background-color: var(--light-green);
-    color: var(--dark-green);
+    background-color: var(--light-variant);
+    color: var(--primary-medium);
 }
 
 .stError {
@@ -72,8 +72,8 @@ div.stButton > button:active {
 }
 
 .stInfo {
-    background-color: var(--light-blue);
-    color: var(--dark-blue);
+    background-color: var(--lighter-variant);
+    color: var(--primary-dark);
 }
 
 /* Scrollbar */
@@ -86,12 +86,12 @@ div.stButton > button:active {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-green);
+    background: var(--primary-light);
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--dark-green);
+    background: var(--primary-medium);
 }
 
 /* Images */
