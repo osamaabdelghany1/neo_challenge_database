@@ -22,11 +22,15 @@ def get_challenge_image(name):
 header("🗣️ Language Challenges", "Learn languages through structured challenges")
 st.divider()
 
+
+
+
 conn = sqlite3.connect(DATABASE_PATH)
 cursor = conn.cursor()
 cursor.execute("select id, name, number_of_levels, number_of_activities from challenges where category='Language' order by name")
 challenges = cursor.fetchall()
 conn.close()
+
 
 if not challenges:
     st.info("No language challenges yet. Create one from the Challenges page!")
