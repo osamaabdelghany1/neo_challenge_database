@@ -1,18 +1,27 @@
-INSERT INTO exercises (muscle_id, name, description, equipment_needed, video_url) VALUES
--- Biceps Brachii (ID: 1)
-(1, 'Barbell Bicep Curl', 'Classic bicep exercise using a barbell for maximum muscle activation', 'Barbell', 'https://example.com/videos/barbell-curl.mp4'),
-(1, 'Dumbbell Hammer Curl', 'Targets both biceps and brachialis with neutral grip', 'Dumbbells', 'https://example.com/videos/hammer-curl.mp4'),
-(1, 'Concentration Curl', 'Isolation exercise for peak bicep contraction', 'Dumbbell', 'https://example.com/videos/concentration-curl.mp4'),
-
-
-(1, '10 Push-ups', 'Keep body straight, chest to ground', 'None', 'https://example.com/videos/push-ups.mp4'),
-(1, '15 Bodyweight Squats', 'Feet shoulder-width, thighs parallel', 'None', 'https://example.com/videos/squats.mp4'),
-(1, '30-sec Plank', 'Hold straight body position', 'None', 'https://example.com/videos/plank.mp4'),
-
-
-(2, '5 Pull-ups (or Negatives)', 'Pull chin over bar. If can'' do pull-ups, do slow negatives', 'Pull-up bar', 'https://example.com/videos/pull-ups.mp4'),
-(2, '10 Lunges (each leg)', 'Step forward, lower back knee', 'None', 'https://example.com/videos/lunges.mp4'),
-(2, '10 Bicycle Crunches', 'Touch elbow to opposite knee', 'None', 'https://example.com/videos/bicycle-crunches.mp4'),
-
-
-
+INSERT INTO exercises (muscle_id, name, description, equipment_needed, difficulty, video_url) VALUES
+(1, 'Barbell Bicep Curl', 'Classic bicep exercise using a barbell for maximum muscle activation', 'Barbell', 'Medium', 'https://example.com/videos/barbell-curl.mp4'),
+(1, 'Dumbbell Hammer Curl', 'Targets both biceps and brachialis with neutral grip', 'Dumbbells', 'Medium', 'https://example.com/videos/hammer-curl.mp4'),
+(1, 'Concentration Curl', 'Isolation exercise for peak bicep contraction', 'Dumbbell', 'Medium', 'https://example.com/videos/concentration-curl.mp4'),
+(1, '10 Push-ups', 'Keep body straight, chest to ground', 'None', 'Easy', 'https://example.com/videos/push-ups.mp4'),
+(1, '15 Bodyweight Squats', 'Feet shoulder-width, thighs parallel', 'None', 'Easy', 'https://example.com/videos/squats.mp4'),
+(1, '30-sec Plank', 'Hold straight body position', 'None', 'Easy', 'https://example.com/videos/plank.mp4'),
+(2, '5 Pull-ups (or Negatives)', 'Pull chin over bar. If can do pull-ups, do slow negatives', 'Pull-up bar', 'Hard', 'https://example.com/videos/pull-ups.mp4'),
+(2, '10 Lunges (each leg)', 'Step forward, lower back knee', 'None', 'Easy', 'https://example.com/videos/lunges.mp4'),
+(2, '10 Bicycle Crunches', 'Touch elbow to opposite knee', 'None', 'Easy', 'https://example.com/videos/bicycle-crunches.mp4'),
+(3, 'Dumbbell Shoulder Press', 'Press dumbbells overhead for shoulder strength', 'Dumbbells', 'Medium', 'https://example.com/videos/shoulder-press.mp4'),
+(3, 'Lateral Raises', 'Raise dumbbells to sides for medial delts', 'Dumbbells', 'Easy', 'https://example.com/videos/lateral-raises.mp4'),
+(4, 'Tricep Dips', 'Bodyweight exercise for tricep strength', 'Parallel bars', 'Medium', 'https://example.com/videos/tricep-dips.mp4'),
+(4, 'Overhead Tricep Extension', 'Extend dumbbell overhead for triceps', 'Dumbbell', 'Medium', 'https://example.com/videos/tricep-extension.mp4'),
+(5, 'Wrist Curls', 'Forearm strengthening exercise', 'Dumbbell', 'Easy', 'https://example.com/videos/wrist-curls.mp4'),
+(6, 'Crunches', 'Basic abdominal exercise', 'None', 'Easy', 'https://example.com/videos/crunches.mp4'),
+(6, 'Russian Twists', 'Oblique exercise with rotation', 'None', 'Medium', 'https://example.com/videos/russian-twists.mp4'),
+(7, 'Leg Press', 'Machine exercise for quad strength', 'Leg press machine', 'Medium', 'https://example.com/videos/leg-press.mp4'),
+(7, 'Lunges', 'Single leg exercise for quads and glutes', 'None', 'Easy', 'https://example.com/videos/lunges.mp4'),
+(8, 'Side Leg Raises', 'Hip abductor exercise', 'None', 'Easy', 'https://example.com/videos/side-leg-raises.mp4'),
+(9, 'Face Pulls', 'Rear delt and upper back exercise', 'Cable machine', 'Medium', 'https://example.com/videos/face-pulls.mp4'),
+(10, 'Lat Pulldowns', 'Machine exercise for lat width', 'Lat pulldown machine', 'Medium', 'https://example.com/videos/lat-pulldowns.mp4'),
+(11, 'Deadlifts', 'Compound exercise for lower back and hamstrings', 'Barbell', 'Hard', 'https://example.com/videos/deadlifts.mp4'),
+(12, 'Skull Crushers', 'Tricep isolation exercise', 'EZ bar', 'Medium', 'https://example.com/videos/skull-crushers.mp4'),
+(13, 'Hip Thrusts', 'Glute strengthening exercise', 'Barbell', 'Medium', 'https://example.com/videos/hip-thrusts.mp4'),
+(14, 'Romanian Deadlifts', 'Hamstring and glute exercise', 'Barbell', 'Hard', 'https://example.com/videos/rdl.mp4'),
+(15, 'Calf Raises', 'Calf muscle exercise', 'None', 'Easy', 'https://example.com/videos/calf-raises.mp4');
