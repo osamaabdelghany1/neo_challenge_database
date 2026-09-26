@@ -14,3 +14,7 @@ INSERT INTO muscles (name, latin_name, description, muscle_group, location, func
 ('Glutes', 'Gluteus maximus', 'The large buttock muscle that extends and rotates the hip', 'Lower Body', 'Buttocks', 'Hip extension and external rotation', 'Ilium, sacrum, and coccyx', 'Femur', 'Skeletal', 'Medium', 'assets/glutes.jpg', ''),
 ('Hamstring', 'Hamstring muscles', 'The muscle group on the back of the thigh that flexes the knee and extends the hip', 'Lower Body', 'Back of thigh', 'Knee flexion and hip extension', 'Ischial tuberosity', 'Tibia and fibula', 'Skeletal', 'Hard', 'assets/hamstring.jpg', ''),
 ('Calves', 'Gastrocnemius and Soleus', 'The calf muscles that plantarflex the ankle and assist in walking and running', 'Lower Body', 'Back of lower leg', 'Ankle plantarflexion and knee flexion', 'Femur and tibia/fibula', 'Calcaneus via Achilles tendon', 'Skeletal', 'Medium', 'assets/calves.jpg', '');
+
+
+
+

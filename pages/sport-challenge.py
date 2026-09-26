@@ -1,7 +1,7 @@
 import streamlit as st
 import sqlite3
 import os
-from assets.config import PRIMARY_DARK, PRIMARY_LIGHT, PRIMARY_MEDIUM, DIFFICULTY_COLORS, CATEGORY_COLORS, DATABASE_PATH
+from assets.config import PRIMARY_DARK, PRIMARY_LIGHT, DIFFICULTY_COLORS, CATEGORY_COLORS, DATABASE_PATH
 
 st.set_page_config(page_title="Sport Tracker", layout="wide")
 

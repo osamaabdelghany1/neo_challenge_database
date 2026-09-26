@@ -35,4 +35,4 @@ else:
                 st.caption(f"Group: {m[2]}")
                 if st.button("View Details", key=f"vm_{i}", use_container_width=True):
                     st.session_state.selected_muscle_id = m[0]
-                    st.switch_page("pages/_muscle_details.py")
+                    st.switch_page("pages/workout.py")

@@ -88,6 +88,7 @@ CREATE TABLE muscles(
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
 select * from muscles;
 
 CREATE TABLE exercises(
