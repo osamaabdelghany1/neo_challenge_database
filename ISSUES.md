@@ -35,7 +35,7 @@ Status: closed
 
 ## #8 [bug] Sports challenges have no activities; 30 activities are orphaned
 Commit `ff4792a` deleted challenges 11 and 13-16, but their 30 activities (challenge_id 11, 13-16) remain. Sports challenges 1-8 have zero activities, so Sports challenge details show "No activities found" and the sport-challenge level filter finds nothing.
-Status: open
+Status: closed (Sports challenges intentionally left without activities)
 
 ## #6 [docs] Marketing and competition materials (English)
 - Fill in `docs/afro_asian_software_template.md`, sections 1–9.
