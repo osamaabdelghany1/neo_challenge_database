@@ -19,6 +19,7 @@ if "selected_exercise_id" not in st.session_state:
 conn = sqlite3.connect(DATABASE_PATH)
 cursor = conn.cursor()
 ex = cursor.execute("select * from exercises where id=?", (st.session_state.selected_exercise_id,)).fetchone()
+muscle = cursor.execute("select name from muscles where id=?", (ex[1],)).fetchone() if ex else None
 conn.close()
 
 if not ex:
@@ -30,7 +31,7 @@ st.divider()
 
 c1, c2 = st.columns(2)
 with c1:
-    st.metric("Muscle ID", ex[1])
+    st.metric("Muscle", muscle[0] if muscle else "Unknown")
     st.metric("Equipment", ex[4] or "None")
 with c2:
     st.metric("Difficulty", ex[5])

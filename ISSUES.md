@@ -43,3 +43,7 @@ Status: closed (Sports challenges intentionally left without activities)
 - Poster plus social posts (Artifact).
 Depends on #1–#5 for screenshots.
 Status: open
+
+## #9 [ui] Sidebar lists every page file; exercise detail shows a muscle id
+The sidebar lists `app`, the create pages and the detail pages. Fix: `app.py` becomes an `st.navigation` router with sections, and the detail pages are registered with `visibility="hidden"`. Also, `_exercise_details.py` shows "Muscle ID 30" instead of the muscle's name.
+Status: closed
