@@ -26,19 +26,18 @@ with col2:
     dob = st.date_input("Date of Birth")
     height = st.number_input("Height (cm)", min_value=0, max_value=300)
     weight = st.number_input("Weight (kg)", min_value=0, max_value=500)
-    ssn = st.text_input("SSN")
 
 st.divider()
 
 if st.button("Register", use_container_width=True):
-    if not all([username, password, email, dob, height, weight, phone, ssn]):
+    if not all([username, password, email, dob, height, weight, phone]):
         st.error("Please fill in all fields")
     else:
         conn = sqlite3.connect(DATABASE_PATH)
         cursor = conn.cursor()
         try:
-            cursor.execute("insert into users (username, password, email, DOB, height, weight, phone, ssn) values (?,?,?,?,?,?,?,?)",
-                           (username, password, email, dob, height, weight, phone, ssn))
+            cursor.execute("insert into users (username, password, email, DOB, height, weight, phone) values (?,?,?,?,?,?,?)",
+                           (username, password, email, dob, height, weight, phone))
             conn.commit()
             conn.close()
             st.success("Registered successfully!")

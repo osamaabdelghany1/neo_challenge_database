@@ -62,11 +62,35 @@ st.write(description)
 c1, c2 = st.columns(2)
 with c1:
     if st.button("Start Challenge", use_container_width=True):
-        st.success("Challenge started!")
-        st.balloons()
+        if "userId" not in st.session_state:
+            st.session_state.need_login = True
+        else:
+            conn = sqlite3.connect(DATABASE_PATH)
+            cursor = conn.cursor()
+            cursor.execute("select 1 from user_challenges where user_id=? and challenge_id=?", (st.session_state.userId, challenge_id))
+            row = cursor.fetchone()
+            if not row:
+                cursor.execute("insert into user_challenges (user_id, challenge_id) values (?,?)", (st.session_state.userId, challenge_id))
+                conn.commit()
+                conn.close()
+                st.success("Challenge joined!")
+                st.balloons()
+            else:
+                conn.close()
+                st.info("You already joined this challenge")
 with c2:
     if st.button("View All Activities", use_container_width=True):
         st.switch_page("pages/view_activities.py")
+
+if category == "General Knowledge":
+    if st.button("Play Quiz", use_container_width=True):
+        st.switch_page("pages/general_knowledge.py")
+
+if st.session_state.get("need_login"):
+    st.warning("Please log in to join this challenge")
+    if st.button("Log In", use_container_width=True):
+        st.session_state.need_login = False
+        st.switch_page("pages/login.py")
 
 st.divider()
 

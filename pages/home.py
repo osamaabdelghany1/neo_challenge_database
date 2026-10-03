@@ -33,7 +33,7 @@ with c2:
         st.switch_page("pages/language_challenge.py")
 with c3:
     if st.button("Start General Knowledge Challenge", use_container_width=True):
-        st.switch_page("pages/view_challenges.py")
+        st.switch_page("pages/general_knowledge.py")
 
 st.subheader("More Ways to Train")
 c1, c2, c3 = st.columns(3)
