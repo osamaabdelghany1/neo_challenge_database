@@ -49,8 +49,8 @@ with c3:
 
 st.markdown("""
 ## How It Works
-1. **Choose your level** - Beginner, Intermediate, or Advanced
-2. **Get daily challenges** - Three new challenges every day
-3. **Track your progress** - Watch yourself improve over time
-4. **Evolve** - Challenges adapt as you grow stronger
+1. **Pick a habit** - Sports, Language or General Knowledge
+2. **Choose your level** - Easy, Medium or Hard
+3. **Do a short challenge** - a workout with video, a language activity, or a 10-question quiz
+4. **Join it** - log in and press Start Challenge to save it to your account
 """)

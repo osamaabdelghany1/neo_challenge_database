@@ -50,4 +50,4 @@ Status: closed
 
 ## #10 [docs] Home page "How It Works" promises features that don't exist
 `pages/home.py` says "Three new challenges every day", "Track your progress" and "Challenges adapt as you grow stronger". None of these exist yet. Fix: reword the box to describe what the app actually does.
-Status: open
+Status: closed
