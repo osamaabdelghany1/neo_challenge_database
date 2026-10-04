@@ -42,8 +42,12 @@ Status: closed (Sports challenges intentionally left without activities)
 - Pitch slide deck (Artifact).
 - Poster plus social posts (Artifact).
 Depends on #1–#5 for screenshots.
-Status: open
+Status: closed (doc in docs/neo_challenge_documentation.md; pitch deck and poster/social posts published as Artifacts)
 
 ## #9 [ui] Sidebar lists every page file; exercise detail shows a muscle id
 The sidebar lists `app`, the create pages and the detail pages. Fix: `app.py` becomes an `st.navigation` router with sections, and the detail pages are registered with `visibility="hidden"`. Also, `_exercise_details.py` shows "Muscle ID 30" instead of the muscle's name.
 Status: closed
+
+## #10 [docs] Home page "How It Works" promises features that don't exist
+`pages/home.py` says "Three new challenges every day", "Track your progress" and "Challenges adapt as you grow stronger". None of these exist yet. Fix: reword the box to describe what the app actually does.
+Status: open
