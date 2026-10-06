@@ -22,5 +22,5 @@ for equipment in EQUIPMENT_TYPES:
             if st.button("Show exercises", key=f"show_{equipment[0]}", width="stretch"):
                 # The Exercises page reads this to show only this equipment.
                 st.session_state.equipment_filter = equipment[0]
-                st.switch_page("pages/view_exercise.py")
+                st.switch_page("app_pages/view_exercise.py")
     number = number + 1

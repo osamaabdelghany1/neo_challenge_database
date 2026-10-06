@@ -40,5 +40,5 @@ for exercise in exercises:
             st.caption(f"{exercise['muscle_name']} · {exercise['equipment']} · {LEVEL_ICONS[exercise['difficulty']]} {exercise['difficulty']}")
             if st.button("Watch", key=f"watch_{exercise['id']}", width="stretch"):
                 st.session_state.selected_exercise_id = exercise["id"]
-                st.switch_page("pages/exercise_details.py")
+                st.switch_page("app_pages/exercise_details.py")
     number = number + 1

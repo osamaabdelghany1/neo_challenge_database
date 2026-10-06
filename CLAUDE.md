@@ -18,8 +18,8 @@ No build step, tests, or linter. `requirements.txt` pins `streamlit==1.64.0`; ev
 
 ## How it fits together
 
-- `app.py` runs on every rerun: `create_tables()` executes `database/schema.sql` (all `CREATE TABLE IF NOT EXISTS`), and if `challenges` is empty runs the `SEED_FILES` in order. Then it builds the `st.navigation` menu from `st.session_state`: logged out → Log in / Sign up; logged in → My challenges / Log out; `is_admin` → the Admin section. Pages not in the menu cannot be opened, so admin pages need no check of their own. `challenge_details.py` and `exercise_details.py` are always registered with `visibility="hidden"`. **A new page must be added to `app.py`.**
-- `pages/` holds one plain script per screen. Each opens its own connection with the same three lines, then writes its SQL inline:
+- `app.py` runs on every rerun: `create_tables()` executes `database/schema.sql` (all `CREATE TABLE IF NOT EXISTS`), and if `challenges` is empty runs the `SEED_FILES` in order. Then it builds the `st.navigation` menu from `st.session_state`: logged out → Log in / Sign up; logged in → My challenges / Log out; `is_admin` → the Admin section. Pages not in the menu cannot be opened, so admin pages need no check of their own. `challenge_details.py` and `exercise_details.py` are always registered with `visibility="hidden"`. **A new page must be added to `app.py`.** Screens must stay in `app_pages/`, never a folder named `pages/`: Streamlit auto-lists a `pages/` folder, and the first request after a server start could then open any screen without going through `app.py`.
+- `app_pages/` holds one plain script per screen. Each opens its own connection with the same three lines, then writes its SQL inline:
 
   ```python
   conn = sqlite3.connect(DATABASE_PATH)

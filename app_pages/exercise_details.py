@@ -4,7 +4,7 @@ from assets.config import DATABASE_PATH, LEVEL_ICONS
 
 # This page needs an exercise picked on the Exercises page first.
 if "selected_exercise_id" not in st.session_state:
-    st.switch_page("pages/view_exercise.py")
+    st.switch_page("app_pages/view_exercise.py")
 
 conn = sqlite3.connect(DATABASE_PATH)
 conn.execute("PRAGMA foreign_keys = ON")
@@ -36,4 +36,4 @@ else:
     st.info("This exercise has no video yet.")
 
 if st.button("Back to exercises", width="stretch"):
-    st.switch_page("pages/view_exercise.py")
+    st.switch_page("app_pages/view_exercise.py")

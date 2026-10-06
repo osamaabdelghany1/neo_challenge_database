@@ -22,12 +22,12 @@ An admin can also see the users and add new challenges, activities, exercises, m
   If the database is empty, it fills it with our starting content from the `database/insert_*.sql` files.
 - `app.py` also builds the menu. The menu only shows what you can open:
   log in / sign up when you are logged out, your pages when you are logged in, and the admin pages only for the admin.
-- Every screen is one file in `pages/`. Each screen talks to the database itself with plain SQL.
+- Every screen is one file in `app_pages/`. Each screen talks to the database itself with plain SQL.
 - The very first person who signs up becomes the **admin**.
 
 ```
 app.py                  creates the database, builds the menu
-pages/                  one file per screen
+app_pages/              one file per screen
 assets/config.py        settings shared by screens (database path, pictures, level icons)
 assets/*.jpg, *.png     pictures
 videos/                 60 exercise videos

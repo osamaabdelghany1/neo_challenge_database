@@ -33,5 +33,5 @@ for muscle in muscles:
                 st.write(f"**Type:** {muscle['muscle_type'] or 'unknown'}")
                 st.write(f"**Difficulty to train:** {muscle['difficulty_to_train'] or 'unknown'}")
             if st.button("Find a workout", key=f"workout_{muscle['id']}", width="stretch"):
-                st.switch_page("pages/workout.py")
+                st.switch_page("app_pages/workout.py")
     number = number + 1

@@ -73,3 +73,14 @@ Make the code readable top to bottom by a 12-year-old, and fix the database desi
 - `database/database.db` is no longer in git.
 - Trade-offs are listed under Limits in `README.md`.
 Status: closed
+
+## #12 [bug] First request after a server start could skip the menu
+Screens lived in a folder named `pages/`, which Streamlit lists by itself. If the very first request after the server started was a direct link (for example `/view_users`), Streamlit ran that file without `app.py`. That skipped setting up the database and hiding the admin pages.
+Fix: rename the folder to `app_pages/` and update every path. A direct link now always goes through `app.py`'s menu.
+Status: closed
+
+## #13 [refactor] Repo cleanup
+- Remove the unused images `OIP.webp`, `American.png`, `Bretish.png` and `logo.svg`.
+- Stop tracking the `.claude/` and `.agents/` skill symlinks; they point into a local Python install.
+- The seed now has 7 challenges (3 Sports); the docs, the screenshot and the deck are updated to match.
+Status: closed

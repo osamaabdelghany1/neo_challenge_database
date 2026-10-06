@@ -13,7 +13,7 @@ def get_challenge_image(name, category):
 
 # This page needs a challenge picked on another page first.
 if "selected_challenge_id" not in st.session_state:
-    st.switch_page("pages/view_challenges.py")
+    st.switch_page("app_pages/view_challenges.py")
 
 challenge_id = st.session_state.selected_challenge_id
 
@@ -65,7 +65,7 @@ else:
 
 if challenge["category"] == "General Knowledge":
     if st.button("🧠 Play the quiz", width="stretch"):
-        st.switch_page("pages/general_knowledge.py")
+        st.switch_page("app_pages/general_knowledge.py")
 
 st.divider()
 st.subheader("Activities")

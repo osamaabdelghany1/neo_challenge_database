@@ -31,5 +31,5 @@ for challenge in challenges:
             st.caption(f"{challenge['category']} · {challenge['duration']} days · {challenge['activity_count']} activities")
             if st.button("Open", key=f"open_{challenge['id']}", width="stretch"):
                 st.session_state.selected_challenge_id = challenge["id"]
-                st.switch_page("pages/challenge_details.py")
+                st.switch_page("app_pages/challenge_details.py")
     number = number + 1

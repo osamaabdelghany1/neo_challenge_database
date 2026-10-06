@@ -1,9 +1,3 @@
--- The NEO Challenge database.
--- app.py runs this file every time the app starts.
--- "IF NOT EXISTS" means running it again changes nothing.
--- "ON DELETE CASCADE" means: when a parent row is deleted, its children go too
--- (delete a challenge and its activities and questions disappear with it).
-
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,

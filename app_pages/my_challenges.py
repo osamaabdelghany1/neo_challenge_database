@@ -31,7 +31,7 @@ for challenge in challenges:
         st.markdown(f"**{challenge['name']}** · {challenge['category']} · {challenge['duration']} days")
         if st.button("Open", key=f"open_{challenge['id']}"):
             st.session_state.selected_challenge_id = challenge["id"]
-            st.switch_page("pages/challenge_details.py")
+            st.switch_page("app_pages/challenge_details.py")
 
 st.subheader("My nutrition plan")
 if plan is None:
