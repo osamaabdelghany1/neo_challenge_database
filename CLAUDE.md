@@ -28,7 +28,7 @@ No build step, tests, or linter. `requirements.txt` pins `streamlit==1.64.0`; ev
   ```
 
   The `PRAGMA` line is required on every connection or SQLite ignores foreign keys and `ON DELETE CASCADE`. Rows are read by column name (`row["name"]`).
-- Session keys: `user_id`, `username`, `is_admin` (set by `login.py`, cleared by `logout.py`), `selected_challenge_id`, `selected_exercise_id`, `equipment_filter` (the key of the Exercises page's selectbox, preset by `workout.py`), `quiz_level`, `quiz_questions`, `quiz_submitted`, `answer_<question id>`.
+- Session keys: `user_id`, `username`, `is_admin` (set by `login.py`, cleared by `logout.py`), `selected_challenge_id`, `just_joined` (shows balloons once after joining), `selected_exercise_id`, `equipment_filter` (the key of the Exercises page's selectbox, preset by `workout.py`), `quiz_level`, `quiz_questions`, `quiz_submitted`, `answer_<question id>`.
 - `assets/config.py`: `DATABASE_PATH`, `CATEGORY_IMAGES`, `CHALLENGE_IMAGES`, `LEVEL_ICONS`. Colours live in `.streamlit/config.toml`; there is no custom CSS.
 - Paths (`database/...`, `assets/...`, `videos/...`, also stored in `exercises.video_url` and `muscles.image_url`) are relative to the repo root.
 

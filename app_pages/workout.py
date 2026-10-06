@@ -11,10 +11,10 @@ EQUIPMENT_TYPES = [
 st.title("💪 Your workout")
 st.caption("Choose what you have to train with")
 
-cols = st.columns(2)
+cols = st.columns(4)
 number = 0
 for equipment in EQUIPMENT_TYPES:
-    with cols[number % 2]:
+    with cols[number % 4]:
         with st.container(border=True):
             st.image(equipment[1], width="stretch")
             st.subheader(equipment[2])

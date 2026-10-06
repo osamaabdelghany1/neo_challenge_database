@@ -22,18 +22,21 @@ if exercise is None:
 
 st.title("💪 " + exercise["name"])
 
-col1, col2, col3 = st.columns(3)
-col1.metric("Muscle", exercise["muscle_name"])
-col2.metric("Equipment", exercise["equipment"])
-col3.metric("Difficulty", LEVEL_ICONS[exercise["difficulty"]] + " " + exercise["difficulty"])
-
-if exercise["description"]:
-    st.write(exercise["description"])
-
-if exercise["video_url"]:
-    st.video(exercise["video_url"])
-else:
-    st.info("This exercise has no video yet.")
+# Our videos were filmed on a phone held upright, so they are tall and narrow.
+# A narrow column (1 part of 3) keeps the whole video on one screen, with the facts beside it.
+# On a phone the two columns stack.
+video_column, facts_column = st.columns([1, 2])
+with video_column:
+    if exercise["video_url"]:
+        st.video(exercise["video_url"])
+    else:
+        st.info("This exercise has no video yet.")
+with facts_column:
+    st.metric("Muscle", exercise["muscle_name"])
+    st.metric("Equipment", exercise["equipment"])
+    st.metric("Difficulty", LEVEL_ICONS[exercise["difficulty"]] + " " + exercise["difficulty"])
+    if exercise["description"]:
+        st.write(exercise["description"])
 
 if st.button("Back to exercises", width="stretch"):
     st.switch_page("app_pages/view_exercise.py")

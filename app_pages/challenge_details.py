@@ -2,6 +2,10 @@ import sqlite3
 import streamlit as st
 from assets.config import DATABASE_PATH, CATEGORY_IMAGES, CHALLENGE_IMAGES, LEVEL_ICONS
 
+# How wide the challenge picture is, in pixels. Our flag pictures are about 550 pixels wide,
+# so 400 keeps them sharp instead of stretching them across the whole page.
+IMAGE_WIDTH = 400
+
 
 def get_challenge_image(name, category):
     # A language challenge shows its country's flag; anything else shows its category picture.
@@ -28,7 +32,7 @@ if challenge is None:
     st.error("That challenge does not exist anymore.")
     st.stop()
 
-st.image(get_challenge_image(challenge["name"], challenge["category"]), width="stretch")
+st.image(get_challenge_image(challenge["name"], challenge["category"]), width=IMAGE_WIDTH)
 st.title(challenge["name"])
 
 col1, col2, col3 = st.columns(3)
@@ -49,6 +53,10 @@ if "user_id" in st.session_state:
 
     if joined:
         st.success("You joined this challenge. You can find it in My challenges.")
+        # Balloons only right after joining, not every time you open the page.
+        if st.session_state.get("just_joined"):
+            st.balloons()
+            st.session_state.just_joined = False
     elif st.button("Start challenge", type="primary", width="stretch"):
         conn = sqlite3.connect(DATABASE_PATH)
         conn.execute("PRAGMA foreign_keys = ON")
@@ -58,8 +66,9 @@ if "user_id" in st.session_state:
         )
         conn.commit()
         conn.close()
-        st.success("You joined this challenge!")
-        st.balloons()
+        # Reload the page so the button disappears and the "you joined" message shows.
+        st.session_state.just_joined = True
+        st.rerun()
 else:
     st.info("Log in to join this challenge.")
 

@@ -84,3 +84,18 @@ Status: closed
 - Stop tracking the `.claude/` and `.agents/` skill symlinks; they point into a local Python install.
 - The seed now has 7 challenges (3 Sports); the docs, the screenshot and the deck are updated to match.
 Status: closed
+
+## #14 [ui] Image and video sizes
+Every picture and video was drawn at full width:
+- The flag on a challenge page was stretched to about 980px and looked blurry.
+- The exercise video filled the whole screen.
+- The muscle pictures had 6 different shapes, so cards didn't line up.
+- Workout was a long 2-column page.
+Fix:
+- Exercise page: video on the left and facts on the right, in two columns (3:2).
+- Challenge picture: capped at 400px wide.
+- Muscle pictures: cropped once to 4:3.
+- Workout: all 4 cards in one row.
+The videos turned out to be tall phone recordings, so the video gets the narrow column (1:2) and fits on one screen.
+Also fixed: after "Start challenge", the button stayed on screen under the success message. The page now reloads after joining and shows the balloons once.
+Status: closed
