@@ -1,1 +1,3 @@
 __pycache__/
+# The app creates this file itself when it starts.
+database/database.db

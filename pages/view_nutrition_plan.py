@@ -1,43 +1,57 @@
-import streamlit as st
 import sqlite3
-import os
-from assets.config import PRIMARY_DARK, DATABASE_PATH
+import streamlit as st
+from assets.config import DATABASE_PATH
 
-st.set_page_config(page_title="View Nutrition Plans", page_icon="🥗", layout="wide")
-
-css_path = os.path.join(os.path.dirname(__file__), "..", "assets", "styles.css")
-with open(css_path) as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-def header(title, subtitle=""):
-    st.markdown(f"<h1 style='color:{PRIMARY_DARK}'>{title}</h1>", unsafe_allow_html=True)
-    if subtitle: st.caption(subtitle)
-
-header("🥗 View Nutrition Plans", "Browse nutrition plans for different fitness goals")
-st.divider()
+st.title("🥗 Nutrition plans")
+st.caption("Meal plans for every BMI category")
 
 conn = sqlite3.connect(DATABASE_PATH)
-cursor = conn.cursor()
-cursor.execute("select id, bmi, category, goal, calories, breakfast, lunch, dinner, water_intake from Nutrition_Plans order by created_at")
-plans = cursor.fetchall()
+conn.execute("PRAGMA foreign_keys = ON")
+conn.row_factory = sqlite3.Row
+plans = conn.execute("select * from nutrition_plans order by bmi").fetchall()
+
+# If you are logged in, find the plan you chose (if any).
+my_plan_id = None
+if "user_id" in st.session_state:
+    row = conn.execute(
+        "select nutrition_plan_id from user_nutrition_plans where user_id = ?",
+        (st.session_state.user_id,),
+    ).fetchone()
+    if row is not None:
+        my_plan_id = row["nutrition_plan_id"]
 conn.close()
 
-if not plans:
-    st.info("No nutrition plans found")
-else:
-    cols = st.columns(3)
-    for i, p in enumerate(plans):
-        with cols[i % 3]:
-            gc = "#77ABB7" if p[3] == "Lose Weight" else "#476D7C" if p[3] == "Gain Weight" else PRIMARY_DARK
-            with st.container(border=True):
-                st.markdown(f"<h3 style='color:{PRIMARY_DARK};margin:0'>BMI: {p[1]}</h3>", unsafe_allow_html=True)
-                st.caption(f"Goal: {p[3]} · Category: {p[2]}")
-                st.metric("Calories", f"{p[4]} kcal")
-                st.metric("Water", p[8])
-                with st.expander("Meals"):
-                    st.write(f"**Breakfast:** {p[5]}")
-                    st.write(f"**Lunch:** {p[6]}")
-                    st.write(f"**Dinner:** {p[7]}")
-                if st.button("View Details", key=f"vnp_{i}", use_container_width=True):
-                    st.session_state.selected_nutrition_plans_id = p[0]
-                    st.switch_page("pages/_nutrition_plan_details.py")
+if len(plans) == 0:
+    st.info("No nutrition plans yet.")
+
+cols = st.columns(3)
+number = 0
+for plan in plans:
+    with cols[number % 3]:
+        with st.container(border=True):
+            st.subheader(f"BMI {plan['bmi']}")
+            st.caption(f"{plan['category']} · Goal: {plan['goal']}")
+            col1, col2 = st.columns(2)
+            col1.metric("Calories", f"{plan['calories']} kcal")
+            col2.metric("Water", plan["water_intake"])
+            with st.expander("Meals"):
+                st.write(f"**Breakfast:** {plan['breakfast']}")
+                st.write(f"**Lunch:** {plan['lunch']}")
+                st.write(f"**Dinner:** {plan['dinner']}")
+
+            if plan["id"] == my_plan_id:
+                st.success("This is your plan.")
+            elif "user_id" in st.session_state:
+                if st.button("Choose this plan", key=f"choose_{plan['id']}", width="stretch"):
+                    # Every user has one plan, so remove the old one before saving the new one.
+                    conn = sqlite3.connect(DATABASE_PATH)
+                    conn.execute("PRAGMA foreign_keys = ON")
+                    conn.execute("delete from user_nutrition_plans where user_id = ?", (st.session_state.user_id,))
+                    conn.execute(
+                        "insert into user_nutrition_plans (user_id, nutrition_plan_id) values (?, ?)",
+                        (st.session_state.user_id, plan["id"]),
+                    )
+                    conn.commit()
+                    conn.close()
+                    st.rerun()
+    number = number + 1

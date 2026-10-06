@@ -1,50 +1,44 @@
-import streamlit as st
 import sqlite3
-import os
-from assets.config import PRIMARY_DARK, DATABASE_PATH, CATEGORY_COLORS, CHALLENGE_IMAGES
-
-st.set_page_config(page_title="Language Challenges", page_icon="🗣️", layout="wide")
-
-css_path = os.path.join(os.path.dirname(__file__), "..", "assets", "styles.css")
-with open(css_path) as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-def header(title, subtitle=""):
-    st.markdown(f"<h1 style='color:{PRIMARY_DARK}'>{title}</h1>", unsafe_allow_html=True)
-    if subtitle: st.caption(subtitle)
-
-def get_challenge_image(name):
-    for keyword, img in CHALLENGE_IMAGES.items():
-        if keyword.lower() in name.lower():
-            return img
-    return "assets/language_challenge.png"
-
-header("🗣️ Language Challenges", "Learn languages through structured challenges")
-st.divider()
+import streamlit as st
+from assets.config import DATABASE_PATH, CATEGORY_IMAGES, CHALLENGE_IMAGES
 
 
+def get_challenge_image(name, category):
+    # A language challenge shows its country's flag; anything else shows its category picture.
+    for language in CHALLENGE_IMAGES:
+        if language.lower() in name.lower():
+            return CHALLENGE_IMAGES[language]
+    return CATEGORY_IMAGES[category]
 
+
+st.title("🗣️ Language challenges")
+st.caption("Learn languages through levelled challenges")
 
 conn = sqlite3.connect(DATABASE_PATH)
-cursor = conn.cursor()
-cursor.execute("select id, name, number_of_levels, number_of_activities from challenges where category='Language' order by name")
-challenges = cursor.fetchall()
+conn.execute("PRAGMA foreign_keys = ON")
+conn.row_factory = sqlite3.Row
+challenges = conn.execute("""
+    select challenges.id, challenges.name, challenges.category,
+           count(activities.id) as activity_count
+    from challenges
+    left join activities on activities.challenge_id = challenges.id
+    where challenges.category = 'Language'
+    group by challenges.id
+    order by challenges.name
+""").fetchall()
 conn.close()
 
+if len(challenges) == 0:
+    st.info("No language challenges yet.")
 
-if not challenges:
-    st.info("No language challenges yet. Create one from the Challenges page!")
-    if st.button("Create Language Challenge"):
-        st.switch_page("pages/_create_challenges.py")
-else:
-    cols = st.columns(3)
-    for i, ch in enumerate(challenges):
-        with cols[i % 3]:
-            cc = CATEGORY_COLORS.get("Language", PRIMARY_DARK)
-            img = get_challenge_image(ch[1])
-            st.image(img, use_container_width=True)
-            st.markdown(f"<h3 style='color:{cc};margin:0.5rem 0 0.25rem'>{ch[1]}</h3>", unsafe_allow_html=True)
-            st.caption(f"{ch[2]} Levels · {ch[3]} Activities")
-            if st.button("Start Challenge", key=f"lc_{i}", use_container_width=True):
-                st.session_state.selected_challenge_id = ch[0]
-                st.switch_page("pages/challenge_details.py")
+cols = st.columns(3)
+number = 0
+for challenge in challenges:
+    with cols[number % 3]:
+        st.image(get_challenge_image(challenge["name"], challenge["category"]), width="stretch")
+        st.subheader(challenge["name"])
+        st.caption(f"{challenge['activity_count']} activities")
+        if st.button("Open", key=f"open_{challenge['id']}", width="stretch"):
+            st.session_state.selected_challenge_id = challenge["id"]
+            st.switch_page("pages/challenge_details.py")
+    number = number + 1

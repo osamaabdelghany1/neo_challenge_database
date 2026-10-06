@@ -1,38 +1,37 @@
-import streamlit as st
 import sqlite3
-import os
-from assets.config import PRIMARY_DARK, DATABASE_PATH
+import streamlit as st
+from assets.config import DATABASE_PATH
 
-st.set_page_config(page_title="View Muscles", page_icon="💪", layout="wide")
-
-css_path = os.path.join(os.path.dirname(__file__), "..", "assets", "styles.css")
-with open(css_path) as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-def header(title, subtitle=""):
-    st.markdown(f"<h1 style='color:{PRIMARY_DARK}'>{title}</h1>", unsafe_allow_html=True)
-    if subtitle: st.caption(subtitle)
-
-header("💪 View Muscles", "Browse all muscle groups")
-st.divider()
+st.title("🦵 Muscles")
+st.caption("Get to know the muscles you train")
 
 conn = sqlite3.connect(DATABASE_PATH)
-cursor = conn.cursor()
-cursor.execute("select id, name, muscle_group, image_url from muscles order by name")
-muscles = cursor.fetchall()
+conn.execute("PRAGMA foreign_keys = ON")
+conn.row_factory = sqlite3.Row
+muscles = conn.execute("select * from muscles order by name").fetchall()
 conn.close()
 
-if not muscles:
-    st.info("No muscles found")
-else:
-    cols = st.columns(3)
-    for i, m in enumerate(muscles):
-        with cols[i % 3]:
-            with st.container(border=True):
-                if m[3]:
-                    st.image(m[3], use_container_width=True)
-                st.markdown(f"<h3 style='color:{PRIMARY_DARK};margin:0.5rem 0 0.25rem'>{m[1]}</h3>", unsafe_allow_html=True)
-                st.caption(f"Group: {m[2]}")
-                if st.button("View Details", key=f"vm_{i}", use_container_width=True):
-                    st.session_state.selected_muscle_id = m[0]
-                    st.switch_page("pages/workout.py")
+if len(muscles) == 0:
+    st.info("No muscles yet.")
+
+cols = st.columns(3)
+number = 0
+for muscle in muscles:
+    with cols[number % 3]:
+        with st.container(border=True):
+            if muscle["image_url"]:
+                st.image(muscle["image_url"], width="stretch")
+            st.subheader(muscle["name"])
+            st.caption(muscle["muscle_group"])
+            with st.expander("Anatomy facts"):
+                st.write(muscle["description"])
+                st.write(f"**Latin name:** {muscle['latin_name'] or 'unknown'}")
+                st.write(f"**Location:** {muscle['location']}")
+                st.write(f"**What it does:** {muscle['function']}")
+                st.write(f"**Starts at:** {muscle['origin'] or 'unknown'}")
+                st.write(f"**Ends at:** {muscle['insertion'] or 'unknown'}")
+                st.write(f"**Type:** {muscle['muscle_type'] or 'unknown'}")
+                st.write(f"**Difficulty to train:** {muscle['difficulty_to_train'] or 'unknown'}")
+            if st.button("Find a workout", key=f"workout_{muscle['id']}", width="stretch"):
+                st.switch_page("pages/workout.py")
+    number = number + 1

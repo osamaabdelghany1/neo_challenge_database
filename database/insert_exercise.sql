@@ -1,4 +1,4 @@
-INSERT INTO exercises (muscle_id, name, description, equipment_needed, difficulty, video_url) VALUES
+INSERT INTO exercises (muscle_id, name, description, equipment, difficulty, video_url) VALUES
 ((select id from muscles where name='Adductors'), 'Adductor Machine', 'Sit back into the pad with your knees wide and squeeze the inner thighs at full closure.', 'Machine', 'Easy', 'videos/adductor_machine.mp4'),
 ((select id from muscles where name='Lower Back'), 'Weighted Back Extension', 'Hinge at the hips with a flat back and keep the weight held close to your chest.', 'Free Weights', 'Medium', 'videos/back_extension_freeweight.mp4'),
 ((select id from muscles where name='Lower Back'), 'Back Extension Machine', 'Pad the roller just above your hips and lift your torso until your body forms one straight line.', 'Machine', 'Easy', 'videos/back_extension_machine.mp4'),

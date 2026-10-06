@@ -51,3 +51,25 @@ Status: closed
 ## #10 [docs] Home page "How It Works" promises features that don't exist
 `pages/home.py` says "Three new challenges every day", "Track your progress" and "Challenges adapt as you grow stronger". None of these exist yet. Fix: reword the box to describe what the app actually does.
 Status: closed
+
+## #11 [refactor] Kid-simple rebuild and database redesign
+Make the code readable top to bottom by a 12-year-old, and fix the database design.
+- `app.py` creates the tables from `database/schema.sql` and seeds an empty database. It builds a menu that shows only what the current user can open, and the first sign-up becomes admin.
+- New schema:
+  - foreign keys enforced with `ON DELETE CASCADE`
+  - `CHECK` rules on every fixed-choice column
+  - live activity counts (`number_of_levels` and `number_of_activities` dropped)
+  - `activities.category` dropped
+  - `PRIMARY KEY` on `user_challenges`
+  - snake_case names and `id` first in every table
+  - seed files link to their parents by name
+- Pages:
+  - read rows by column name
+  - no custom CSS (colours come from `.streamlit/config.toml`)
+  - no `try`/`except`
+  - Create forms use dropdowns
+- Dropped: Sports by level and the fitness calculator, the Activities list, Activity details, Nutrition plan details, Muscle details, the fake balloon buttons and the seed users.
+- Added: My challenges, Log out, and "Choose this plan" (saved to `user_nutrition_plans`).
+- `database/database.db` is no longer in git.
+- Trade-offs are listed under Limits in `README.md`.
+Status: closed

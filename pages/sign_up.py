@@ -1,20 +1,13 @@
-import streamlit as st
+import datetime
 import sqlite3
-import os
-from assets.config import PRIMARY_DARK, DATABASE_PATH
+import streamlit as st
+from assets.config import DATABASE_PATH
 
-st.set_page_config(page_title="Register", page_icon="📝", layout="wide")
+# The oldest birthday the form lets you pick.
+OLDEST_BIRTH_DATE = datetime.date(1940, 1, 1)
 
-css_path = os.path.join(os.path.dirname(__file__), "..", "assets", "styles.css")
-with open(css_path) as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-def header(title, subtitle=""):
-    st.markdown(f"<h1 style='color:{PRIMARY_DARK}'>{title}</h1>", unsafe_allow_html=True)
-    if subtitle: st.caption(subtitle)
-
-header("📝 Register", "Create your fitness account")
-st.divider()
+st.title("📝 Sign up")
+st.caption("Create your NEO Challenge account")
 
 col1, col2 = st.columns(2)
 with col1:
@@ -23,25 +16,34 @@ with col1:
     password = st.text_input("Password", type="password")
     phone = st.text_input("Phone")
 with col2:
-    dob = st.date_input("Date of Birth")
+    birth_date = st.date_input("Date of birth", value=None, min_value=OLDEST_BIRTH_DATE, max_value=datetime.date.today())
     height = st.number_input("Height (cm)", min_value=0, max_value=300)
     weight = st.number_input("Weight (kg)", min_value=0, max_value=500)
 
-st.divider()
+if st.button("Sign up", type="primary", width="stretch"):
+    conn = sqlite3.connect(DATABASE_PATH)
+    conn.execute("PRAGMA foreign_keys = ON")
+    email_taken = conn.execute("select 1 from users where email = ?", (email,)).fetchone()
+    user_count = conn.execute("select count(*) from users").fetchone()[0]
 
-if st.button("Register", use_container_width=True):
-    if not all([username, password, email, dob, height, weight, phone]):
-        st.error("Please fill in all fields")
+    if username == "" or email == "" or password == "" or phone == "" or birth_date is None or height == 0 or weight == 0:
+        st.error("Please fill in every field.")
+    elif email_taken:
+        st.error("That email is already used. Try logging in instead.")
     else:
-        conn = sqlite3.connect(DATABASE_PATH)
-        cursor = conn.cursor()
-        try:
-            cursor.execute("insert into users (username, password, email, DOB, height, weight, phone) values (?,?,?,?,?,?,?)",
-                           (username, password, email, dob, height, weight, phone))
-            conn.commit()
-            conn.close()
-            st.success("Registered successfully!")
-            st.balloons()
-        except sqlite3.IntegrityError:
-            conn.close()
-            st.error("Email already exists")
+        # The very first person who signs up becomes the admin.
+        if user_count == 0:
+            is_admin = 1
+        else:
+            is_admin = 0
+        conn.execute(
+            "insert into users (username, email, password, phone, birth_date, height, weight, is_admin) values (?, ?, ?, ?, ?, ?, ?, ?)",
+            (username, email, password, phone, birth_date.isoformat(), height, weight, is_admin),
+        )
+        conn.commit()
+        if is_admin == 1:
+            st.success("Account created! You are the first user, so you are the admin. You can log in now.")
+        else:
+            st.success("Account created! You can log in now.")
+        st.balloons()
+    conn.close()

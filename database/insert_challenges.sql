@@ -1,19 +1,19 @@
-INSERT INTO challenges (name, number_of_levels, number_of_activities, category, duration, description) VALUES
+INSERT INTO challenges (name, category, duration, description) VALUES
 -- Sports
-('Beginner Fitness Challenge', 3, 15, 'Sports', 14, 'A progressive program to build basic fitness through simple daily exercises, ideal for those who have never worked out before.'),
-('Fat Burning Challenge', 4, 20, 'Sports', 30, 'A combined workout and nutrition plan over 30 days to burn fat and boost metabolism.'),
-('Strength & Muscle Building Challenge', 5, 25, 'Sports', 30, 'Progressively harder resistance exercises with fitness metrics tracking to monitor muscle growth.'),
-('Daily 10,000 Steps Challenge', 2, 10, 'Sports', 21, 'A simple daily habit to increase physical activity and improve overall health through regular walking.'),
-('Home Workout Challenge', 3, 18, 'Sports', 21, 'No-equipment daily workouts designed to be done at home in under 30 minutes.'),
-('Flexibility & Stretching Challenge', 2, 12, 'Sports', 14, 'Daily stretching routines to improve flexibility, posture, and reduce muscle tension.'),
-('Yoga for Beginners Challenge', 3, 15, 'Sports', 21, 'Guided daily yoga sessions to build strength, balance, and mindfulness together.'),
-('Healthy Nutrition Plan Challenge', 4, 20, 'Sports', 30, 'A daily meal-planning challenge with nutrition tips to build sustainable healthy eating habits.'),
+('Beginner Fitness Challenge', 'Sports', 14, 'A progressive program to build basic fitness through simple daily exercises, ideal for those who have never worked out before.'),
+('Fat Burning Challenge', 'Sports', 30, 'A combined workout and nutrition plan over 30 days to burn fat and boost metabolism.'),
+('Strength & Muscle Building Challenge', 'Sports', 30, 'Progressively harder resistance exercises with fitness metrics tracking to monitor muscle growth.'),
+('Daily 10,000 Steps Challenge', 'Sports', 21, 'A simple daily habit to increase physical activity and improve overall health through regular walking.'),
+('Home Workout Challenge', 'Sports', 21, 'No-equipment daily workouts designed to be done at home in under 30 minutes.'),
+('Flexibility & Stretching Challenge', 'Sports', 14, 'Daily stretching routines to improve flexibility, posture, and reduce muscle tension.'),
+('Yoga for Beginners Challenge', 'Sports', 21, 'Guided daily yoga sessions to build strength, balance, and mindfulness together.'),
+('Healthy Nutrition Plan Challenge', 'Sports', 30, 'A daily meal-planning challenge with nutrition tips to build sustainable healthy eating habits.'),
 
 -- Language
-('English for Beginners Challenge', 3, 18, 'Language', 21, 'Daily lessons and quizzes to build a strong foundation in English vocabulary and grammar.'),
-('French Conversation Challenge', 4, 24, 'Language', 30, 'Progressive daily conversation exercises to improve fluency in French.'),
-('German Grammar Challenge', 3, 15, 'Language', 14, 'Focused lessons on core German grammar with short daily quizzes.'),
+('English for Beginners Challenge', 'Language', 21, 'Daily lessons and quizzes to build a strong foundation in English vocabulary and grammar.'),
+('French Conversation Challenge', 'Language', 30, 'Progressive daily conversation exercises to improve fluency in French.'),
+('German Grammar Challenge', 'Language', 14, 'Focused lessons on core German grammar with short daily quizzes.'),
 
--- General Kno wledge
-('General Knowledge Challenge', 3, 15, 'General Knowledge', 21, 'Daily quizzes and trivia questions covering history, science, geography, and culture to expand your general knowledge base.');
+-- General Knowledge
+('General Knowledge Challenge', 'General Knowledge', 21, 'Daily quizzes and trivia questions covering history, science, geography, and culture to expand your general knowledge base.');
 

@@ -1,56 +1,43 @@
 import streamlit as st
-import sqlite3
-import os
-from assets.config import PRIMARY_DARK, DATABASE_PATH
 
-st.set_page_config(page_title="Daily Challenges", page_icon="✨", layout="wide")
-
-st.title("Daily Challenge")
+st.title("✨ Daily Challenge")
 st.caption("Transform your daily routine with fun and engaging challenges")
 
 col1, col2, col3 = st.columns(3)
 with col1:
     st.subheader("🏋️ Sports")
-    st.image("assets/sport_challenge.png", use_container_width=True, caption="Stay fit and active")
+    st.image("assets/sport_challenge.png", width="stretch", caption="Stay fit and active")
     st.write("Daily physical activities to boost your energy and improve your fitness level.")
+    if st.button("Start sports challenge", width="stretch"):
+        st.switch_page("pages/view_challenges.py")
 with col2:
-    st.subheader("🗣️ Language Challenge")
-    st.image("assets/language_challenge.png", use_container_width=True, caption="Expand your vocabulary")
-    st.write("Daily words and phrases to help you master English and communicate effectively.")
+    st.subheader("🗣️ Language")
+    st.image("assets/language_challenge.png", width="stretch", caption="Expand your vocabulary")
+    st.write("Daily words and phrases in English, French and German.")
+    if st.button("Start language challenge", width="stretch"):
+        st.switch_page("pages/language_challenge.py")
 with col3:
-    st.subheader("🧠 General Knowledge")
-    st.image("assets/General-Knowledge.jpg", use_container_width=True, caption="Expand your knowledge")
+    st.subheader("🧠 General knowledge")
+    st.image("assets/General-Knowledge.jpg", width="stretch", caption="Expand your knowledge")
     st.write("Daily facts and trivia to boost your general knowledge.")
+    if st.button("Start the quiz", width="stretch"):
+        st.switch_page("pages/general_knowledge.py")
 
 st.divider()
 
-c1, c2, c3 = st.columns(3)
-with c1:
-    if st.button("Start Sports Challenge", use_container_width=True):
-        st.switch_page("pages/view_challenges.py")
-with c2:
-    if st.button("Start Language Challenge", use_container_width=True):
-        st.switch_page("pages/language_challenge.py")
-with c3:
-    if st.button("Start General Knowledge Challenge", use_container_width=True):
-        st.switch_page("pages/general_knowledge.py")
-
-st.subheader("More Ways to Train")
-c1, c2, c3 = st.columns(3)
-with c1:
-    if st.button("🏋️ Workout by Equipment", use_container_width=True):
+st.subheader("More ways to train")
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("🏋️ Workout by equipment", width="stretch"):
         st.switch_page("pages/workout.py")
-with c2:
-    if st.button("📊 Fitness Level Test", use_container_width=True):
-        st.switch_page("pages/sport-challenge.py")
-with c3:
-    if st.button("💪 View All Exercises", use_container_width=True):
+with col2:
+    if st.button("💪 See all exercises", width="stretch"):
         st.switch_page("pages/view_exercise.py")
 
 st.markdown("""
-## How It Works
+## How it works
 1. **Pick a habit** - Sports, Language or General Knowledge
 2. **Choose your level** - Easy, Medium or Hard
 3. **Do a short challenge** - a workout with video, a language activity, or a 10-question quiz
-4. **Join it** - log in and press Start Challenge to save it to your account
+4. **Join it** - log in and press Start challenge to save it to your account
 """)

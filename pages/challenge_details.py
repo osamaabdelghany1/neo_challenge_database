@@ -1,137 +1,85 @@
-import streamlit as st
 import sqlite3
-import os
-from assets.config import PRIMARY_DARK, DATABASE_PATH, DIFFICULTY_COLORS, LEVEL_ICONS, CHALLENGE_IMAGES
+import streamlit as st
+from assets.config import DATABASE_PATH, CATEGORY_IMAGES, CHALLENGE_IMAGES, LEVEL_ICONS
 
-st.set_page_config(page_title="Challenge Details", page_icon="🏆", layout="wide")
 
-css_path = os.path.join(os.path.dirname(__file__), "..", "assets", "styles.css")
-with open(css_path) as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+def get_challenge_image(name, category):
+    # A language challenge shows its country's flag; anything else shows its category picture.
+    for language in CHALLENGE_IMAGES:
+        if language.lower() in name.lower():
+            return CHALLENGE_IMAGES[language]
+    return CATEGORY_IMAGES[category]
 
-def header(title, subtitle=""):
-    st.markdown(f"<h1 style='color:{PRIMARY_DARK}'>{title}</h1>", unsafe_allow_html=True)
-    if subtitle: st.caption(subtitle)
 
-def get_challenge_image(name):
-    for keyword, img in CHALLENGE_IMAGES.items():
-        if keyword.lower() in name.lower():
-            return img
-    return "assets/language_challenge.png"
-
+# This page needs a challenge picked on another page first.
 if "selected_challenge_id" not in st.session_state:
     st.switch_page("pages/view_challenges.py")
 
+challenge_id = st.session_state.selected_challenge_id
+
 conn = sqlite3.connect(DATABASE_PATH)
-cursor = conn.cursor()
-ch = cursor.execute("""select id, name, number_of_levels, number_of_activities, category, duration, description 
-    from challenges where id=?""", (st.session_state.selected_challenge_id,)).fetchone()
+conn.execute("PRAGMA foreign_keys = ON")
+conn.row_factory = sqlite3.Row
+challenge = conn.execute("select * from challenges where id = ?", (challenge_id,)).fetchone()
+activities = conn.execute("select * from activities where challenge_id = ? order by name", (challenge_id,)).fetchall()
 conn.close()
 
-if not ch:
-    st.error("Challenge not found")
+if challenge is None:
+    st.error("That challenge does not exist anymore.")
     st.stop()
 
-# ch = (id, name, number_of_levels, number_of_activities, category, duration, description)
-challenge_id = ch[0]
-name = ch[1]
-number_of_levels = ch[2]
-number_of_activities = ch[3]
-category = ch[4]
-duration = ch[5]
-description = ch[6]
+st.image(get_challenge_image(challenge["name"], challenge["category"]), width="stretch")
+st.title(challenge["name"])
 
-# Challenge image at top
-img = get_challenge_image(name)
-st.image(img, use_container_width=True)
+col1, col2, col3 = st.columns(3)
+col1.metric("Category", challenge["category"])
+col2.metric("Activities", len(activities))
+col3.metric("Duration", f"{challenge['duration']} days")
+st.write(challenge["description"])
 
-header(name)
-st.divider()
+# Joining saves the challenge to your account, so you need to be logged in.
+if "user_id" in st.session_state:
+    conn = sqlite3.connect(DATABASE_PATH)
+    conn.execute("PRAGMA foreign_keys = ON")
+    joined = conn.execute(
+        "select 1 from user_challenges where user_id = ? and challenge_id = ?",
+        (st.session_state.user_id, challenge_id),
+    ).fetchone()
+    conn.close()
 
-c1, c2, c3 = st.columns(3)
-with c1:
-    st.metric("Levels", number_of_levels)
-with c2:
-    st.metric("Activities", number_of_activities)
-with c3:
-    st.metric("Duration", f"{duration} days")
+    if joined:
+        st.success("You joined this challenge. You can find it in My challenges.")
+    elif st.button("Start challenge", type="primary", width="stretch"):
+        conn = sqlite3.connect(DATABASE_PATH)
+        conn.execute("PRAGMA foreign_keys = ON")
+        conn.execute(
+            "insert into user_challenges (user_id, challenge_id) values (?, ?)",
+            (st.session_state.user_id, challenge_id),
+        )
+        conn.commit()
+        conn.close()
+        st.success("You joined this challenge!")
+        st.balloons()
+else:
+    st.info("Log in to join this challenge.")
 
-st.caption(f"Category: {category}")
-st.write(description)
-
-c1, c2 = st.columns(2)
-with c1:
-    if st.button("Start Challenge", use_container_width=True):
-        if "userId" not in st.session_state:
-            st.session_state.need_login = True
-        else:
-            conn = sqlite3.connect(DATABASE_PATH)
-            cursor = conn.cursor()
-            cursor.execute("select 1 from user_challenges where user_id=? and challenge_id=?", (st.session_state.userId, challenge_id))
-            row = cursor.fetchone()
-            if not row:
-                cursor.execute("insert into user_challenges (user_id, challenge_id) values (?,?)", (st.session_state.userId, challenge_id))
-                conn.commit()
-                conn.close()
-                st.success("Challenge joined!")
-                st.balloons()
-            else:
-                conn.close()
-                st.info("You already joined this challenge")
-with c2:
-    if st.button("View All Activities", use_container_width=True):
-        st.switch_page("pages/view_activities.py")
-
-if category == "General Knowledge":
-    if st.button("Play Quiz", use_container_width=True):
+if challenge["category"] == "General Knowledge":
+    if st.button("🧠 Play the quiz", width="stretch"):
         st.switch_page("pages/general_knowledge.py")
 
-if st.session_state.get("need_login"):
-    st.warning("Please log in to join this challenge")
-    if st.button("Log In", use_container_width=True):
-        st.session_state.need_login = False
-        st.switch_page("pages/login.py")
-
 st.divider()
+st.subheader("Activities")
 
-# Level selection - visual buttons
-st.subheader("Choose Level")
-lvl_cols = st.columns(3)
-for i, level in enumerate(["Easy", "Medium", "Hard"]):
-    with lvl_cols[i]:
-        icon = LEVEL_ICONS[level]["icon"]
-        color = LEVEL_ICONS[level]["color"]
-        is_selected = st.session_state.get("selected_difficulty") == level
-        if st.button(f"{icon} {level}", key=f"lvl_{level}", use_container_width=True, type="primary" if is_selected else "secondary"):
-            st.session_state.selected_difficulty = level
-            st.rerun()
-
-# Filter activities
-diff = st.session_state.get("selected_difficulty")
-conn = sqlite3.connect(DATABASE_PATH)
-cursor = conn.cursor()
-if diff:
-    cursor.execute("select * from activities where challenge_id=? and difficulty=? order by name", (challenge_id, diff))
+if len(activities) == 0:
+    st.info("This challenge has no activities yet.")
 else:
-    cursor.execute("select * from activities where challenge_id=? order by name", (challenge_id,))
-acts = cursor.fetchall()
-conn.close()
-
-if diff:
-    st.markdown(f"<div style='background:{DIFFICULTY_COLORS.get(diff, PRIMARY_DARK)};color:white;padding:0.5rem;border-radius:8px;margin:0.5rem 0;text-align:center'><strong>Showing {diff} activities</strong></div>", unsafe_allow_html=True)
-    if st.button("Clear Filter", use_container_width=True):
-        st.session_state.selected_difficulty = None
-        st.rerun()
-
-if acts:
-    st.subheader("Activities")
-    for act in acts:
-        with st.container(border=True):
-            dc = DIFFICULTY_COLORS.get(act[4], PRIMARY_DARK)
-            st.markdown(f"<div style='display:flex;justify-content:space-between'><strong>{act[1]}</strong><span style='background:{dc};color:white;padding:0.2rem 0.5rem;border-radius:9999px;font-size:0.7rem'>{act[4]}</span></div>", unsafe_allow_html=True)
-            st.caption(act[2])
-            if st.button("Start Activity", key=f"act_{act[0]}", use_container_width=True):
-                st.session_state.selected_activities_id = act[0]
-                st.switch_page("pages/_activites_details.py")
-else:
-    st.info(f"No {diff} activities found" if diff else "No activities found")
+    level = st.radio("Show level", ["All", "Easy", "Medium", "Hard"], horizontal=True)
+    shown = 0
+    for activity in activities:
+        if level == "All" or activity["difficulty"] == level:
+            with st.container(border=True):
+                st.markdown(f"**{activity['name']}** · {LEVEL_ICONS[activity['difficulty']]} {activity['difficulty']}")
+                st.caption(activity["description"])
+            shown = shown + 1
+    if shown == 0:
+        st.info(f"No {level} activities in this challenge.")

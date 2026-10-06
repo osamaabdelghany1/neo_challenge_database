@@ -1,25 +1,25 @@
-"""Minimal config for Fitness Challenge App"""
+# Settings that several screens share.
 
-# Colors
-PRIMARY_DARK = "#254B62"
-PRIMARY_LIGHT = "#77ABB7"
+# The database file. app.py creates it the first time the app starts.
+DATABASE_PATH = "database/database.db"
 
-DIFFICULTY_COLORS = {"Easy": "#77ABB7", "Medium": "#476D7C", "Hard": "#1D3E53"}
-CATEGORY_COLORS = {"Sports": "#77ABB7", "Language": "#254B62", "General Knowledge": "#476D7C"}
+# The picture for each kind of challenge.
+CATEGORY_IMAGES = {
+    "Sports": "assets/sport_challenge.png",
+    "Language": "assets/language_challenge.png",
+    "General Knowledge": "assets/General-Knowledge.jpg",
+}
 
-# Challenge images (by keyword in challenge name)
+# Language challenges get their country's flag when the language is in the challenge name.
 CHALLENGE_IMAGES = {
     "English": "assets/English.jpg",
     "French": "assets/French.png",
     "German": "assets/German.jpg",
 }
 
-# Level icons with colors
+# A coloured dot next to each level, so you can spot it quickly.
 LEVEL_ICONS = {
-    "Easy": {"icon": "🟢", "color": "#77ABB7"},
-    "Medium": {"icon": "🟡", "color": "#476D7C"},
-    "Hard": {"icon": "🔴", "color": "#1D3E53"},
+    "Easy": "🟢",
+    "Medium": "🟡",
+    "Hard": "🔴",
 }
-
-# Database
-DATABASE_PATH = "database/database.db"

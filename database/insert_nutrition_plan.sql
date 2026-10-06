@@ -1,4 +1,4 @@
-INSERT INTO Nutrition_Plans
+INSERT INTO nutrition_plans
 (bmi, category, goal, calories, breakfast, lunch, dinner, water_intake)
 VALUES
 (16.50, 'Underweight', 'Gain Weight', 3000, 'Oatmeal with milk and nuts', 'Chicken with rice', 'Salmon with potatoes', '3.5 Liters'),

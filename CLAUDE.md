@@ -4,32 +4,55 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A Streamlit multi-page app ("Daily Challenge") for fitness, language and general-knowledge challenges, backed by a local SQLite file. No build step, no tests, no linter. `requirements.txt` lists only `streamlit` (developed against 1.64); the database uses the stdlib `sqlite3`.
+NEO Challenge: a Streamlit app (fitness, language and general-knowledge challenges) on one SQLite file. It is **kid-simple** on purpose: code a curious 12-year-old could read top to bottom. Keep it that way (rules below). `README.md` explains the app and lists every trade-off under **Limits**.
 
 ## Commands
 
 ```bash
-streamlit run app.py                                   # run the app (must be launched from repo root)
-sqlite3 database/database.db < database/tables.sql     # create schema on a fresh DB
-sqlite3 database/database.db < database/insert_users.sql   # seed one table (repeat per insert_*.sql)
+pip install -r requirements.txt
+streamlit run app.py          # must run from the repo root
+rm database/database.db       # reset: the app recreates and reseeds it on the next start
 ```
 
-The app does **not** create or migrate the database itself; `database/database.db` is committed and already seeded. To change the schema, edit `database/tables.sql`, then rebuild the DB manually with the commands above. Note `tables.sql` contains stray `select` statements and commented `drop table` lines.
+No build step, tests, or linter. `requirements.txt` pins `streamlit==1.64.0`; everything else is the standard library (`sqlite3`, `datetime`).
 
-## Architecture
+## How it fits together
 
-- **Entry point**: `app.py` is an `st.navigation` router. It registers every file in `pages/` in sidebar sections (Home / Challenges / Train / Nutrition / Account / Admin), with `pages/home.py` as the default. Detail pages are registered with `visibility="hidden"`. **A new page must be added to `app.py`**, or it won't appear and `st.switch_page` to it fails.
-- **Every page is self-contained**: each file calls `st.set_page_config()`, loads `assets/styles.css` via a path relative to `__file__`, defines its own tiny `header()` helper, and opens its own `sqlite3.connect(DATABASE_PATH)`. There is no shared DB/helper module — duplication across pages is the established style.
-- **Relative paths assume CWD = repo root**: `DATABASE_PATH = "database/database.db"` and image paths like `"assets/x.jpg"` (in pages and in `muscles.image_url`) are resolved against the working directory, not the file.
-- **Config** lives in `assets/config.py` (colors, `DIFFICULTY_COLORS`, `CATEGORY_COLORS`, `CHALLENGE_IMAGES`, `LEVEL_ICONS`, `DATABASE_PATH`), imported as `from assets.config import ...`.
-- **List → detail navigation via session state**: a `view_*.py` page sets an id in `st.session_state` and calls `st.switch_page("pages/<detail>.py")`; the detail page reads that id and redirects back to the list page if it's missing. Keys in use: `selected_challenge_id`, `selected_activities_id`, `selected_nutrition_plans_id`, `selected_exercise_id`, `selected_muscle_id`, `selected_level`, `selected_difficulty`, `equipment_filter`, `fitness_level_filter`, `userId`.
-- **Underscore-prefixed pages** (`_create_*.py`, `_*_details.py`) are detail and create pages. The prefix is only a naming convention; their visibility is set in `app.py`. `st.switch_page` paths must match the file name exactly, including the underscore and existing misspellings (`_activites_details.py`, `_create_nutration_plan.py`).
-- **Rows are tuples**: queries use `select *` with no `row_factory`, and pages index columns positionally (e.g. `ex[2]` for exercise name). Changing column order in `tables.sql` silently breaks pages. Note `challenges` declares `id` after other columns.
-- **Domain links**: `challenges` → `activities` / `questions` (by `challenge_id`, `questions.level` ∈ Easy/Medium/Hard); `muscles` → `exercises` (by `muscle_id`; `equipment_needed` drives the `workout.py` equipment filter); `users` ↔ `challenges` / `Nutrition_Plans` via `user_challenges` and `User_Nutrition_Plans` join tables.
-- **Media**: images in `assets/`, exercise videos in `videos/` (`exercises.video_url` holds relative `videos/<file>.mp4` paths, one exercise per clip; `equipment_needed` is one of Machine / Bodyweight / Free Weights / Cable).
+- `app.py` runs on every rerun: `create_tables()` executes `database/schema.sql` (all `CREATE TABLE IF NOT EXISTS`), and if `challenges` is empty runs the `SEED_FILES` in order. Then it builds the `st.navigation` menu from `st.session_state`: logged out → Log in / Sign up; logged in → My challenges / Log out; `is_admin` → the Admin section. Pages not in the menu cannot be opened, so admin pages need no check of their own. `challenge_details.py` and `exercise_details.py` are always registered with `visibility="hidden"`. **A new page must be added to `app.py`.**
+- `pages/` holds one plain script per screen. Each opens its own connection with the same three lines, then writes its SQL inline:
 
-## Gotchas
+  ```python
+  conn = sqlite3.connect(DATABASE_PATH)
+  conn.execute("PRAGMA foreign_keys = ON")
+  conn.row_factory = sqlite3.Row
+  ```
+
+  The `PRAGMA` line is required on every connection or SQLite ignores foreign keys and `ON DELETE CASCADE`. Rows are read by column name (`row["name"]`).
+- Session keys: `user_id`, `username`, `is_admin` (set by `login.py`, cleared by `logout.py`), `selected_challenge_id`, `selected_exercise_id`, `equipment_filter` (the key of the Exercises page's selectbox, preset by `workout.py`), `quiz_level`, `quiz_questions`, `quiz_submitted`, `answer_<question id>`.
+- `assets/config.py`: `DATABASE_PATH`, `CATEGORY_IMAGES`, `CHALLENGE_IMAGES`, `LEVEL_ICONS`. Colours live in `.streamlit/config.toml`; there is no custom CSS.
+- Paths (`database/...`, `assets/...`, `videos/...`, also stored in `exercises.video_url` and `muscles.image_url`) are relative to the repo root.
+
+## Database rules
+
+- `database/schema.sql` is the only schema. `CHECK` rules fix the allowed values: difficulty/level `Easy|Medium|Hard`; challenge category `Sports|Language|General Knowledge`; exercise equipment `Machine|Bodyweight|Free Weights|Cable`; muscle group `Upper Body|Core|Lower Body`; nutrition category and goal.
+- Child rows use `ON DELETE CASCADE`. `user_challenges` has `PRIMARY KEY (user_id, challenge_id)`; `user_nutrition_plans` has `user_id` as primary key (one plan per user).
+- Counts (activities per challenge) are computed with SQL, never stored.
+- Seed files link to parents **by name** with a subselect, e.g. `(select id from challenges where name = 'General Knowledge Challenge')`, never by a hard-coded id. `challenges.name` and `muscles.name` are `UNIQUE` for that reason.
+- `database/database.db` is not in git; the app creates it.
+
+## Kid-simple rules (keep them)
+
+- Plain variables and functions with verb names; loops and `if`s instead of comprehensions, decorators, classes, type hints, or generators.
+- One short comment in kid words above anything a reader would ask "why?" about.
+- Constants at the top of a file in CAPITALS with a comment saying why the value is what it is.
+- Repetition beats abstraction when it keeps a file readable on its own (the 3 connection lines are repeated on purpose).
+- Standard library first; an extra library must do something plain code can't do in about 10 lines. Pin versions you tested.
+- Validate with plain `if` checks where a user can go wrong (empty fields, taken email or name) and show a friendly message. No `try`/`except`.
+- UI: sentence-case labels, icons on menu items, at most one `type="primary"` button per screen (none on Home), hide what the current user can't use.
+- Every simplification that removes safety or capability goes in README's **Limits** section.
+
+## Project process
 
 - `ISSUES.md` is the local issue tracker; commits close issues with `closes #N`.
-- Passwords are stored and compared in plaintext (`login.py` / `sign_up.py`).
-- `.claude/skills/developing-with-streamlit` holds a project-local Streamlit skill — use it for Streamlit/styling work.
+- `docs/neo_challenge_documentation.md` is the competition write-up; keep it in step with the app. Its screenshots are in `docs/screenshots/`.
+- `.claude/skills/developing-with-streamlit` holds a project-local Streamlit skill.
