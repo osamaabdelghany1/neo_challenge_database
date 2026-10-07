@@ -99,3 +99,17 @@ Fix:
 The videos turned out to be tall phone recordings, so the video gets the narrow column (1:2) and fits on one screen.
 Also fixed: after "Start challenge", the button stayed on screen under the success message. The page now reloads after joining and shows the balloons once.
 Status: closed
+
+## #15 [ui] Better quiz and exercises pages; one button style
+Buttons came in two looks (filled teal for the one main action, almost white for everything else), which read as random. The quiz was one long form. The exercises page was 60 text-only cards with one dropdown.
+Fix:
+- Buttons: every button is filled teal and full width.
+- Quiz:
+  - one question at a time, with level pills and a progress bar
+  - 4 answer buttons, then instant ✅/❌ and Next
+  - at the end: score, review and Play again
+- Exercises:
+  - square picture cards, 4 per row
+  - pills for equipment and level, plus a muscle dropdown
+  - new `exercises.thumbnail_url` column with 60 frames taken from the videos
+Status: closed

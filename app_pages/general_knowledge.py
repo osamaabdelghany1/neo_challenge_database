@@ -6,6 +6,7 @@ from assets.config import DATABASE_PATH
 QUESTIONS_PER_QUIZ = 10
 # Score this many or more and you get balloons.
 GREAT_SCORE = 7
+LETTERS = ["A", "B", "C", "D"]
 
 
 def load_new_quiz(level):
@@ -23,71 +24,94 @@ def load_new_quiz(level):
         limit ?
     """, (level, QUESTIONS_PER_QUIZ)).fetchall()
     conn.close()
-    # Forget the answers from the last round.
-    for key in list(st.session_state.keys()):
-        if key.startswith("answer_"):
-            del st.session_state[key]
     st.session_state.quiz_level = level
     st.session_state.quiz_questions = questions
-    st.session_state.quiz_submitted = False
+    st.session_state.quiz_number = 0      # which question you are on (0 is the first)
+    st.session_state.quiz_answers = []    # the letter you picked for each question
+    st.session_state.quiz_just_finished = False
 
 
 st.title("🧠 General knowledge quiz")
-st.caption("Answer the questions, then see your score")
+st.caption("One question at a time. Pick an answer and see if you are right.")
 
-level = st.radio("Choose a level", ["Easy", "Medium", "Hard"], horizontal=True)
+level = st.pills("Level", ["Easy", "Medium", "Hard"], default="Easy", required=True)
 
-# A new level, or the very first visit, gets a fresh set of questions.
+# A new level, or the very first visit, starts a fresh quiz.
 if st.session_state.get("quiz_level") != level:
     load_new_quiz(level)
 
 questions = st.session_state.quiz_questions
+number = st.session_state.quiz_number
+answers = st.session_state.quiz_answers
 
 if len(questions) == 0:
     st.info("There are no questions for this level yet.")
     st.stop()
 
-with st.form("quiz"):
-    for question in questions:
-        options = [
-            "A. " + question["option_a"],
-            "B. " + question["option_b"],
-            "C. " + question["option_c"],
-            "D. " + question["option_d"],
-        ]
-        st.radio(question["question"], options, index=None, key=f"answer_{question['id']}")
-    submitted = st.form_submit_button("Submit answers", type="primary", width="stretch")
+if number < len(questions):
+    # Still answering: show one question.
+    question = questions[number]
+    answered = len(answers) > number
+    st.progress(number / len(questions), text=f"Question {number + 1} of {len(questions)}")
 
-if submitted:
-    st.session_state.quiz_submitted = True
+    with st.container(border=True):
+        st.subheader(question["question"])
+        cols = st.columns(2)
+        place = 0
+        for letter in LETTERS:
+            option = question["option_" + letter.lower()]
+            with cols[place % 2]:
+                # The buttons lock after you answer, so you can't change your mind.
+                if st.button(letter + ". " + option, key=f"pick_{question['id']}_{letter}",
+                             disabled=answered, type="primary", width="stretch"):
+                    # "answers" is the list kept in session_state, so this remembers your pick.
+                    answers.append(letter)
+                    st.rerun()
+            place = place + 1
 
-if st.session_state.quiz_submitted:
-    score = 0
-    for question in questions:
-        answer = st.session_state.get(f"answer_{question['id']}")
-        # An answer looks like "B. Paris", so its first letter is the choice.
-        if answer is not None and answer[0] == question["correct_answer"]:
-            score = score + 1
-
-    st.metric("Score", f"{score} / {len(questions)}")
-    if submitted and score >= GREAT_SCORE:
-        st.balloons()
-
-    for question in questions:
-        answer = st.session_state.get(f"answer_{question['id']}")
+    if answered:
         correct_letter = question["correct_answer"]
         correct_text = question["option_" + correct_letter.lower()]
+        if answers[number] == correct_letter:
+            st.success("✅ Right! " + correct_letter + ". " + correct_text + " is correct.")
+        else:
+            st.error("❌ Not quite. The answer is " + correct_letter + ". " + correct_text + ".")
+
+        if number + 1 < len(questions):
+            next_label = "Next question →"
+        else:
+            next_label = "See my score →"
+        if st.button(next_label, type="primary", width="stretch"):
+            st.session_state.quiz_number = number + 1
+            if number + 1 == len(questions):
+                st.session_state.quiz_just_finished = True
+            st.rerun()
+else:
+    # All questions answered: show the score and what you got right.
+    score = 0
+    for place in range(len(questions)):
+        if answers[place] == questions[place]["correct_answer"]:
+            score = score + 1
+
+    st.metric("Your score", f"{score} / {len(questions)}")
+    # Balloons only once, right after the last question.
+    if st.session_state.quiz_just_finished:
+        if score >= GREAT_SCORE:
+            st.balloons()
+        st.session_state.quiz_just_finished = False
+
+    for place in range(len(questions)):
+        question = questions[place]
+        correct_letter = question["correct_answer"]
+        picked_letter = answers[place]
         with st.container(border=True):
-            if answer is not None and answer[0] == correct_letter:
+            if picked_letter == correct_letter:
                 st.write("✅ " + question["question"])
             else:
                 st.write("❌ " + question["question"])
-            if answer is None:
-                st.write("Your answer: not answered")
-            else:
-                st.write("Your answer: " + answer)
-            st.write("Correct answer: " + correct_letter + ". " + correct_text)
+            st.write("Your answer: " + picked_letter + ". " + question["option_" + picked_letter.lower()])
+            st.write("Correct answer: " + correct_letter + ". " + question["option_" + correct_letter.lower()])
 
-if st.button("New quiz", width="stretch"):
-    load_new_quiz(level)
-    st.rerun()
+    if st.button("Play again", type="primary", width="stretch"):
+        load_new_quiz(level)
+        st.rerun()

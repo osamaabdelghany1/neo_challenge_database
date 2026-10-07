@@ -24,6 +24,7 @@ with col1:
 with col2:
     difficulty = st.selectbox("Difficulty", ["Easy", "Medium", "Hard"])
     video_url = st.text_input("Video file", placeholder="videos/pushups.mp4")
+    thumbnail_url = st.text_input("Thumbnail file", placeholder="assets/thumbnails/pushups.jpg")
 description = st.text_area("Description", height=150)
 
 if st.button("Create exercise", type="primary", width="stretch"):
@@ -33,8 +34,8 @@ if st.button("Create exercise", type="primary", width="stretch"):
         conn = sqlite3.connect(DATABASE_PATH)
         conn.execute("PRAGMA foreign_keys = ON")
         conn.execute(
-            "insert into exercises (muscle_id, name, description, equipment, difficulty, video_url) values (?, ?, ?, ?, ?, ?)",
-            (muscle_ids[muscle_name], name, description, equipment, difficulty, video_url),
+            "insert into exercises (muscle_id, name, description, equipment, difficulty, video_url, thumbnail_url) values (?, ?, ?, ?, ?, ?, ?)",
+            (muscle_ids[muscle_name], name, description, equipment, difficulty, video_url, thumbnail_url),
         )
         conn.commit()
         conn.close()

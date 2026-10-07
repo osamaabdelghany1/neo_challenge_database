@@ -42,7 +42,7 @@ for plan in plans:
             if plan["id"] == my_plan_id:
                 st.success("This is your plan.")
             elif "user_id" in st.session_state:
-                if st.button("Choose this plan", key=f"choose_{plan['id']}", width="stretch"):
+                if st.button("Choose this plan", key=f"choose_{plan['id']}", type="primary", width="stretch"):
                     # Every user has one plan, so remove the old one before saving the new one.
                     conn = sqlite3.connect(DATABASE_PATH)
                     conn.execute("PRAGMA foreign_keys = ON")

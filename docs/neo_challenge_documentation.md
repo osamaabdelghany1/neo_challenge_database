@@ -66,6 +66,7 @@ neo_challenge_database/
 ├── .streamlit/config.toml      # The app's colours
 ├── assets/
 │   ├── config.py               # Database path, pictures, level icons
+│   ├── thumbnails/             # A picture from each exercise video
 │   └── *.jpg / *.png / *.webp  # Category, flag, muscle and equipment pictures
 ├── app_pages/                  # 21 screens, one plain script each
 │   ├── home.py                 # Home: the three habits
@@ -121,7 +122,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 |------|---------|:-------------:|
 | app.py | Creates the tables, fills an empty database with our content, and builds the menu: Log in / Sign up when logged out, My challenges / Log out when logged in, Admin only for the admin. | 82 |
 | app_pages/challenge_details.py | The busiest screen. Shows one challenge, counts its activities, lets a logged-in student join it, and filters the activities by Easy / Medium / Hard. | 85 |
-| app_pages/general_knowledge.py | The quiz. Picks 10 random questions for the chosen level, scores the answers and reviews each one with ✅ or ❌. | 93 |
+| app_pages/general_knowledge.py | The quiz. Picks 10 random questions for the chosen level, shows them one at a time with right or wrong straight away, then the score and a ✅ / ❌ review. | 117 |
 | app_pages/view_nutrition_plan.py | Nutrition plans by BMI; a logged-in student can choose one plan. | 57 |
 | app_pages/sign_up.py | Creates an account. Checks for empty fields and a used email; the very first person to sign up becomes the admin. | 49 |
 | app_pages/view_exercise.py | The exercise library, filtered by equipment. | 44 |
@@ -141,9 +142,9 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | 3 | Challenge page with level filter | Details, metrics and the challenge's activities, filtered by All / Easy / Medium / Hard. | ✅ |
 | 4 | Join a challenge | A logged-in student presses "Start challenge" to save it; logged-out visitors see "Log in to join this challenge." | ✅ |
 | 5 | Language challenges | English for Beginners, French Conversation and German Grammar, each with 6 levelled activities. | ✅ |
-| 6 | General knowledge quiz | Choose a level, answer 10 random questions, see the score and a ✅ / ❌ review with the correct answers. | ✅ |
+| 6 | General knowledge quiz | Choose a level, then answer 10 random questions one at a time with a progress bar; each answer shows right or wrong straight away, and the end shows the score and a ✅ / ❌ review. | ✅ |
 | 7 | Workout by equipment | Machines, Free weights, Bodyweight and Cables cards that open the matching exercises. | ✅ |
-| 8 | Exercise library with videos | All 60 exercises have a demonstration video, the muscle they train, the equipment and the difficulty. | ✅ |
+| 8 | Exercise library with videos | All 60 exercises have a picture taken from their video, a demonstration video, the muscle they train, the equipment and the difficulty; filter by equipment, level and muscle. | ✅ |
 | 9 | Muscle explorer | 15 muscles with pictures and an "Anatomy facts" section (Latin name, location, what it does, and more). | ✅ |
 | 10 | Nutrition plans | 15 plans across Underweight, Normal, Overweight and Obese with calories, meals and water; a student can choose one. | ✅ |
 | 11 | My challenges | Everything a student joined, plus their chosen nutrition plan. | ✅ |
@@ -193,9 +194,9 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | All challenges | app_pages/view_challenges.py | Every challenge with category, duration and activity count | Challenge |
 | Language challenges | app_pages/language_challenge.py | English, French and German challenge cards with flags | Challenge |
 | Challenge | app_pages/challenge_details.py | Picture, metrics, description, join button, activities by level | Quiz (General Knowledge only) |
-| General knowledge quiz | app_pages/general_knowledge.py | Level choice, 10 questions, score and review | A new quiz on the same screen |
+| General knowledge quiz | app_pages/general_knowledge.py | Level pills, one question at a time, score and review | Play again on the same screen |
 | Workout | app_pages/workout.py | Four equipment cards | Exercises (filtered) |
-| Exercises | app_pages/view_exercise.py | Equipment filter and exercise cards | Exercise |
+| Exercises | app_pages/view_exercise.py | Equipment and level pills, muscle filter, picture cards | Exercise |
 | Exercise | app_pages/exercise_details.py | Muscle, equipment, difficulty, description and video | Exercises |
 | Muscles | app_pages/view_muscles.py | Muscle pictures with "Anatomy facts" | Workout |
 | Nutrition plans | app_pages/view_nutrition_plan.py | Plan cards with meals; "Choose this plan" when logged in | Stays on the page |
@@ -217,7 +218,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 
 ![Workout](screenshots/02_workout.png)
 
-**Exercise library**: filtered to free weights, with the muscle, equipment and difficulty on every card.
+**Exercise library**: filter pills for equipment and level, a muscle filter, and a picture from each video on its card.
 
 ![Exercises](screenshots/03_exercises.png)
 
@@ -237,7 +238,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 
 ![Challenge](screenshots/07_challenge_details.png)
 
-**Quiz**: pick a level and answer 10 questions.
+**Quiz**: one question at a time, with a progress bar and right or wrong straight away.
 
 ![Quiz](screenshots/08_quiz.png)
 
@@ -268,7 +269,7 @@ The colours are set once in `.streamlit/config.toml`, so every screen matches wi
 | **Text** | `#1D3E53` |
 | **Level Icons** | 🟢 Easy · 🟡 Medium · 🔴 Hard, so the level is readable without relying on colour alone |
 | **Font** | Streamlit's default sans-serif |
-| **Buttons** | One highlighted (primary) button per screen for the main action, such as Log in, Submit answers or Start challenge; Home has none because its three habits are equal choices |
+| **Buttons** | Every button is the same filled teal and full width, so the app looks the same everywhere |
 | **Cards** | Streamlit bordered containers |
 | **Layout** | Wide layout with a grouped sidebar menu (Home / Challenges / Train / Nutrition / Account or My account / Admin) |
 
@@ -311,7 +312,7 @@ There are **no external APIs**: no accounts to create, no keys to store, and not
 | `nutrition_plans` | id, bmi, category, goal, calories, breakfast, lunch, dinner, water_intake, created_at | 15 plans across 4 BMI categories |
 | `user_nutrition_plans` | user_id, nutrition_plan_id | The plan each user chose; one per user |
 | `muscles` | id, name, latin_name, description, muscle_group, location, function, origin, insertion, muscle_type, difficulty_to_train, image_url, video_url, created_at, updated_at | 15 muscles with anatomy facts and a picture |
-| `exercises` | id, muscle_id, name, description, equipment, difficulty, video_url | 60 exercises: Machine 18, Free Weights 20, Cable 12, Bodyweight 10 |
+| `exercises` | id, muscle_id, name, description, equipment, difficulty, video_url, thumbnail_url | 60 exercises: Machine 18, Free Weights 20, Cable 12, Bodyweight 10 |
 
 How the database keeps itself correct:
 
@@ -445,7 +446,7 @@ language activity or a short quiz every day.
 | All challenges | All 7 challenges with activity counts | Home → Start sports challenge |
 | Challenge | Details, join button, activities by level | Any challenge card → Open |
 | Language challenges | English, French and German challenges | Home → Start language challenge |
-| General knowledge quiz | Level choice, 10 questions, score and review | Home → Start the quiz |
+| General knowledge quiz | One question at a time, then score and review | Home → Start the quiz |
 | Workout | Four equipment cards | Home → Workout by equipment |
 | Exercises | Exercise cards with an equipment filter | Workout → Show exercises |
 | Exercise | Muscle, equipment, difficulty and video | Exercises → Watch |
@@ -464,7 +465,7 @@ language activity or a short quiz every day.
 | Level filter | Show only Easy, Medium or Hard activities | ✅ |
 | Join a challenge | Saves the challenge to the logged-in student | ✅ |
 | Language challenges | English, French, German with 6 activities each | ✅ |
-| General knowledge quiz | 10 random questions per level, instant score with review | ✅ |
+| General knowledge quiz | 10 random questions, one at a time, right or wrong straight away | ✅ |
 | Workout and exercises | 60 exercises with videos, filtered by equipment | ✅ |
 | Muscle explorer | 15 muscles with pictures and anatomy facts | ✅ |
 | Nutrition plans | 15 plans by BMI; choose one | ✅ |

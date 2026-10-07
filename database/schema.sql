@@ -96,5 +96,6 @@ CREATE TABLE IF NOT EXISTS exercises (
     description TEXT,
     equipment TEXT NOT NULL CHECK (equipment IN ('Machine', 'Bodyweight', 'Free Weights', 'Cable')),
     difficulty TEXT NOT NULL CHECK (difficulty IN ('Easy', 'Medium', 'Hard')),
-    video_url TEXT                           -- a path like "videos/pushups.mp4"
+    video_url TEXT,                          -- a path like "videos/pushups.mp4"
+    thumbnail_url TEXT                       -- a still picture from the video, like "assets/thumbnails/pushups.jpg"
 );

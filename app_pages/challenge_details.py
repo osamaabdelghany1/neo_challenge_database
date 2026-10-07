@@ -73,7 +73,7 @@ else:
     st.info("Log in to join this challenge.")
 
 if challenge["category"] == "General Knowledge":
-    if st.button("🧠 Play the quiz", width="stretch"):
+    if st.button("🧠 Play the quiz", type="primary", width="stretch"):
         st.switch_page("app_pages/general_knowledge.py")
 
 st.divider()

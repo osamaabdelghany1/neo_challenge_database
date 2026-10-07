@@ -6,7 +6,7 @@ NEO Challenge is a small web app for students aged 12–18. You can:
 
 - browse **challenges** (Sports, Language, General Knowledge) and join the ones you like,
 - learn **English, French or German** with activities from Easy to Hard,
-- play a **general knowledge quiz**: 10 random questions, then your score and the right answers,
+- play a **general knowledge quiz**: 10 random questions, one at a time, with right or wrong straight away,
 - find a **workout** for the equipment you have and watch a **video** for each of the 60 exercises,
 - read about the **muscles** you train,
 - pick a **nutrition plan** for your BMI category,
@@ -68,5 +68,6 @@ We kept the app simple on purpose. These are the trade-offs we chose:
 - **The database resets on Streamlit Community Cloud** when the server restarts, so accounts and joins made there are not kept forever.
 - **Sports challenges have no activities yet.** Sports training lives in Workout and Exercises.
 - **Some database columns are not used by any screen yet:** `users.ssn`, `muscles.video_url` and `muscles.updated_at`.
-- **Admin forms take file paths as text.** To add an exercise video or a muscle picture, put the file in `videos/` or `assets/` first, then type its path.
+- **Admin forms take file paths as text.** To add an exercise video, its thumbnail picture or a muscle picture, put the file in `videos/` or `assets/` first, then type its path.
+- **New database columns need a fresh database.** The app creates missing tables but never changes existing ones, so after a schema change delete `database/database.db` once (this resets accounts).
 - **Nothing tracks progress over time.** Joining a challenge saves that you joined, not what you did each day.

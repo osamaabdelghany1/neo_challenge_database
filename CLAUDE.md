@@ -28,9 +28,9 @@ No build step, tests, or linter. `requirements.txt` pins `streamlit==1.64.0`; ev
   ```
 
   The `PRAGMA` line is required on every connection or SQLite ignores foreign keys and `ON DELETE CASCADE`. Rows are read by column name (`row["name"]`).
-- Session keys: `user_id`, `username`, `is_admin` (set by `login.py`, cleared by `logout.py`), `selected_challenge_id`, `just_joined` (shows balloons once after joining), `selected_exercise_id`, `equipment_filter` (the key of the Exercises page's selectbox, preset by `workout.py`), `quiz_level`, `quiz_questions`, `quiz_submitted`, `answer_<question id>`.
+- Session keys: `user_id`, `username`, `is_admin` (set by `login.py`, cleared by `logout.py`), `selected_challenge_id`, `just_joined` (shows balloons once after joining), `selected_exercise_id`, `equipment_filter` (the key of the Exercises page's selectbox, preset by `workout.py`), `quiz_level`, `quiz_questions`, `quiz_number` (which question you are on), `quiz_answers` (the letters picked so far), `quiz_just_finished` (balloons once).
 - `assets/config.py`: `DATABASE_PATH`, `CATEGORY_IMAGES`, `CHALLENGE_IMAGES`, `LEVEL_ICONS`. Colours live in `.streamlit/config.toml`; there is no custom CSS.
-- Paths (`database/...`, `assets/...`, `videos/...`, also stored in `exercises.video_url` and `muscles.image_url`) are relative to the repo root.
+- Paths (`database/...`, `assets/...`, `videos/...`, also stored in `exercises.video_url`, `exercises.thumbnail_url` and `muscles.image_url`) are relative to the repo root.
 
 ## Database rules
 
@@ -48,7 +48,7 @@ No build step, tests, or linter. `requirements.txt` pins `streamlit==1.64.0`; ev
 - Repetition beats abstraction when it keeps a file readable on its own (the 3 connection lines are repeated on purpose).
 - Standard library first; an extra library must do something plain code can't do in about 10 lines. Pin versions you tested.
 - Validate with plain `if` checks where a user can go wrong (empty fields, taken email or name) and show a friendly message. No `try`/`except`.
-- UI: sentence-case labels, icons on menu items, at most one `type="primary"` button per screen (none on Home), hide what the current user can't use.
+- UI: sentence-case labels, icons on menu items, every button is `type="primary", width="stretch"` so all buttons look the same (filled teal), hide what the current user can't use.
 - Every simplification that removes safety or capability goes in README's **Limits** section.
 
 ## Project process

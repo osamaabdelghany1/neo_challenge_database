@@ -38,7 +38,7 @@ for challenge in challenges:
         st.image(get_challenge_image(challenge["name"], challenge["category"]), width="stretch")
         st.subheader(challenge["name"])
         st.caption(f"{challenge['activity_count']} activities")
-        if st.button("Open", key=f"open_{challenge['id']}", width="stretch"):
+        if st.button("Open", key=f"open_{challenge['id']}", type="primary", width="stretch"):
             st.session_state.selected_challenge_id = challenge["id"]
             st.switch_page("app_pages/challenge_details.py")
     number = number + 1

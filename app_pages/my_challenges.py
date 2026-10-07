@@ -29,7 +29,7 @@ if len(challenges) == 0:
 for challenge in challenges:
     with st.container(border=True):
         st.markdown(f"**{challenge['name']}** · {challenge['category']} · {challenge['duration']} days")
-        if st.button("Open", key=f"open_{challenge['id']}"):
+        if st.button("Open", key=f"open_{challenge['id']}", type="primary", width="stretch"):
             st.session_state.selected_challenge_id = challenge["id"]
             st.switch_page("app_pages/challenge_details.py")
 

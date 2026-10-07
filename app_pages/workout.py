@@ -19,7 +19,7 @@ for equipment in EQUIPMENT_TYPES:
             st.image(equipment[1], width="stretch")
             st.subheader(equipment[2])
             st.caption(equipment[3])
-            if st.button("Show exercises", key=f"show_{equipment[0]}", width="stretch"):
+            if st.button("Show exercises", key=f"show_{equipment[0]}", type="primary", width="stretch"):
                 # The Exercises page reads this to show only this equipment.
                 st.session_state.equipment_filter = equipment[0]
                 st.switch_page("app_pages/view_exercise.py")

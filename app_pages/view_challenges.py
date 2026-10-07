@@ -29,7 +29,7 @@ for challenge in challenges:
         with st.container(border=True):
             st.subheader(challenge["name"])
             st.caption(f"{challenge['category']} · {challenge['duration']} days · {challenge['activity_count']} activities")
-            if st.button("Open", key=f"open_{challenge['id']}", width="stretch"):
+            if st.button("Open", key=f"open_{challenge['id']}", type="primary", width="stretch"):
                 st.session_state.selected_challenge_id = challenge["id"]
                 st.switch_page("app_pages/challenge_details.py")
     number = number + 1

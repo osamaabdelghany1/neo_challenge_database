@@ -38,5 +38,5 @@ with facts_column:
     if exercise["description"]:
         st.write(exercise["description"])
 
-if st.button("Back to exercises", width="stretch"):
+if st.button("Back to exercises", type="primary", width="stretch"):
     st.switch_page("app_pages/view_exercise.py")
