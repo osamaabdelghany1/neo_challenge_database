@@ -9,6 +9,7 @@ conn = sqlite3.connect(DATABASE_PATH)
 conn.execute("PRAGMA foreign_keys = ON")
 conn.row_factory = sqlite3.Row
 challenges = conn.execute("select id, name from challenges order by name").fetchall()
+exercises = conn.execute("select id, name from exercises order by name").fetchall()
 conn.close()
 
 # The dropdown shows challenge names; this remembers which id belongs to each name.
@@ -16,12 +17,18 @@ challenge_ids = {}
 for challenge in challenges:
     challenge_ids[challenge["name"]] = challenge["id"]
 
+# An activity can link to one of our video exercises, or to none.
+exercise_ids = {"No video": None}
+for exercise in exercises:
+    exercise_ids[exercise["name"]] = exercise["id"]
+
 col1, col2 = st.columns(2)
 with col1:
     challenge_name = st.selectbox("Challenge", list(challenge_ids.keys()))
     name = st.text_input("Activity name")
 with col2:
     difficulty = st.selectbox("Difficulty", ["Easy", "Medium", "Hard"])
+    exercise_name = st.selectbox("Video exercise (optional)", list(exercise_ids.keys()))
 description = st.text_area("Description", height=150)
 
 if st.button("Create activity", type="primary", width="stretch"):
@@ -31,8 +38,8 @@ if st.button("Create activity", type="primary", width="stretch"):
         conn = sqlite3.connect(DATABASE_PATH)
         conn.execute("PRAGMA foreign_keys = ON")
         conn.execute(
-            "insert into activities (challenge_id, name, description, difficulty) values (?, ?, ?, ?)",
-            (challenge_ids[challenge_name], name, description, difficulty),
+            "insert into activities (challenge_id, name, description, difficulty, exercise_id) values (?, ?, ?, ?, ?)",
+            (challenge_ids[challenge_name], name, description, difficulty, exercise_ids[exercise_name]),
         )
         conn.commit()
         conn.close()

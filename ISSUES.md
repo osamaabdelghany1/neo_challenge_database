@@ -113,3 +113,12 @@ Fix:
   - pills for equipment and level, plus a muscle dropdown
   - new `exercises.thumbnail_url` column with 60 frames taken from the videos
 Status: closed
+
+## #16 [feature] Progress tracking and Sports activities
+- **Activities:** on a challenge you joined, tick each activity Done. The page shows "X of N done" and balloons when all are done.
+- **Exercises:** an "I did this today" button on the video page, once per day per exercise.
+- **Quiz:** every finished round is saved for logged-in users.
+- **My challenges:** becomes a dashboard with the challenge progress bars, workouts this week, the last 5 exercises, the best quiz score per level, the last 5 quiz rounds and your nutrition plan.
+- **Sports activities:** 18 new activities for the 3 Sports challenges; the 12 workout ones link to a video exercise (new `activities.exercise_id` column).
+- **New tables:** `user_activities`, `exercise_logs`, `quiz_results`.
+Status: closed

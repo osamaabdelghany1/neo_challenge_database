@@ -28,7 +28,7 @@ No build step, tests, or linter. `requirements.txt` pins `streamlit==1.64.0`; ev
   ```
 
   The `PRAGMA` line is required on every connection or SQLite ignores foreign keys and `ON DELETE CASCADE`. Rows are read by column name (`row["name"]`).
-- Session keys: `user_id`, `username`, `is_admin` (set by `login.py`, cleared by `logout.py`), `selected_challenge_id`, `just_joined` (shows balloons once after joining), `selected_exercise_id`, `equipment_filter` (the key of the Exercises page's selectbox, preset by `workout.py`), `quiz_level`, `quiz_questions`, `quiz_number` (which question you are on), `quiz_answers` (the letters picked so far), `quiz_just_finished` (balloons once).
+- Session keys: `user_id`, `username`, `is_admin` (set by `login.py`, cleared by `logout.py`), `selected_challenge_id`, `just_joined` (shows balloons once after joining), `selected_exercise_id`, `equipment_filter` (the key of the Exercises page's selectbox, preset by `workout.py`), `quiz_level`, `quiz_questions`, `quiz_number` (which question you are on), `quiz_answers` (the letters picked so far), `quiz_just_finished` (save the round and show balloons once), `challenge_finished` (balloons once when every activity is ticked).
 - `assets/config.py`: `DATABASE_PATH`, `CATEGORY_IMAGES`, `CHALLENGE_IMAGES`, `LEVEL_ICONS`. Colours live in `.streamlit/config.toml`; there is no custom CSS.
 - Paths (`database/...`, `assets/...`, `videos/...`, also stored in `exercises.video_url`, `exercises.thumbnail_url` and `muscles.image_url`) are relative to the repo root.
 
@@ -36,7 +36,8 @@ No build step, tests, or linter. `requirements.txt` pins `streamlit==1.64.0`; ev
 
 - `database/schema.sql` is the only schema. `CHECK` rules fix the allowed values: difficulty/level `Easy|Medium|Hard`; challenge category `Sports|Language|General Knowledge`; exercise equipment `Machine|Bodyweight|Free Weights|Cable`; muscle group `Upper Body|Core|Lower Body`; nutrition category and goal.
 - Child rows use `ON DELETE CASCADE`. `user_challenges` has `PRIMARY KEY (user_id, challenge_id)`; `user_nutrition_plans` has `user_id` as primary key (one plan per user).
-- Counts (activities per challenge) are computed with SQL, never stored.
+- Counts (activities per challenge, progress) are computed with SQL, never stored.
+- Progress tables: `user_activities` (ticked activities), `exercise_logs` (one row per user, exercise and day), `quiz_results` (one row per finished round, saved once via `quiz_just_finished`). `activities.exercise_id` optionally links an activity to a video exercise (`ON DELETE SET NULL`).
 - Seed files link to parents **by name** with a subselect, e.g. `(select id from challenges where name = 'General Knowledge Challenge')`, never by a hard-coded id. `challenges.name` and `muscles.name` are `UNIQUE` for that reason.
 - `database/database.db` is not in git; the app creates it.
 

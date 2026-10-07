@@ -3,14 +3,14 @@ import streamlit as st
 from assets.config import DATABASE_PATH
 
 # The files that fill an empty database.
-# The order matters: activities and questions need their challenges to exist first,
-# and exercises need their muscles.
+# The order matters: exercises need their muscles, and activities need
+# their challenges and the exercises they link to.
 SEED_FILES = [
     "database/insert_challenges.sql",
-    "database/insert_activities.sql",
-    "database/insert_general_knowledge.sql",
     "database/insert_muscles.sql",
     "database/insert_exercise.sql",
+    "database/insert_activities.sql",
+    "database/insert_general_knowledge.sql",
     "database/insert_nutrition_plan.sql",
 ]
 

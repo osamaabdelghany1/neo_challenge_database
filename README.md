@@ -10,7 +10,7 @@ NEO Challenge is a small web app for students aged 12–18. You can:
 - find a **workout** for the equipment you have and watch a **video** for each of the 60 exercises,
 - read about the **muscles** you train,
 - pick a **nutrition plan** for your BMI category,
-- see everything you joined on **My challenges**.
+- tick off activities, log the exercises you did and keep your quiz scores, then see your progress on **My challenges**.
 
 An admin can also see the users and add new challenges, activities, exercises, muscles and nutrition plans.
 
@@ -66,8 +66,7 @@ We kept the app simple on purpose. These are the trade-offs we chose:
 - **The first sign-up is the admin.** Whoever signs up first on a new database gets the admin pages, so sign up yourself right after deploying.
 - **No error handling code.** The app checks the things a user can get wrong (empty fields, an email or name that is already used) and shows a friendly message. Anything else, such as a broken database file, shows Streamlit's own error.
 - **The database resets on Streamlit Community Cloud** when the server restarts, so accounts and joins made there are not kept forever.
-- **Sports challenges have no activities yet.** Sports training lives in Workout and Exercises.
 - **Some database columns are not used by any screen yet:** `users.ssn`, `muscles.video_url` and `muscles.updated_at`.
 - **Admin forms take file paths as text.** To add an exercise video, its thumbnail picture or a muscle picture, put the file in `videos/` or `assets/` first, then type its path.
 - **New database columns need a fresh database.** The app creates missing tables but never changes existing ones, so after a schema change delete `database/database.db` once (this resets accounts).
-- **Nothing tracks progress over time.** Joining a challenge saves that you joined, not what you did each day.
+- **Progress is simple.** You can tick activities, log each exercise once a day and keep quiz scores, but there are no reminders or day-in-a-row streaks.

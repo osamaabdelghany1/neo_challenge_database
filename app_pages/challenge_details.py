@@ -42,13 +42,23 @@ col3.metric("Duration", f"{challenge['duration']} days")
 st.write(challenge["description"])
 
 # Joining saves the challenge to your account, so you need to be logged in.
+joined = False
+done_ids = []
 if "user_id" in st.session_state:
     conn = sqlite3.connect(DATABASE_PATH)
     conn.execute("PRAGMA foreign_keys = ON")
     joined = conn.execute(
         "select 1 from user_challenges where user_id = ? and challenge_id = ?",
         (st.session_state.user_id, challenge_id),
-    ).fetchone()
+    ).fetchone() is not None
+    # The activities of this challenge you already ticked Done.
+    rows = conn.execute("""
+        select user_activities.activity_id
+        from user_activities join activities on activities.id = user_activities.activity_id
+        where user_activities.user_id = ? and activities.challenge_id = ?
+    """, (st.session_state.user_id, challenge_id)).fetchall()
+    for row in rows:
+        done_ids.append(row[0])
     conn.close()
 
     if joined:
@@ -81,14 +91,56 @@ st.subheader("Activities")
 
 if len(activities) == 0:
     st.info("This challenge has no activities yet.")
-else:
-    level = st.radio("Show level", ["All", "Easy", "Medium", "Hard"], horizontal=True)
-    shown = 0
-    for activity in activities:
-        if level == "All" or activity["difficulty"] == level:
-            with st.container(border=True):
-                st.markdown(f"**{activity['name']}** · {LEVEL_ICONS[activity['difficulty']]} {activity['difficulty']}")
-                st.caption(activity["description"])
-            shown = shown + 1
-    if shown == 0:
-        st.info(f"No {level} activities in this challenge.")
+    st.stop()
+
+if joined:
+    st.progress(len(done_ids) / len(activities), text=f"{len(done_ids)} of {len(activities)} done")
+    # Balloons once, right after the last activity is ticked.
+    if st.session_state.get("challenge_finished"):
+        st.balloons()
+        st.success("You finished every activity in this challenge!")
+        st.session_state.challenge_finished = False
+elif "user_id" in st.session_state:
+    st.info("Start the challenge to track your progress.")
+
+level = st.pills("Show level", ["All", "Easy", "Medium", "Hard"], default="All", required=True)
+shown = 0
+for activity in activities:
+    if level != "All" and activity["difficulty"] != level:
+        continue
+    shown = shown + 1
+    with st.container(border=True):
+        st.markdown(f"**{activity['name']}** · {LEVEL_ICONS[activity['difficulty']]} {activity['difficulty']}")
+        st.caption(activity["description"])
+
+        if joined:
+            was_done = activity["id"] in done_ids
+            ticked = st.checkbox("Done", value=was_done, key=f"done_{activity['id']}")
+            # Save the change only when the tick is different from what we stored.
+            if ticked != was_done:
+                conn = sqlite3.connect(DATABASE_PATH)
+                conn.execute("PRAGMA foreign_keys = ON")
+                if ticked:
+                    conn.execute(
+                        "insert into user_activities (user_id, activity_id) values (?, ?)",
+                        (st.session_state.user_id, activity["id"]),
+                    )
+                    if len(done_ids) + 1 == len(activities):
+                        st.session_state.challenge_finished = True
+                else:
+                    conn.execute(
+                        "delete from user_activities where user_id = ? and activity_id = ?",
+                        (st.session_state.user_id, activity["id"]),
+                    )
+                conn.commit()
+                conn.close()
+                st.rerun()
+
+        # Some activities use one of our video exercises.
+        if activity["exercise_id"]:
+            if st.button("▶ Watch the video", key=f"video_{activity['id']}", type="primary", width="stretch"):
+                st.session_state.selected_exercise_id = activity["exercise_id"]
+                st.switch_page("app_pages/exercise_details.py")
+
+if shown == 0:
+    st.info(f"No {level} activities in this challenge.")

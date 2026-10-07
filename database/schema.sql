@@ -27,6 +27,8 @@ CREATE TABLE IF NOT EXISTS activities (
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     difficulty TEXT NOT NULL CHECK (difficulty IN ('Easy', 'Medium', 'Hard')),
+    -- The video exercise this activity uses, if any. If that exercise is deleted, the link is cleared.
+    exercise_id INTEGER REFERENCES exercises(id) ON DELETE SET NULL,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -98,4 +100,30 @@ CREATE TABLE IF NOT EXISTS exercises (
     difficulty TEXT NOT NULL CHECK (difficulty IN ('Easy', 'Medium', 'Hard')),
     video_url TEXT,                          -- a path like "videos/pushups.mp4"
     thumbnail_url TEXT                       -- a still picture from the video, like "assets/thumbnails/pushups.jpg"
+);
+
+-- Progress: which activities each user has ticked Done.
+CREATE TABLE IF NOT EXISTS user_activities (
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    activity_id INTEGER NOT NULL REFERENCES activities(id) ON DELETE CASCADE,
+    done_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, activity_id)
+);
+
+-- Progress: the exercises each user did, at most once per exercise per day.
+CREATE TABLE IF NOT EXISTS exercise_logs (
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    exercise_id INTEGER NOT NULL REFERENCES exercises(id) ON DELETE CASCADE,
+    done_on TEXT NOT NULL,                   -- a date like "2026-10-07"
+    PRIMARY KEY (user_id, exercise_id, done_on)
+);
+
+-- Progress: every quiz round a logged-in user finished.
+CREATE TABLE IF NOT EXISTS quiz_results (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    level TEXT NOT NULL CHECK (level IN ('Easy', 'Medium', 'Hard')),
+    score INTEGER NOT NULL,
+    total INTEGER NOT NULL,
+    played_at TEXT DEFAULT CURRENT_TIMESTAMP
 );

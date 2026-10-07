@@ -94,11 +94,26 @@ else:
             score = score + 1
 
     st.metric("Your score", f"{score} / {len(questions)}")
-    # Balloons only once, right after the last question.
+    # Right after the last question: save the round (if logged in) and maybe show balloons.
+    # This runs only once per round, so a round is never saved twice.
     if st.session_state.quiz_just_finished:
+        if "user_id" in st.session_state:
+            conn = sqlite3.connect(DATABASE_PATH)
+            conn.execute("PRAGMA foreign_keys = ON")
+            conn.execute(
+                "insert into quiz_results (user_id, level, score, total) values (?, ?, ?, ?)",
+                (st.session_state.user_id, level, score, len(questions)),
+            )
+            conn.commit()
+            conn.close()
         if score >= GREAT_SCORE:
             st.balloons()
         st.session_state.quiz_just_finished = False
+
+    if "user_id" in st.session_state:
+        st.caption("Your score is saved. See it in My challenges.")
+    else:
+        st.info("Log in to save your scores.")
 
     for place in range(len(questions)):
         question = questions[place]

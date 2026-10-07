@@ -84,7 +84,7 @@ neo_challenge_database/
 │   └── create_*.py             # Admin: add challenges, activities, exercises,
 │                               #        muscles and nutrition plans
 ├── database/
-│   ├── schema.sql              # The 9 tables, with their rules
+│   ├── schema.sql              # The 12 tables, with their rules
 │   └── insert_*.sql            # Our starting content
 ├── videos/                     # 60 exercise demonstration clips (.mp4)
 └── docs/
@@ -122,12 +122,12 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 |------|---------|:-------------:|
 | app.py | Creates the tables, fills an empty database with our content, and builds the menu: Log in / Sign up when logged out, My challenges / Log out when logged in, Admin only for the admin. | 82 |
 | app_pages/challenge_details.py | The busiest screen. Shows one challenge, counts its activities, lets a logged-in student join it, and filters the activities by Easy / Medium / Hard. | 85 |
-| app_pages/general_knowledge.py | The quiz. Picks 10 random questions for the chosen level, shows them one at a time with right or wrong straight away, then the score and a ✅ / ❌ review. | 117 |
+| app_pages/general_knowledge.py | The quiz. Picks 10 random questions for the chosen level, shows them one at a time with right or wrong straight away, then the score and a ✅ / ❌ review, and saves the round for logged-in students. | 132 |
 | app_pages/view_nutrition_plan.py | Nutrition plans by BMI; a logged-in student can choose one plan. | 57 |
 | app_pages/sign_up.py | Creates an account. Checks for empty fields and a used email; the very first person to sign up becomes the admin. | 49 |
 | app_pages/view_exercise.py | The exercise library, filtered by equipment. | 44 |
 | app_pages/workout.py | Four equipment cards that open the filtered exercise library. | 26 |
-| database/schema.sql | The 9 tables with their foreign keys and `CHECK` rules. | 106 |
+| database/schema.sql | The 12 tables with their foreign keys and `CHECK` rules. | 129 |
 
 ---
 
@@ -147,17 +147,17 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | 8 | Exercise library with videos | All 60 exercises have a picture taken from their video, a demonstration video, the muscle they train, the equipment and the difficulty; filter by equipment, level and muscle. | ✅ |
 | 9 | Muscle explorer | 15 muscles with pictures and an "Anatomy facts" section (Latin name, location, what it does, and more). | ✅ |
 | 10 | Nutrition plans | 15 plans across Underweight, Normal, Overweight and Obese with calories, meals and water; a student can choose one. | ✅ |
-| 11 | My challenges | Everything a student joined, plus their chosen nutrition plan. | ✅ |
+| 11 | My challenges (progress) | A dashboard: a progress bar for every joined challenge, exercises done this week, best quiz score per level, recent rounds and the chosen nutrition plan. | ✅ |
 | 12 | Sign up / log in / log out | Student accounts; the menu changes to show only what you can open. | ✅ |
 | 13 | Admin pages | The first person to sign up is the admin and can see all users and add challenges, activities, exercises, muscles and nutrition plans. | ✅ |
 | 14 | Password hashing | Passwords are stored in plain text today. | ⏳ |
-| 15 | Progress tracking over time | Saving what a student did each day, so they can see their streak. | ⏳ |
-| 16 | Activities for Sports challenges | Sports challenges have no activities yet; sports training lives in Workout and Exercises. | ⏳ |
+| 15 | Progress tracking | Tick activities Done on a joined challenge, log an exercise once a day, and save every quiz round. | ✅ |
+| 16 | Activities for Sports challenges | 6 activities per Sports challenge; the workout ones open the matching exercise video. | ✅ |
 | 17 | Public deployment | Putting the app online so any school can open it without installing Python. | ⏳ |
 
 > Status: ✅ Complete | ⏳ In Progress | ❌ Not Started
 
-**Known limitations** (the full list is in `README.md` under Limits): passwords are stored in plain text; the app has no error-handling code beyond friendly checks for empty fields and used emails or names; there is no progress history yet; and the app is not deployed publicly.
+**Known limitations** (the full list is in `README.md` under Limits): passwords are stored in plain text; the app has no error-handling code beyond friendly checks for empty fields and used emails or names; progress has no reminders or day-in-a-row streaks yet; and the app is not deployed publicly.
 
 ### User Flow
 
@@ -179,7 +179,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
       └───────┬───────┘      └────────────┘       └───────────────┘
               ▼
       ┌───────────────┐
-      │ My challenges │   (logged in: also shows your nutrition plan)
+      │ My challenges │   (logged in: your progress dashboard)
       └───────────────┘
 
  The sidebar menu is always there. It shows Log in / Sign up when you are logged out,
@@ -200,7 +200,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | Exercise | app_pages/exercise_details.py | Muscle, equipment, difficulty, description and video | Exercises |
 | Muscles | app_pages/view_muscles.py | Muscle pictures with "Anatomy facts" | Workout |
 | Nutrition plans | app_pages/view_nutrition_plan.py | Plan cards with meals; "Choose this plan" when logged in | Stays on the page |
-| My challenges | app_pages/my_challenges.py | Joined challenges and your nutrition plan | Challenge |
+| My challenges | app_pages/my_challenges.py | Progress dashboard: challenges, workouts, quiz scores, nutrition plan | Challenge |
 | Log in / Sign up / Log out | app_pages/login.py, sign_up.py, logout.py | Accounts | The menu changes |
 | Users, Create … (admin) | app_pages/view_users.py, create_*.py | User list and forms to add content | — |
 
@@ -250,7 +250,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 
 ![Nutrition plans](screenshots/10_nutrition.png)
 
-**My challenges**: the challenges a student joined and their nutrition plan.
+**My challenges**: the progress dashboard, with challenge progress bars, exercises done this week and quiz scores.
 
 ![My challenges](screenshots/11_my_challenges.png)
 
@@ -290,11 +290,11 @@ The colours are set once in `.streamlit/config.toml`, so every screen matches wi
 | Source | Type | Description |
 |--------|------|-------------|
 | `database/database.db` | SQLite Database | Created by the app when it starts; holds everything below |
-| `database/insert_*.sql` | Static (SQL files) | Our starting content: 7 challenges, 18 language activities, 60 trivia questions, 15 muscles, 60 exercises, 15 nutrition plans |
+| `database/insert_*.sql` | Static (SQL files) | Our starting content: 7 challenges, 36 activities (18 language, 18 sports), 60 trivia questions, 15 muscles, 60 exercises, 15 nutrition plans |
 | Sign up form | User Input | Username, email, password, phone, date of birth, height, weight |
 | Start challenge / Choose this plan | User Input | Saved in `user_challenges` and `user_nutrition_plans` |
 | Admin forms | User Input | New challenges, activities, exercises, muscles and nutrition plans |
-| Quiz answers | User Input | Scored on the spot and not stored |
+| Progress | User Input | Ticked activities (`user_activities`), exercises done (`exercise_logs`) and finished quiz rounds (`quiz_results`) |
 | `assets/` | Static (images) | Category art, flags, muscle pictures, equipment photos |
 | `videos/` | Static (.mp4) | 60 exercise demonstration clips, one per exercise |
 
@@ -306,11 +306,14 @@ There are **no external APIs**: no accounts to create, no keys to store, and not
 |-------|---------|-------------|
 | `users` | id, username, email, password, birth_date, height, weight, phone, ssn, is_admin, created_at | Student accounts; email is unique; the first account has `is_admin = 1` |
 | `challenges` | id, name, category, duration, description, created_at | 7 challenges: 3 Sports, 3 Language, 1 General Knowledge |
-| `activities` | id, challenge_id, name, description, difficulty, created_at | 18 activities, 6 for each language challenge |
+| `activities` | id, challenge_id, name, description, difficulty, exercise_id, created_at | 36 activities, 6 per challenge; 12 workout activities link to a video exercise |
 | `questions` | id, challenge_id, question, option_a…option_d, correct_answer, level, created_at | 60 trivia questions (10 Easy, 20 Medium, 30 Hard) |
 | `user_challenges` | user_id, challenge_id | Who joined what; one row per user and challenge |
 | `nutrition_plans` | id, bmi, category, goal, calories, breakfast, lunch, dinner, water_intake, created_at | 15 plans across 4 BMI categories |
 | `user_nutrition_plans` | user_id, nutrition_plan_id | The plan each user chose; one per user |
+| `user_activities` | user_id, activity_id, done_at | Activities each user ticked Done |
+| `exercise_logs` | user_id, exercise_id, done_on | Exercises each user did; at most once per exercise per day |
+| `quiz_results` | id, user_id, level, score, total, played_at | Every quiz round a logged-in user finished |
 | `muscles` | id, name, latin_name, description, muscle_group, location, function, origin, insertion, muscle_type, difficulty_to_train, image_url, video_url, created_at, updated_at | 15 muscles with anatomy facts and a picture |
 | `exercises` | id, muscle_id, name, description, equipment, difficulty, video_url, thumbnail_url | 60 exercises: Machine 18, Free Weights 20, Cable 12, Bodyweight 10 |
 
@@ -336,7 +339,7 @@ How the database keeps itself correct:
 By the end of this project, the student will be able to:
 
 1. **Build a multi-screen Python web app with Streamlit**: 21 short screens joined by one menu that changes depending on who is logged in.
-2. **Design a relational database that protects itself**: 9 SQLite tables with primary keys, foreign keys with cascade deletes, two join tables and `CHECK` rules.
+2. **Design a relational database that protects itself**: 12 SQLite tables with primary keys, foreign keys with cascade deletes, two join tables and `CHECK` rules.
 3. **Manage app state and navigation**: use `st.session_state` to remember the logged-in user, the selected challenge or exercise, and the current quiz.
 4. **Organise and load real content**: write SQL seed files for 7 challenges, 60 exercises with 60 videos, 60 trivia questions, 15 muscles and 15 nutrition plans that link to each other by name.
 5. **Write code other people can read**: keep every file short and plain, explain the "why" in comments, and list every trade-off honestly.
@@ -354,7 +357,7 @@ By the end of this project, the student will be able to:
 | Skill Area | What the Student Practices |
 |------------|---------------------------|
 | Problem Solving | Turning a real observation ("teenagers use several separate apps for fitness, languages and trivia") into a product decision: keep every task short, free and in one place. |
-| Computational Thinking | Data modelling and SQL: 9 tables, foreign keys, join tables, counting with `group by`, `order by random()` for the quiz, and rules that keep the data correct. |
+| Computational Thinking | Data modelling and SQL: 12 tables, foreign keys, join tables, counting with `group by`, `order by random()` for the quiz, and rules that keep the data correct. |
 | Creativity | The teal colour theme, level icons, and a 60-clip exercise catalogue linked to muscle pictures. |
 | Collaboration | A three-person team working through Git and GitHub: separate commits per feature and merging branches. |
 | Technical Writing | This document, the README with its honest Limits section, and comments that explain the "why" in plain words. |
@@ -452,7 +455,7 @@ language activity or a short quiz every day.
 | Exercise | Muscle, equipment, difficulty and video | Exercises → Watch |
 | Muscles | Muscle pictures and anatomy facts | Menu → Muscles |
 | Nutrition plans | Plans by BMI; choose yours | Menu → Nutrition plans |
-| My challenges | What you joined and your plan | Menu → My challenges (logged in) |
+| My challenges | Your progress, scores and plan | Menu → My challenges (logged in) |
 
 ---
 
@@ -469,11 +472,11 @@ language activity or a short quiz every day.
 | Workout and exercises | 60 exercises with videos, filtered by equipment | ✅ |
 | Muscle explorer | 15 muscles with pictures and anatomy facts | ✅ |
 | Nutrition plans | 15 plans by BMI; choose one | ✅ |
-| My challenges | Your joined challenges and plan | ✅ |
+| My challenges | Your progress dashboard | ✅ |
 | Accounts | Sign up, log in, log out; first sign-up is admin | ✅ |
 | Admin pages | Add challenges, activities, exercises, muscles, plans | ✅ |
 | Password hashing | Passwords are plain text today | ⏳ |
-| Progress tracking | Saving daily results over time | ⏳ |
+| Progress tracking | Ticked activities, exercises done, saved quiz scores | ✅ |
 | Public deployment | Putting the app online | ⏳ |
 
 ---
@@ -491,11 +494,11 @@ internet connection.
 
 **What data is stored?**
 
-9 SQLite tables: 7 challenges (3 Sports, 3 Language, 1 General Knowledge), 18 language
+12 SQLite tables: 7 challenges (3 Sports, 3 Language, 1 General Knowledge), 36
 activities, 60 trivia questions, 15 muscles, 60 exercises each linked to a muscle and a video,
-15 nutrition plans, the users who sign up, and two tables that remember which challenges
-each user joined and which nutrition plan they chose. Quiz answers are scored on the spot and
-not stored.
+15 nutrition plans, the users who sign up, which challenges they joined and which nutrition
+plan they chose, and their progress: ticked activities, exercises done each day and every
+finished quiz round.
 
 ---
 
@@ -509,8 +512,8 @@ not stored.
 2. **The most fun part of building my project was:** collecting the 60 exercise videos and linking
    each one to the right muscle and equipment, and writing the 60 quiz questions.
 
-3. **If I had more time, I would add:** progress tracking so a student can see a streak,
-   password hashing, activities for the Sports challenges, and a public link.
+3. **If I had more time, I would add:** day-in-a-row streaks and reminders, password
+   hashing, and a public link.
 
 4. **One thing I would do differently:** design the database rules before adding content, and
    keep the code simple from day one. When we rewrote the app so every file reads top to

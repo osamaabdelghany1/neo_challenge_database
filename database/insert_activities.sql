@@ -18,3 +18,24 @@ INSERT INTO activities (name, description, difficulty, challenge_id) VALUES
 ('Modal Verbs', 'Konnen, mussen, wollen, sollen', 'Medium', (select id from challenges where name = 'German Grammar Challenge')),
 ('Genitive Case', 'Possession and prepositions', 'Hard', (select id from challenges where name = 'German Grammar Challenge')),
 ('Passive Voice', 'Werden + Partizip II', 'Hard', (select id from challenges where name = 'German Grammar Challenge'));
+
+-- Sports activities. Most link to one of our video exercises by its name.
+INSERT INTO activities (name, description, difficulty, challenge_id, exercise_id) VALUES
+('Machine Chest Press', '3 sets of 12', 'Easy', (select id from challenges where name = 'Strength & Muscle Building Challenge'), (select id from exercises where name = 'Machine Chest Press')),
+('Lat Pulldown', '3 sets of 12', 'Easy', (select id from challenges where name = 'Strength & Muscle Building Challenge'), (select id from exercises where name = 'Lat Pulldown')),
+('Dumbbell Shoulder Press', '3 sets of 10', 'Medium', (select id from challenges where name = 'Strength & Muscle Building Challenge'), (select id from exercises where name = 'Dumbbell Shoulder Press')),
+('Hack Squat', '3 sets of 10', 'Medium', (select id from challenges where name = 'Strength & Muscle Building Challenge'), (select id from exercises where name = 'Hack Squat')),
+('Weighted Dips', '3 sets of 8', 'Hard', (select id from challenges where name = 'Strength & Muscle Building Challenge'), (select id from exercises where name = 'Weighted Dips')),
+('T-Bar Row', '4 sets of 8', 'Hard', (select id from challenges where name = 'Strength & Muscle Building Challenge'), (select id from exercises where name = 'T-Bar Row')),
+('Push-ups', '3 sets of 10', 'Easy', (select id from challenges where name = 'Home Workout Challenge'), (select id from exercises where name = 'Push-ups')),
+('Bodyweight Squats', '3 sets of 15', 'Easy', (select id from challenges where name = 'Home Workout Challenge'), (select id from exercises where name = 'Bodyweight Squats')),
+('Diamond Push-ups', '3 sets of 8', 'Medium', (select id from challenges where name = 'Home Workout Challenge'), (select id from exercises where name = 'Diamond Push-ups')),
+('Inverted Rows', '3 sets of 10', 'Medium', (select id from challenges where name = 'Home Workout Challenge'), (select id from exercises where name = 'Inverted Rows')),
+('Pull-ups', '3 sets of 5', 'Hard', (select id from challenges where name = 'Home Workout Challenge'), (select id from exercises where name = 'Pull-ups')),
+('Wall Sit', '3 holds of 60 seconds', 'Hard', (select id from challenges where name = 'Home Workout Challenge'), (select id from exercises where name = 'Wall Sit')),
+('Drink 8 glasses of water today', 'Spread them through the day, one with every meal.', 'Easy', (select id from challenges where name = 'Healthy Nutrition Plan Challenge'), NULL),
+('Eat a piece of fruit with breakfast', 'An apple, a banana or a handful of dates all count.', 'Easy', (select id from challenges where name = 'Healthy Nutrition Plan Challenge'), NULL),
+('Fill half your lunch plate with vegetables', 'Raw or cooked, any colour.', 'Medium', (select id from challenges where name = 'Healthy Nutrition Plan Challenge'), NULL),
+('No sugary drinks for a whole day', 'Water, milk or tea without sugar instead.', 'Medium', (select id from challenges where name = 'Healthy Nutrition Plan Challenge'), NULL),
+('Plan tomorrow''s three meals tonight', 'Write down breakfast, lunch and dinner.', 'Hard', (select id from challenges where name = 'Healthy Nutrition Plan Challenge'), NULL),
+('Follow your chosen nutrition plan all day', 'Pick a plan on the Nutrition plans page first.', 'Hard', (select id from challenges where name = 'Healthy Nutrition Plan Challenge'), NULL);

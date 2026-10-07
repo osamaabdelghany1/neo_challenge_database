@@ -1,3 +1,4 @@
+import datetime
 import sqlite3
 import streamlit as st
 from assets.config import DATABASE_PATH, LEVEL_ICONS
@@ -37,6 +38,31 @@ with facts_column:
     st.metric("Difficulty", LEVEL_ICONS[exercise["difficulty"]] + " " + exercise["difficulty"])
     if exercise["description"]:
         st.write(exercise["description"])
+
+    # Logged-in users can note that they did this exercise, once per day.
+    if "user_id" in st.session_state:
+        today = datetime.date.today().isoformat()
+        conn = sqlite3.connect(DATABASE_PATH)
+        conn.execute("PRAGMA foreign_keys = ON")
+        done_today = conn.execute(
+            "select 1 from exercise_logs where user_id = ? and exercise_id = ? and done_on = ?",
+            (st.session_state.user_id, exercise["id"], today),
+        ).fetchone()
+        conn.close()
+        if done_today:
+            st.success("✅ Done today")
+        elif st.button("I did this today", type="primary", width="stretch"):
+            conn = sqlite3.connect(DATABASE_PATH)
+            conn.execute("PRAGMA foreign_keys = ON")
+            conn.execute(
+                "insert into exercise_logs (user_id, exercise_id, done_on) values (?, ?, ?)",
+                (st.session_state.user_id, exercise["id"], today),
+            )
+            conn.commit()
+            conn.close()
+            st.rerun()
+    else:
+        st.info("Log in to keep track of your workouts.")
 
 if st.button("Back to exercises", type="primary", width="stretch"):
     st.switch_page("app_pages/view_exercise.py")
