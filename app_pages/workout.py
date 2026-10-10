@@ -4,7 +4,7 @@ import streamlit as st
 EQUIPMENT_TYPES = [
     ["Machine", "assets/machine.jpg", "🏭 Machines", "Build strength with gym equipment"],
     ["Free Weights", "assets/free_weights.jpg", "🏋️ Free weights", "Dumbbells and barbells for resistance"],
-    ["Bodyweight", "assets/body.jpg", "🧘 Bodyweight", "Use your own body, no equipment needed"],
+    ["Bodyweight", "assets/body.jpg", "🧘 Bodyweight", "Use your own body, no equipment"],
     ["Cable", "assets/cables.jpg", "🔗 Cables", "Cable machines for isolation exercises"],
 ]
 

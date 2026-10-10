@@ -13,13 +13,13 @@ with col1:
 with col2:
     st.subheader("🗣️ Language")
     st.image("assets/language_challenge.png", width="stretch", caption="Expand your vocabulary")
-    st.write("Daily words and phrases in English, French and German.")
+    st.write("Daily words and phrases to learn in English, French and German.")
     if st.button("Start language challenge", type="primary", width="stretch"):
         st.switch_page("app_pages/language_challenge.py")
 with col3:
     st.subheader("🧠 General knowledge")
     st.image("assets/General-Knowledge.jpg", width="stretch", caption="Expand your knowledge")
-    st.write("Daily facts and trivia to boost your general knowledge.")
+    st.write("Daily facts and trivia to boost your general information and knowledge.")
     if st.button("Start the quiz", type="primary", width="stretch"):
         st.switch_page("app_pages/general_knowledge.py")
 
