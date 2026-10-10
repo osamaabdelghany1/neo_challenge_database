@@ -1,9 +1,6 @@
 
 # Software Project Documentation | توثيق مشروع البرمجيات
 
-<div class="arabic">
-قالب توثيق مشاريع البرمجيات — للمسابقة الأفريقية الآسيوية للتكنولوجيا
-</div>
 
 ---
 
@@ -13,7 +10,7 @@
 |-------|-------|
 | **Project Title** | NEO Challenge |
 | **Project Type** | Web App |
-| **Description** | A gamified challenge platform that helps users build healthy habits through daily challenges in sports, language learning, and general knowledge. Users can join challenges, track their progress, watch exercise videos, take quizzes, and follow personalized nutrition plans. |
+| **Description** | A gamified challenge platform that helps users build healthy habits through daily challenges in sports, language learning, and general knowledge. Users can join challenges, track their progress, watch exercise videos, take quizes, and follow personalized nutrition plans. |
 
 | **Target Users** | Students and young adults ages 12-25 interested in self-improvement, teachers looking for educational tools, and fitness enthusiasts |
 
@@ -38,9 +35,6 @@
 
 ## 2. Problem Statement | بيان المشكلة
 
-<div class="arabic">
-هنا تكتب المشكلة التي يحلها مشروعك — لماذا هذا المشروع مهم؟
-</div>
 
 ### What problem does this project solve? | ما المشكلة التي يحلها هذا المشروع؟
 
@@ -59,9 +53,6 @@ Users currently use separate apps for different needs: fitness apps like MyFitne
 
 ## 3. Technical Architecture | البنية التقنية
 
-<div class="arabic">
-هنا تشرح كيف مشروعك مبني من الداخل — هيكل الملفات والتقنيات المستخدمة
-</div>
 
 ### Project Structure | هيكل المشروع
 
@@ -110,11 +101,7 @@ neo-challange_database/
 
 ### Architecture Diagram | مخطط البنية
 
-```
-[User] → [Frontend] → [Backend] → [Database]
-```
 
-[Draw or describe your architecture — how do the parts connect?]
 
 ### Key Files | الملفات الرئيسية
 
@@ -127,26 +114,18 @@ neo-challange_database/
 | app_pages/view_challenges.py | Challenges browser - displays all challenges in a grid layout with activity counts | ~36 |
 
 <details>
-<summary>Example: Student Health App</summary>
 
 
 ### Architecture Diagram
 
 ```
 [Student] → [Streamlit Browser] → [Python Backend] → [SQLite Database]
-                    ↓
-              [Charts (matplotlib)]
-```
+                    
 
 
 
----
 
 ## 4. Features & User Flow | الميزات وتدفق المستخدم
-
-<div class="arabic">
-هنا تكتب قائمة الميزات + مخطط تدفق المستخدم عبر الشاشات
-</div>
 
 ### Feature List | قائمة الميزات
 
@@ -172,22 +151,25 @@ neo-challange_database/
                     │   LANDING    │
                     │   (home.py)  │
                     └──────┬───────┘
-                           │
-                    ┌──────▼───────┐
-                    │   LOGIN /    │
-                    │   REGISTER   │
+                       │   │   │
+            ┌──────────┘   │   └──────────────┐ ────────────────────┐                                     
+      user/register ┌──────▼───────┐        workout                nutrition plan
+                    │     all      │                                                
+                    │   challenges │  exercise       muscles
+                    │              │        
                     └──────┬───────┘
                            │
                     ┌──────▼───────┐
-                    │   MAIN MENU  │
-                    │  (navigatio) │
+                    │   challenge  │
+                    │    details   │
+                    │              │
                     └──┬───┬───┬───┘
                        │   │   │
               ┌────────┘   │   └────────┐
               ▼            ▼            ▼
         ┌──────────┐ ┌──────────┐ ┌──────────┐
-        │CHALLENGES│ │  TRAIN   │ │NUTRITION │
-        │(view)    │ │(workout) │ │ (plans)  │
+        │  sport   │ │ language │ │ General  │
+        │challenge │ │ challenge│ │ knowledge│
         └──────────┘ └──────────┘ └──────────┘
 ```
 
@@ -213,10 +195,7 @@ neo-challange_database/
 ---
 
 ## 5. UI/UX Design | تصميم واجهة المستخدم
-
-<div class="arabic">
-هنا تحط لقطات الشاشة + وصف التصميم البصري لمشروعك
-</div>
+>
 
 ### Screenshots | لقطات الشاشة
 
@@ -285,9 +264,13 @@ neo-challange_database/
 
 | Source | Type | Description |
 |--------|------|-------------|
-| [fill in] | [Database / API / JSON / Static / User Input] | [what data it provides] |
-| [fill in] | [fill in] | [fill in] |
-| [fill in] | [fill in] | [fill in] |
+| database/database.db | SQLite Database | Stores all user data, challenges, activities, exercises, muscles, nutrition plans, quiz results |
+| database/schema.sql | SQL Schema File | Defines database table structure and relationships |
+| database/*.sql files | SQL Seed Files | Initial data for challenges, activities, exercises, muscles, nutrition plans, general knowledge |
+| User Input | Form Submissions | User registration, challenge joining, activity completion, quiz answers |
+| Streamlit Session | Session State | Current logged-in user, selected challenge, equipment filters |
+| assets/ | Static Files | Images for UI (category icons, muscle images, thumbnails) |
+| videos/ | Video Files | Exercise demonstration videos |
 
 ### Database Schema | مخطط قاعدة البيانات
 
@@ -330,46 +313,10 @@ By the end of this project, the student will be able to:
 
 | Topic | Description |
 |-------|-------------|
-| [Theme of your project] | [How does it connect to culture, science, or society?] |
-| [fill in] | [fill in] |
+| Health & Wellness | Promotes healthy habits through sports challenges and nutrition planning, addressing modern sedentary lifestyles |
+| Multilingual Learning | Language challenges support English, French, and German, fostering cultural exchange and language skills |
+| General Knowledge | Quiz system encourages continuous learning across various subjects |
 
-### Curriculum Alignment | التوافق مع المنهج
-
-| Skill Area | What the Student Practices |
-|------------|---------------------------|
-| Problem Solving | [e.g., Breaking a real problem into code solutions] |
-| Computational Thinking | [e.g., Data modeling, algorithms, abstraction] |
-| Creativity | [e.g., UI design, user experience, visual storytelling] |
-| Collaboration | [e.g., Pair programming, code reviews] |
-| Technical Writing | [e.g., Documenting architecture and features] |
-
-
-### Learning Objectives
-
-1. Build a full-stack web application using Python and Streamlit
-2. Design and implement a SQLite database with CRUD operations
-3. Create data visualizations with matplotlib
-4. Implement user registration and session management
-5. Apply UI/UX design principles for responsive layouts
-
-### Cultural / Historical Context
-
-| Topic | Description |
-|-------|-------------|
-| Student Health | Health track ing tools exist but none are designed specifically for students in our region — this project bridges that gap |
-| Data Privacy | Students learn about handling personal health data responsibly |
-
-### Curriculum Alignment
-
-| Skill Area | What the Student Practices |
-|------------|---------------------------|
-| Problem Solving | Identifying a real student need and building a solution |
-| Computational Thinking | Database design, data modeling, chart generation |
-| Creativity | UI/UX design, color schemes, user flow |
-| Collaboration | Working with team members on different features |
-| Technical Writing | Documenting architecture and writing this template |
-
-</details>
 
 ---
 
@@ -411,50 +358,18 @@ By the end of this project, the student will be able to:
 
 ### My Project Information | معلومات مشروعي
 
-**Student Name**: ___________________________
+**Student Name**: osama abdelghany, mohamed abdelghany
 
-**Project Title**: ___________________________
+**Project Title**: Neo challenge
 
-**Date**: ___________________________
-
----
-
-#### What is your project about? | عن ماذا يتحدث مشروعي؟
-
-_______________________________________________
-_______________________________________________
-
-#### What problem does it solve? | ما المشكلة التي يحلها؟
-
-_______________________________________________
-_______________________________________________
 
 ---
 
-### My Tech Stack | التقنيات المستخدمة
 
-**My project type** (circle one): Web App / Desktop App / Mobile App / Python Script / Other: _______
 
-**Technologies I used**:
 
-| Category | Technology |
-|----------|-----------|
-| Language | |
-| Framework | |
-| Database | |
-| Libraries | |
 
----
 
-### My Screens | شاشات مشروعي
-
-Draw or describe all the screens in your project:
-
-| Screen Name | What the user sees/does | How to get here |
-|-------------|------------------------|-----------------|
-| | | |
-| | | |
-| | | |
 
 
 ### My Data | بيانات مشروعي
@@ -471,26 +386,18 @@ _______________________________________________
 
 ### What I Learned | ما تعلمته
 
-1. The hardest part of building my project was: _________________________________
+1. The hardest part of building my project was: writing database tables sql
 
-2. The most fun part of building my project was: _________________________________
+2. The most fun part of building my project was: recording videos of the exercises
 
-3. If I had more time, I would add: _________________________________
+3. If I had more time, I would add: add more languages and more video types
 
-4. One thing I would do differently: _________________________________
-
----
-
-### Screenshot of My Project | لقطة شاشة من مشروعي
-
-<!-- Paste a screenshot of your project running here -->
+4. One thing I would do differently: 
 
 ---
 
-**Instructor Notes** | ملاحظات المدرس:
+---
 
-_______________________________________________
-_______________________________________________
 
 ---
 
