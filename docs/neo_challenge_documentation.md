@@ -6,7 +6,7 @@ Software project documentation · Afro-Asian Tech Forum · Software Category · 
 
 By Mohamed Abd Al Ghany and Osama Abd Alghany · NEO Team · Techno Future KFS
 
-<p align="center"><img src="assets/mark.svg" alt="NEO Challenge mark" width="160"></p>
+<p align="center"><img src="../assets/logo.png" alt="NEO Challenge logo: Better every day" width="300"></p>
 
 
 
@@ -256,7 +256,7 @@ The colours are set once in `.streamlit/config.toml`, so every screen matches wi
 | **Text** | `#1D3E53` |
 | **Level Icons** | 🟢 Easy · 🟡 Medium · 🔴 Hard, so the level is readable without relying on colour alone |
 | **Font** | Streamlit's default sans-serif in the app. The poster and slides use Bebas Neue (titles), Space Grotesk and JetBrains Mono. |
-| **Mark** | A teal circle with three arcs for the three habits and an amber dot for today's challenge (`docs/assets/mark.svg`). The app itself has no logo; its browser-tab icon is ✨. |
+| **Logo** | A teal "N" with an arrow rising out of it, over "NEO CHALLENGE · Better every day" (`assets/logo.png`). The "N" on its own (`assets/logo_mark.png`) is the browser-tab icon and sits at the top of the menu (`st.logo`). |
 | **Buttons** | Every button is the same filled teal and full width, so the app looks the same everywhere |
 | **Cards** | Streamlit bordered containers |
 | **Layout** | Wide layout with a grouped sidebar menu (Home / Challenges / Train / Nutrition / Account or My account / Admin) |

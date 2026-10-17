@@ -31,7 +31,10 @@ def create_tables():
     conn.close()
 
 
-st.set_page_config(page_title="NEO Challenge", page_icon="✨", layout="wide")
+# Our logo's "N" with the arrow is the browser-tab icon and sits at the top of the menu.
+# (The full logo, with the words, is assets/logo.png; it is too tall for the menu.)
+st.set_page_config(page_title="NEO Challenge", page_icon="assets/logo_mark.png", layout="wide")
+st.logo("assets/logo_mark.png", size="large")
 create_tables()
 
 # The screens live in app_pages/, not pages/: Streamlit shows a folder called "pages"
