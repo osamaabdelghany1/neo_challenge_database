@@ -10,6 +10,11 @@ INSERT INTO questions (question, option_a, option_b, option_c, option_d, correct
 ('What color do you get when you mix blue and yellow?', 'Green', 'Purple', 'Orange', 'Brown', 'A', 'Easy', (select id from challenges where name = 'General Knowledge Challenge')),
 ('How many days are in a week?', '5', '6', '7', '8', 'C', 'Easy', (select id from challenges where name = 'General Knowledge Challenge')),
 ('What is the opposite of hot?', 'Cold', 'Warm', 'Cool', 'Freezing', 'A', 'Easy', (select id from challenges where name = 'General Knowledge Challenge')),
+
+
+
+
+
 ('What year did World War II end?', '1943', '1944', '1945', '1946', 'C', 'Medium', (select id from challenges where name = 'General Knowledge Challenge')),
 ('Who painted the Mona Lisa?', 'Van Gogh', 'Picasso', 'Da Vinci', 'Michelangelo', 'C', 'Medium', (select id from challenges where name = 'General Knowledge Challenge')),
 ('What is the currency of Japan?', 'Yuan', 'Won', 'Yen', 'Ringgit', 'C', 'Medium', (select id from challenges where name = 'General Knowledge Challenge')),
@@ -30,6 +35,11 @@ INSERT INTO questions (question, option_a, option_b, option_c, option_d, correct
 ('Who developed the theory of relativity?', 'Newton', 'Einstein', 'Galileo', 'Tesla', 'B', 'Medium', (select id from challenges where name = 'General Knowledge Challenge')),
 ('What is the largest desert in the world?', 'Sahara', 'Gobi', 'Arabian', 'Antarctic', 'D', 'Medium', (select id from challenges where name = 'General Knowledge Challenge')),
 ('Which organ pumps blood throughout the body?', 'Lungs', 'Liver', 'Heart', 'Brain', 'C', 'Medium', (select id from challenges where name = 'General Knowledge Challenge')),
+
+
+
+
+
 ('What is the molecular formula of glucose?', 'C6H12O6', 'C12H22O11', 'CH3OH', 'C2H5OH', 'A', 'Hard', (select id from challenges where name = 'General Knowledge Challenge')),
 ('Who was the first female Nobel Prize winner?', 'Curie', 'Meitner', 'Franklin', 'Hodgkin', 'A', 'Hard', (select id from challenges where name = 'General Knowledge Challenge')),
 ('What year did the Berlin Wall fall?', '1987', '1988', '1989', '1990', 'C', 'Hard', (select id from challenges where name = 'General Knowledge Challenge')),

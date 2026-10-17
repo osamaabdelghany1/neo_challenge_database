@@ -1,9 +1,6 @@
 
 # Software Project Documentation | توثيق مشروع البرمجيات
 
-<div class="arabic">
-قالب توثيق مشاريع البرمجيات — للمسابقة الأفريقية الآسيوية للتكنولوجيا
-</div>
 
 ---
 
@@ -11,170 +8,139 @@
 
 | Field | Value |
 |-------|-------|
-| **Project Title** | [NEO Challenge] |
-| **Project Type** | [Web App / Desktop App / Mobile App / Python Script / AI Tool / Other] |
-| **Description** | [2-3 sentences: what does this project do?] |
-| **Target Users** | [Who will use this? e.g., students, teachers, doctors, general public] |
-| **Resolution / Platform** | [e.g., 1920x1080 desktop, mobile-responsive, cross-platform] |
-| **Date** | [fill in] |
+| **Project Title** | NEO Challenge |
+| **Project Type** | Web App |
+| **Description** | A gamified challenge platform that helps users build healthy habits through daily challenges in sports, language learning, and general knowledge. Users can join challenges, track their progress, watch exercise videos, take quizes, and follow personalized nutrition plans. |
+
+| **Target Users** | Students and young adults ages 12-25 interested in self-improvement, teachers looking for educational tools, and fitness enthusiasts |
 
 ### Tech Stack | Technology Stack
 
 | Category | Technology | Purpose |
 |----------|-----------|---------|
-| **Language** | [e.g., Python, JavaScript, HTML/CSS] | [what it's used for] |
-| **Database** | [e.g., SQLite, PostgreSQL, Firebase, None] | [what it's stored] |
-| **Libraries** | [e.g., pandas, TensorFlow, Bootstrap] | [what they do] |
+| **Language** | Python | Main programming language for the application |
+| **Database** | SQLite3 | Stores all data including users, challenges, activities, exercises, muscles, language data, general knowledge, and videos |
+| **Libraries** | streamlit | Creates responsive web pages with easy user experience and multi-page navigation |
 
 ### Dependencies | المكتبات المستخدمة
 
 | Package | Version | Purpose |
 |---------|---------|---------|
-| [fill in] | [fill in] | [fill in] |
-| [fill in] | [fill in] | [fill in] |
+| streamlit | 1.64.0 | Creates responsive web pages with easy user experience and multi-page navigation |
 
-<!-- Screenshot: Main screen of your project -->
+
+![alt text](screenshots/01_home.png)
 
 ---
 
 ## 2. Problem Statement | بيان المشكلة
 
-<div class="arabic">
-هنا تكتب المشكلة التي يحلها مشروعك — لماذا هذا المشروع مهم؟
-</div>
 
 ### What problem does this project solve? | ما المشكلة التي يحلها هذا المشروع؟
 
-[fill in — 2-3 sentences describing the real-world problem]
+Many students and young adults struggle to maintain healthy habits and continuous learning. They lack a unified, engaging platform that combines physical fitness, language learning, and general knowledge improvement. Existing tools are either too complex, focused on only one area, or not designed for the gamified learning experience that motivates young users.
 
 ### Why does it matter? | لماذا هذا مهم؟
 
-[fill in — who is affected by this problem? what happens if it's not solved?]
+Poor health habits and lack of continuous learning lead to reduced energy, difficulty concentrating, and missed opportunities for personal growth. A gamified, multi-faceted platform that addresses sports, language, and knowledge can help users build sustainable habits while making learning fun and engaging. This holistic approach supports both physical and mental development.
 
 ### How is it currently solved? | كيف تُحل المشكلة حالياً؟
 
-[fill in — what alternatives exist? why are they not good enough?]
+Users currently use separate apps for different needs: fitness apps like MyFitnessPal for workouts, language apps like Duolingo for languages, and quiz apps for knowledge. This fragmented approach is less effective because it lacks integration, doesn't provide a unified progress tracking system, and misses the opportunity for cross-domain motivation.
 
-<details>
-<summary>Example: Student Health App</summary>
-
-### What problem does this project solve?
-
-Many students don't track  their health habits — water intake, sleep, and exercise. They don't realize how these habits affect their energy, focus, and academic performance. There's no simple, fun tool designed specifically for students to monitor these habits.
-
-### Why does it matter?
-
-Poor health habits lead to low energy, difficulty concentrating, and long-term health problems. Students who track  their habits are more likely to make positive changes.
-
-### How is it currently solved?
-
-Students can use general health apps like MyFitnessPal or Apple Health, but these are designed for adults, not students. They're complex, overwhelming, and not culturally relevant to students in our region.
-
-</details>
 
 ---
 
 ## 3. Technical Architecture | البنية التقنية
 
-<div class="arabic">
-هنا تشرح كيف مشروعك مبني من الداخل — هيكل الملفات والتقنيات المستخدمة
-</div>
 
 ### Project Structure | هيكل المشروع
 
 ```
-project-name/
-├── main.py              # Entry point
-├── templates/           # HTML templates (if web app)
-│   ├── index.html
-│   └── about.html
-├── static/              # CSS, JS, images
-│   ├── style.css
-│   └── script.js
-├── database/            # Database files
-│   └── app.db
-├── requirements.txt     # Python dependencies
-└── README.md            # (optional)
-```
-
-[Replace the above with your actual project structure]
+neo-challange_database/
+├── app.py               
+├── app_pages
+│   ├── home.py         
+│   ├── login.py         
+│   ├── sign_up.py       
+│   ├── view_challenges.py  
+│   ├── challenge_details.py 
+│   ├── workout.py       
+│   ├── general_knowledge.py 
+│   ├── language_challenge.py 
+│   ├── my_challenges.py 
+│   ├── create_challenge.py  
+│   ├── create_activity.py   
+│   ├── create_exercise.py   
+│   ├── create_muscle.py     
+│   ├── create_nutrition_plan.py  
+│   ├── view_exercise.py     
+│   ├── view_muscles.py      
+│   ├── view_nutrition_plan.py 
+│   ├── view_users.py     
+│   ├── exercise_details.py 
+│   └── logout.py        
+├── database/            
+│   ├── database.db       
+│   ├── schema.sql       
+│   ├── insert_challenges.sql    
+│   ├── insert_activities.sql    
+│   ├── insert_exercise.sql      
+│   ├── insert_muscles.sql       
+│   ├── insert_nutrition_plan.sql 
+│   └── insert_general_knowledge.sql 
+├── assets/              
+│   ├── config.py        
+│   └── [various images for UI]
+├── docs/                
+│   └── afro_asian_software_template.md
+├── requirements.txt     
+├── README.md            
+├── .streamlit/          
+└── .gitignore          
 
 ### Architecture Diagram | مخطط البنية
 
-```
-[User] → [Frontend] → [Backend] → [Database]
-```
 
-[Draw or describe your architecture — how do the parts connect?]
 
 ### Key Files | الملفات الرئيسية
 
 | File | Purpose | Lines of Code |
 |------|---------|:-------------:|
-| [fill in] | [what it does] | [approximate] |
-| [fill in] | [what it does] | [approximate] |
-| [fill in] | [what it does] | [approximate] |
+| app.py | Main entry point - sets up Streamlit app, creates database tables, defines navigation menu | ~83 |
+| database/schema.sql | Database schema - defines all tables (users, challenges, activities, exercises, muscles, nutrition plans) | ~130 |
+| app_pages/home.py | Landing page - displays three main challenge categories (Sports, Language, General Knowledge) | ~44 |
+| assets/config.py | Shared configuration - database path, category images, level icons used across pages | ~26 |
+| app_pages/view_challenges.py | Challenges browser - displays all challenges in a grid layout with activity counts | ~36 |
 
 <details>
-<summary>Example: Student Health App</summary>
 
-### Project Structure
-
-```
-health-track er/
-├── app.py               # Main Streamlit app
-├── pages/
-│   ├── 1_dashboard.py   # Dashboard with charts
-│   ├── 2_log.py         # Daily habit logging
-│   └── 3_tips.py        # Health tips page
-├── data/
-│   └── habits.db        # SQLite database
-├── utils/
-│   ├── database.py      # Database functions
-│   └── charts.py        # Chart generation
-├── images/
-│   └── logo.png
-├── requirements.txt
-└── .streamlit/
-    └── config.toml      # Streamlit config
-```
 
 ### Architecture Diagram
 
 ```
 [Student] → [Streamlit Browser] → [Python Backend] → [SQLite Database]
-                    ↓
-              [Charts (matplotlib)]
-```
+                    
 
-### Key Files
 
-| File | Purpose | Lines of Code |
-|------|---------|:-------------:|
-| app.py | Main app entry point | ~50 |
-| pages/2_log.py | Daily habit logging form | ~120 |
-| utils/database.py | Database CRUD operations | ~80 |
-| utils/charts.py | Chart generation functions | ~60 |
 
-</details>
-
----
 
 ## 4. Features & User Flow | الميزات وتدفق المستخدم
-
-<div class="arabic">
-هنا تكتب قائمة الميزات + مخطط تدفق المستخدم عبر الشاشات
-</div>
 
 ### Feature List | قائمة الميزات
 
 | # | Feature | Description | Status |
 |---|---------|-------------|:------:|
-| 1 | [fill in] | [what it does] | ✅ / ⏳ / ❌ |
-| 2 | [fill in] | [what it does] | ✅ / ⏳ / ❌ |
-| 3 | [fill in] | [what it does] | ✅ / ⏳ / ❌ |
-| 4 | [fill in] | [what it does] | ✅ / ⏳ / ❌ |
-| 5 | [fill in] | [what it does] | ✅ / ⏳ / ❌ |
+| 1 | User Authentication | User registration and login with email/password, admin role assignment | ✅ |
+| 2 | Sports Challenges | Daily physical activities with exercise videos and difficulty levels (Easy/Medium/Hard) | ✅ |
+| 3 | Language Challenges | Language learning activities for English, French, and German with vocabulary and phrases | ✅ |
+| 4 | General Knowledge Quiz | Interactive quiz system with multiple-choice questions at different difficulty levels | ✅ |
+| 5 | Exercise Library | Browse exercises by equipment type (Machine, Free Weights, Bodyweight, Cable) with video demonstrations | ✅ |
+| 6 | Muscle Information | Detailed muscle anatomy with descriptions, locations, functions, and difficulty to train | ✅ |
+| 7 | Nutrition Plans | Personalized nutrition recommendations based on BMI categories with meal plans | ✅ |
+| 8 | Progress Tracking | Track completed activities, exercises, and quiz scores over time | ✅ |
+| 9 | My Challenges | View and manage joined challenges with progress indicators | ✅ |
+| 10 | Admin Panel | Create and manage challenges, activities, exercises, muscles, and nutrition plans | ✅ |
 
 > Status: ✅ Complete | ⏳ In Progress | ❌ Not Started
 
@@ -183,24 +149,27 @@ health-track er/
 ```
                     ┌──────────────┐
                     │   LANDING    │
-                    │    PAGE      │
+                    │   (home.py)  │
+                    └──────┬───────┘
+                       │   │   │
+            ┌──────────┘   │   └──────────────┐ ────────────────────┐                                     
+      user/register ┌──────▼───────┐        workout                nutrition plan
+                    │     all      │                                                
+                    │   challenges │  exercise       muscles
+                    │              │        
                     └──────┬───────┘
                            │
                     ┌──────▼───────┐
-                    │   LOGIN /    │
-                    │   REGISTER   │
-                    └──────┬───────┘
-                           │
-                    ┌──────▼───────┐
-                    │   MAIN MENU  │
-                    │  (navigation) │
+                    │   challenge  │
+                    │    details   │
+                    │              │
                     └──┬───┬───┬───┘
                        │   │   │
               ┌────────┘   │   └────────┐
               ▼            ▼            ▼
         ┌──────────┐ ┌──────────┐ ┌──────────┐
-        │ Screen 1 │ │ Screen 2 │ │ Screen 3 │
-        │ (name)   │ │ (name)   │ │ (name)   │
+        │  sport   │ │ language │ │ General  │
+        │challenge │ │ challenge│ │ knowledge│
         └──────────┘ └──────────┘ └──────────┘
 ```
 
@@ -208,134 +177,80 @@ health-track er/
 
 | Screen | File / Route | Description | Transitions To |
 |--------|-------------|-------------|----------------|
-| [fill in] | [fill in] | [what user sees/does] | [where they can go] |
-| [fill in] | [fill in] | [what user sees/does] | [where they can go] |
-| [fill in] | [fill in] | [what user sees/does] | [where they can go] |
+| Landing | app_pages/home.py | Welcome page with three challenge categories (Sports, Language, General Knowledge) | Login, Sign up, View challenges, Language challenge, General knowledge, Workout, View exercises |
+| Login | app_pages/login.py | User authentication with email and password | Home (after login) |
+| Sign up | app_pages/sign_up.py | User registration with personal details (username, email, password, phone, birth date, height, weight) | Login |
+| All Challenges | app_pages/view_challenges.py | Grid view of all challenges with category, duration, and activity count | Challenge details |
+| Challenge Details | app_pages/challenge_details.py | Shows challenge activities with difficulty levels, allows users to join challenges | My challenges |
+| Workout | app_pages/workout.py | Choose equipment type (Machine, Free Weights, Bodyweight, Cable) to filter exercises | View exercises |
+| View Exercises | app_pages/view_exercise.py | Display exercises with videos and thumbnails, filtered by equipment | Exercise details |
+| Exercise Details | app_pages/exercise_details.py | Shows exercise video, description, muscle target, and difficulty | Back to exercises |
+| Language Challenge | app_pages/language_challenge.py | Language learning activities for English, French, German | Home |
+| General Knowledge | app_pages/general_knowledge.py | Quiz with questions at Easy/Medium/Hard levels | Home |
+| Nutrition Plans | app_pages/view_nutrition_plan.py | Display nutrition plans based on BMI categories with meal recommendations | Home |
+| My Challenges | app_pages/my_challenges.py | Shows challenges the user has joined and their progress | Challenge details |
 
-<details>
-<summary>Example: Student Health App</summary>
 
-### Feature List
-
-| # | Feature | Description | Status |
-|---|---------|-------------|:------:|
-| 1 | Daily Logging | Students log water, sleep, and exercise | ✅ |
-| 2 | Dashboard | Visual charts showing weekly/monthly trends | ✅ |
-| 3 | Health Tips | Personalized tips based on logged data | ✅ |
-| 4 | User Registration | Students create accounts to save data | ✅ |
-| 5 | Export Data | Download health data as CSV | ⏳ |
-
-### User Flow
-
-```
-                    ┌──────────────┐
-                    │   LANDING    │
-                    │  (welcome)   │
-                    └──────┬───────┘
-                           │
-                    ┌──────▼───────┐
-                    │   REGISTER   │
-                    │   / LOGIN    │
-                    └──────┬───────┘
-                           │
-                    ┌──────▼───────┐
-                    │  DASHBOARD   │
-                    │ (charts)     │
-                    └──┬───┬───┬───┘
-                       │   │   │
-              ┌────────┘   │   └────────┐
-              ▼            ▼            ▼
-        ┌──────────┐ ┌──────────┐ ┌──────────┐
-        │   LOG    │ │   TIPS   │ │  EXPORT  │
-        │ (daily)  │ │ (health) │ │ (data)   │
-        └──────────┘ └──────────┘ └──────────┘
-```
-
-### Screen Reference
-
-| Screen | File / Route | Description | Transitions To |
-|--------|-------------|-------------|----------------|
-| Landing | app.py | Welcome page with login/register | Register, Login |
-| Register | pages/register.py | Create new account | Dashboard |
-| Dashboard | pages/1_dashboard.py | Charts and weekly summary | Log, Tips, Export |
-| Log | pages/2_log.py | Daily habit entry form | Dashboard |
-| Tips | pages/3_tips.py | Personalized health advice | Dashboard |
-| Export | pages/export.py | Download data as CSV | Dashboard |
-
-</details>
 
 ---
 
 ## 5. UI/UX Design | تصميم واجهة المستخدم
-
-<div class="arabic">
-هنا تحط لقطات الشاشة + وصف التصميم البصري لمشروعك
-</div>
+>
 
 ### Screenshots | لقطات الشاشة
 
 <!-- Screenshot: Landing page -->
-**Landing Page**: Welcome screen with login and registration options, clean interface with navigation to different challenge categories.
+**Landing Page**: ![alt text](screenshots/01_home.png)
 
 <!-- Screenshot: Main dashboard -->
-**Challenges View**: Grid layout showing all available challenges in Sports, Language, and General Knowledge categories with difficulty levels and activity counts.
+**Challenges View**: ![alt text](screenshots/12_all_challenges.png)
 
 <!-- Screenshot: Key feature screen -->
-**Nutrition Plans**: Display of nutrition plans based on BMI categories with detailed meal plans (breakfast, lunch, dinner) and water intake recommendations.
+**Nutrition Plans**: ![alt text](screenshots/10_nutrition.png)
 
-<!-- Add more screenshots as needed -->
+<!-- Screenshot: Workout page -->
+**Workout**: ![alt text](screenshots/02_workout.png)
 
-### Design System | نظام التصميم
+<!-- Screenshot: Exercises view -->
+**Exercises**: ![alt text](screenshots/03_exercises.png)
 
-| Element | Style |
-|---------|-------|
-| **Primary Color** | Streamlit default blue (#1a73e8) |
-| **Secondary Color** | Green for success/completion (#34a853) |
-| **Font** | Default Streamlit font (sans-serif) |
-| **Button Style** | Rounded buttons with full-width containers |
-| **Layout** | Multi-page navigation with sidebar, card-based content display |
+<!-- Screenshot: Language challenge -->
+**Language Challenge**: ![alt text](screenshots/06_language.png)
 
-### Responsive Design | التصميم المتجاوب
+<!-- Screenshot: Quiz -->
+**Quiz**: ![alt text](screenshots/08_quiz.png)
 
-| Breakpoint | Layout | Tested? |
-|------------|--------|:-------:|
-| Desktop (1024px+) | [describe layout] | ☐ |
-| Tablet (768-1024px) | [describe layout] | ☐ |
-| Mobile (< 768px) | [describe layout] | ☐ |
+<!-- Screenshot: My challenges -->
+**My Challenges**: ![alt text](screenshots/11_my_challenges.png)
 
-<details>
-<summary>Example: Student Health App</summary>
+<!-- Screenshot: Muscles -->
+**Muscles**: ![alt text](screenshots/05_muscles.png)
 
-### Screenshots
+<!-- Screenshot: Challenge details -->
+**Challenge Details**: ![alt text](screenshots/07_challenge_details.png)
 
-<!-- Screenshot: Landing page -->
-**Landing Page**: Clean welcome screen with app logo, "Welcome to Health track er!" message, and two buttons: "Login" and "Register". Blue and green color scheme.
-
-<!-- Screenshot: Dashboard -->
-**Dashboard**: Shows 3 charts — weekly water intake bar chart, sleep hours line chart, and exercise pie chart. Summary cards at the top show daily averages.
-
-<!-- Screenshot: Log page -->
-**Log Page**: Simple form with 3 input fields: Water (glasses), Sleep (hours), Exercise (minutes). Submit button saves to database.
+<!-- Screenshot: Quiz result -->
+**Quiz Result**: ![alt text](screenshots/09_quiz_result.png)
 
 ### Design System
 
 | Element | Style |
 |---------|-------|
-| **Primary Color** | #1a73e8 (blue) |
-| **Secondary Color** | #34a853 (green) |
-| **Font** | Inter |
-| **Button Style** | Rounded, flat |
-| **Layout** | Streamlit sidebar navigation |
+| **Primary Color** | Teal blue (#254B62) |
+| **Background Color** | Light gray-blue (#F3F8F9) |
+| **Secondary Background** | Light teal (#E4EFF2) |
+| **Text Color** | Dark teal (#1D3E53) |
+| **Font** | Default Streamlit font (sans-serif) |
+| **Button Style** | Rounded buttons with full-width containers |
+| **Layout** | Multi-page navigation with sidebar, card-based content display |
 
 ### Responsive Design
 
 | Breakpoint | Layout | Tested? |
 |------------|--------|:-------:|
-| Desktop (1024px+) | Full sidebar + main content area | ☐ |
-| Tablet (768-1024px) | Collapsible sidebar | ☐ |
-| Mobile (< 768px) | Stacked layout, full-width charts | ☐ |
-
-</details>
+| Desktop (1024px+) | Full sidebar navigation + multi-column grid layouts (3-4 columns) | ☑ |
+| Tablet (768-1024px) | Collapsible sidebar + 2-column grid layouts | ☐ |
+| Mobile (< 768px) | Stacked single-column layout, full-width cards | ☐ |
 
 ---
 
@@ -349,50 +264,34 @@ health-track er/
 
 | Source | Type | Description |
 |--------|------|-------------|
-| [fill in] | [Database / API / JSON / Static / User Input] | [what data it provides] |
-| [fill in] | [fill in] | [fill in] |
-| [fill in] | [fill in] | [fill in] |
+| database/database.db | SQLite Database | Stores all user data, challenges, activities, exercises, muscles, nutrition plans, quiz results |
+| database/schema.sql | SQL Schema File | Defines database table structure and relationships |
+| database/*.sql files | SQL Seed Files | Initial data for challenges, activities, exercises, muscles, nutrition plans, general knowledge |
+| User Input | Form Submissions | User registration, challenge joining, activity completion, quiz answers |
+| Streamlit Session | Session State | Current logged-in user, selected challenge, equipment filters |
+| assets/ | Static Files | Images for UI (category icons, muscle images, thumbnails) |
+| videos/ | Video Files | Exercise demonstration videos |
 
 ### Database Schema | مخطط قاعدة البيانات
 
 | Table | Columns | Description |
 |-------|---------|-------------|
-| [fill in] | [fill in] | [what it stores] |
-| [fill in] | [fill in] | [what it stores] |
+| users | id, username, email, password, birth_date, height, weight, phone, ssn, is_admin | User accounts with personal details and admin status |
+| challenges | id, name, category, duration, description | Challenge definitions (Sports, Language, General Knowledge) |
+| activities | id, challenge_id, name, description, difficulty, exercise_id | Activities within challenges, linked to optional exercises |
+| questions | id, challenge_id, question, option_a, option_b, option_c, option_d, correct_answer, level | Quiz questions for General Knowledge challenges |
+| user_challenges | user_id, challenge_id | Which users joined which challenges |
+| nutrition_plans | id, bmi, category, goal, calories, breakfast, lunch, dinner, water_intake | Nutrition plans based on BMI categories |
+| user_nutrition_plans | user_id, nutrition_plan_id | Each user's selected nutrition plan |
+| muscles | id, name, latin_name, description, muscle_group, location, function, origin, insertion, muscle_type, difficulty_to_train, image_url, video_url | Muscle information with anatomical details |
+| exercises | id, muscle_id, name, description, equipment, difficulty, video_url, thumbnail_url | Exercise demonstrations linked to muscles |
+| user_activities | user_id, activity_id, done_at | Progress tracking: activities completed by users |
+| exercise_logs | user_id, exercise_id, done_on | Progress tracking: exercises done by users per day |
+| quiz_results | id, user_id, level, score, total, played_at | Quiz results and scores |
 
-### External APIs (if any) | واجهات برمجة التطبيقات
 
-| API | Purpose | Rate Limit |
-|-----|---------|------------|
-| [fill in] | [what it's used for] | [requests per day/hour] |
 
-<details>
-<summary>Example: Student Health App</summary>
 
-### Data Sources
-
-| Source | Type | Description |
-|--------|------|-------------|
-| habits.db | SQLite Database | Stores user accounts, daily logs |
-| User Input | Form Submissions | Water, sleep, exercise data |
-| Streamlit Session | Session State | Current logged-in user |
-
-### Database Schema
-
-| Table | Columns | Description |
-|-------|---------|-------------|
-| users | id, username, password_hash, created_at | User accounts |
-| daily_logs | id, user_id, date, water, sleep, exercise | Daily habit entries |
-
-### External APIs
-
-| API | Purpose | Rate Limit |
-|-----|---------|------------|
-| None | All data is local | N/A |
-
-</details>
-
----
 
 ## 7. Educational Content | المحتوى التعليمي
 
@@ -414,48 +313,10 @@ By the end of this project, the student will be able to:
 
 | Topic | Description |
 |-------|-------------|
-| [Theme of your project] | [How does it connect to culture, science, or society?] |
-| [fill in] | [fill in] |
+| Health & Wellness | Promotes healthy habits through sports challenges and nutrition planning, addressing modern sedentary lifestyles |
+| Multilingual Learning | Language challenges support English, French, and German, fostering cultural exchange and language skills |
+| General Knowledge | Quiz system encourages continuous learning across various subjects |
 
-### Curriculum Alignment | التوافق مع المنهج
-
-| Skill Area | What the Student Practices |
-|------------|---------------------------|
-| Problem Solving | [e.g., Breaking a real problem into code solutions] |
-| Computational Thinking | [e.g., Data modeling, algorithms, abstraction] |
-| Creativity | [e.g., UI design, user experience, visual storytelling] |
-| Collaboration | [e.g., Pair programming, code reviews] |
-| Technical Writing | [e.g., Documenting architecture and features] |
-
-<details>
-<summary>Example: Student Health App</summary>
-
-### Learning Objectives
-
-1. Build a full-stack web application using Python and Streamlit
-2. Design and implement a SQLite database with CRUD operations
-3. Create data visualizations with matplotlib
-4. Implement user registration and session management
-5. Apply UI/UX design principles for responsive layouts
-
-### Cultural / Historical Context
-
-| Topic | Description |
-|-------|-------------|
-| Student Health | Health track ing tools exist but none are designed specifically for students in our region — this project bridges that gap |
-| Data Privacy | Students learn about handling personal health data responsibly |
-
-### Curriculum Alignment
-
-| Skill Area | What the Student Practices |
-|------------|---------------------------|
-| Problem Solving | Identifying a real student need and building a solution |
-| Computational Thinking | Database design, data modeling, chart generation |
-| Creativity | UI/UX design, color schemes, user flow |
-| Collaboration | Working with team members on different features |
-| Technical Writing | Documenting architecture and writing this template |
-
-</details>
 
 ---
 
@@ -469,45 +330,23 @@ By the end of this project, the student will be able to:
 
 ### Target Audience | الجمهور المستهدف
 
-- **Primary**: [who will use this — e.g., students ages 12-18]
-- **Secondary**: [who else — e.g., teachers, parents, schools]
-- **Tertiary**: [anyone else — e.g., health organizations, coding communities]
+- **Primary**: Students and young adults ages 12-25 interested in self-improvement through daily challenges in sports, language, and general knowledge
+- **Secondary**: Teachers and educators looking for engaging educational tools for their students
+- **Tertiary**: Fitness enthusiasts, language learners, and coding communities interested in gamified learning
 
 ### Platforms | المنصات
 
-- [e.g., Web browser (Chrome, Firefox, Edge)]
-- [e.g., Mobile phone]
-- [e.g., School computers]
+- Web browser (Chrome, Firefox, Edge, Safari) - desktop and mobile responsive
+- School computer labs and educational institutions
+- Personal laptops and tablets
 
 ### Promotion Ideas | أفكار ترويجية
 
-1. [e.g., Share demo video on YouTube/TikTok]
-2. [e.g., Present at school science fair]
-3. [e.g., Post screenshots on class group]
-4. [e.g., Submit to Afro-Asian Tech Forum competition]
-
-<details>
-<summary>Example: Student Health App</summary>
-
-### Target Audience
-
-- **Primary**: Students ages 12-18 who want to track  health habits
-- **Secondary**: Teachers looking for health education tools
-- **Tertiary**: School administrators interested in student wellness programs
-
-### Platforms
-
-- Web browser (desktop + mobile)
-- School computer labs
-
-### Promotion Ideas
-
-1. Demo video on school YouTube channel
-2. Present at end-of-semester exhibition
-3. Post screenshots on school WhatsApp group
-4. Submit to Afro-Asian Tech Forum — Educational Tools category
-
-</details>
+1. Share demo video on YouTube/TikTok showing the challenge features
+2. Present at school science fair or educational exhibition
+3. Post screenshots and features on class WhatsApp/Telegram groups
+4. Submit to Afro-Asian Tech Forum competition - Educational Tools category
+5. Create social media posts highlighting success stories of users completing challenges
 
 ---
 
@@ -519,62 +358,19 @@ By the end of this project, the student will be able to:
 
 ### My Project Information | معلومات مشروعي
 
-**Student Name**: ___________________________
+**Student Name**: osama abdelghany, mohamed abdelghany
 
-**Project Title**: ___________________________
+**Project Title**: Neo challenge
 
-**Date**: ___________________________
-
----
-
-#### What is your project about? | عن ماذا يتحدث مشروعي؟
-
-_______________________________________________
-_______________________________________________
-
-#### What problem does it solve? | ما المشكلة التي يحلها؟
-
-_______________________________________________
-_______________________________________________
 
 ---
 
-### My Tech Stack | التقنيات المستخدمة
 
-**My project type** (circle one): Web App / Desktop App / Mobile App / Python Script / Other: _______
 
-**Technologies I used**:
 
-| Category | Technology |
-|----------|-----------|
-| Language | |
-| Framework | |
-| Database | |
-| Libraries | |
 
----
 
-### My Screens | شاشات مشروعي
 
-Draw or describe all the screens in your project:
-
-| Screen Name | What the user sees/does | How to get here |
-|-------------|------------------------|-----------------|
-| | | |
-| | | |
-| | | |
-
----
-
-### My Features | ميزات مشروعي
-
-| Feature | What it does | Status |
-|---------|-------------|:------:|
-| | | ✅ / ⏳ / ❌ |
-| | | ✅ / ⏳ / ❌ |
-| | | ✅ / ⏳ / ❌ |
-
----
 
 ### My Data | بيانات مشروعي
 
@@ -590,26 +386,18 @@ _______________________________________________
 
 ### What I Learned | ما تعلمته
 
-1. The hardest part of building my project was: _________________________________
+1. The hardest part of building my project was: writing database tables sql
 
-2. The most fun part of building my project was: _________________________________
+2. The most fun part of building my project was: recording videos of the exercises
 
-3. If I had more time, I would add: _________________________________
+3. If I had more time, I would add: add more languages and more video types
 
-4. One thing I would do differently: _________________________________
-
----
-
-### Screenshot of My Project | لقطة شاشة من مشروعي
-
-<!-- Paste a screenshot of your project running here -->
+4. One thing I would do differently: 
 
 ---
 
-**Instructor Notes** | ملاحظات المدرس:
+---
 
-_______________________________________________
-_______________________________________________
 
 ---
 
