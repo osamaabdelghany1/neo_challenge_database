@@ -81,42 +81,42 @@ INSERT INTO activities (name, description, difficulty, challenge_id, audio_url) 
 
 -- German, Easy
 INSERT INTO activities (name, description, difficulty, challenge_id, audio_url) VALUES
-('I am a student', 'Ich bin Schüler', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_01.mp3'),
-('My name is Adam', 'Ich heiße Adam', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_02.mp3'),
-('I live in Egypt', 'Ich wohne in Ägypten', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_03.mp3'),
-('She likes apples', 'Sie mag Äpfel', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_04.mp3'),
-('He plays football', 'Er spielt Fußball', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_05.mp3'),
-('We have a big house', 'Wir haben ein großes Haus', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_06.mp3'),
-('They are my friends', 'Sie sind meine Freunde', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_07.mp3'),
-('I go to school every day', 'Ich gehe jeden Tag zur Schule', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_08.mp3'),
-('My mother cooks dinner', 'Meine Mutter kocht das Abendessen', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_09.mp3'),
-('The weather is nice today', 'Das Wetter ist heute schön', 'Easy', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_easy_10.mp3');
+('I am a student', 'Ich bin Schüler', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_01.mp3'),
+('My name is Adam', 'Ich heiße Adam', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_02.mp3'),
+('I live in Egypt', 'Ich wohne in Ägypten', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_03.mp3'),
+('She likes apples', 'Sie mag Äpfel', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_04.mp3'),
+('He plays football', 'Er spielt Fußball', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_05.mp3'),
+('We have a big house', 'Wir haben ein großes Haus', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_06.mp3'),
+('They are my friends', 'Sie sind meine Freunde', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_07.mp3'),
+('I go to school every day', 'Ich gehe jeden Tag zur Schule', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_08.mp3'),
+('My mother cooks dinner', 'Meine Mutter kocht das Abendessen', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_09.mp3'),
+('The weather is nice today', 'Das Wetter ist heute schön', 'Easy', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_easy_10.mp3');
 
 -- German, Medium
 INSERT INTO activities (name, description, difficulty, challenge_id, audio_url) VALUES
-('I usually wake up early because I have to go to school', 'Ich stehe früh auf', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_01.mp3'),
-('My sister is watching TV while I do my homework', 'Meine Schwester sieht fern', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_02.mp3'),
-('We went to the supermarket yesterday and bought fruit', 'Wir sind zum Supermarkt gegangen', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_03.mp3'),
-('I have lived in this city for five years', 'Ich wohne seit fünf Jahren', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_04.mp3'),
-('She didn''t come to school because she felt sick', 'Sie ist nicht zur Schule gekommen', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_05.mp3'),
-('If the weather is good tomorrow, we will go to the beach', 'Wenn das Wetter morgen gut ist', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_06.mp3'),
-('My father was working when I called him', 'Mein Vater hat gearbeitet', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_07.mp3'),
-('He wants to learn German because he wants to travel to Germany', 'Er möchte Deutsch lernen', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_08.mp3'),
-('Although the exam was difficult, I could answer most of the questions', 'Obwohl die Prüfung schwierig war', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_09.mp3'),
-('I have never been to France, but I want to travel there one day', 'Ich war noch nie in Frankreich', 'Medium', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_medium_10.mp3');
+('I usually wake up early because I have to go to school', 'Ich stehe früh auf', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_01.mp3'),
+('My sister is watching TV while I do my homework', 'Meine Schwester sieht fern', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_02.mp3'),
+('We went to the supermarket yesterday and bought fruit', 'Wir sind zum Supermarkt gegangen', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_03.mp3'),
+('I have lived in this city for five years', 'Ich wohne seit fünf Jahren', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_04.mp3'),
+('She didn''t come to school because she felt sick', 'Sie ist nicht zur Schule gekommen', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_05.mp3'),
+('If the weather is good tomorrow, we will go to the beach', 'Wenn das Wetter morgen gut ist', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_06.mp3'),
+('My father was working when I called him', 'Mein Vater hat gearbeitet', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_07.mp3'),
+('He wants to learn German because he wants to travel to Germany', 'Er möchte Deutsch lernen', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_08.mp3'),
+('Although the exam was difficult, I could answer most of the questions', 'Obwohl die Prüfung schwierig war', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_09.mp3'),
+('I have never been to France, but I want to travel there one day', 'Ich war noch nie in Frankreich', 'Medium', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_medium_10.mp3');
 
 -- German, Hard
 INSERT INTO activities (name, description, difficulty, challenge_id, audio_url) VALUES
-('If I had known about the problem earlier, I would have tried to help you', 'Wenn ich früher gewusst hätte', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_01.mp3'),
-('She had already done her homework before her friends arrived', 'Sie hatte bereits gemacht', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_02.mp3'),
-('Although he was very tired, he continued working until midnight', 'Obwohl er sehr müde war', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_03.mp3'),
-('If I were in your position, I would think carefully before making such an important decision', 'Wenn ich an deiner Stelle wäre', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_04.mp3'),
-('The teacher explained the lesson again because several students had not understood it', 'Der Lehrer erklärte noch einmal', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_05.mp3'),
-('When we arrived at the station, the train had already left', 'Als wir am Bahnhof ankamen', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_06.mp3'),
-('She said that she had studied English for three years before she moved to London', 'Sie hatte Englisch gelernt', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_07.mp3'),
-('Although he had never traveled abroad, he decided to study in Germany for six months', 'Obwohl er nie ins Ausland gereist war', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_08.mp3'),
-('If they had followed the instructions carefully, they wouldn''t have made so many mistakes', 'Wenn sie die Anweisungen befolgt hätten', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_09.mp3'),
-('The book, which was written several decades ago, contains ideas that are still relevant today', 'Das Buch enthält Ideen', 'Hard', (select id from challenges where name = 'German Grammar Challenge'), 'audio/german_hard_10.mp3');
+('If I had known about the problem earlier, I would have tried to help you', 'Wenn ich früher gewusst hätte', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_01.mp3'),
+('She had already done her homework before her friends arrived', 'Sie hatte bereits gemacht', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_02.mp3'),
+('Although he was very tired, he continued working until midnight', 'Obwohl er sehr müde war', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_03.mp3'),
+('If I were in your position, I would think carefully before making such an important decision', 'Wenn ich an deiner Stelle wäre', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_04.mp3'),
+('The teacher explained the lesson again because several students had not understood it', 'Der Lehrer erklärte noch einmal', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_05.mp3'),
+('When we arrived at the station, the train had already left', 'Als wir am Bahnhof ankamen', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_06.mp3'),
+('She said that she had studied English for three years before she moved to London', 'Sie hatte Englisch gelernt', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_07.mp3'),
+('Although he had never traveled abroad, he decided to study in Germany for six months', 'Obwohl er nie ins Ausland gereist war', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_08.mp3'),
+('If they had followed the instructions carefully, they wouldn''t have made so many mistakes', 'Wenn sie die Anweisungen befolgt hätten', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_09.mp3'),
+('The book, which was written several decades ago, contains ideas that are still relevant today', 'Das Buch enthält Ideen', 'Hard', (select id from challenges where name = 'German For Beginner Challenge'), 'audio/german_hard_10.mp3');
 
 -- Sports activities. Most link to one of our video exercises by its name.
 INSERT INTO activities (name, description, difficulty, challenge_id, exercise_id) VALUES

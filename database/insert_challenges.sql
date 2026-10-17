@@ -16,9 +16,3 @@ INSERT INTO challenges (name, category, duration, description) VALUES
 
 -- General Knowledge
 ('General Knowledge Challenge', 'General Knowledge', 21, 'Daily quizzes and trivia questions covering history, science, geography, and culture to expand your general knowledge base.');
-
-
-
-update challenges set
-name = "German For Beginner Challenge"
-where name = 'German Grammar Challenge'
