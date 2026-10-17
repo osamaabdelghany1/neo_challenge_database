@@ -17,7 +17,7 @@ pushups = st.number_input("Push-ups (reps)", min_value=0, max_value=100, step=1)
 squats = st.number_input("Squats (reps)", min_value=0, max_value=200, step=1)
 plank = st.number_input("Plank hold (seconds)", min_value=0, max_value=600, step=5)
 
-if st.button("Calculate Fitness Level"):
+if st.button("Calculate my fitness level", type="primary", width="stretch"):
 
     
     score = pushups + squats + (plank // 10)

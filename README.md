@@ -7,9 +7,10 @@ NEO Challenge is a small web app for students aged 12–18. You can:
 - browse **challenges** (Sports, Language, General Knowledge) and join the ones you like,
 - learn **English, French or German** with 30 sentences from Easy to Hard, each one read aloud by a short audio clip,
 - play a **general knowledge quiz**: 10 random questions, one at a time, with right or wrong straight away,
+- check your **fitness level** (Easy, Medium or Hard) from your push-ups, squats and plank time,
 - find a **workout** for the equipment you have and watch a **video** for each of the 60 exercises,
 - read about the **muscles** you train,
-- pick a **nutrition plan** for your BMI category,
+- type your weight and height to get your **BMI and a 7-day meal plan**, and pick a **nutrition plan** for your BMI category,
 - tick off activities, log the exercises you did and keep your quiz scores, then see your progress on **My challenges**.
 
 An admin can also see the users and add new challenges, activities, exercises, muscles and nutrition plans.
@@ -82,4 +83,5 @@ We kept the app simple on purpose. These are the trade-offs we chose:
 - **Audio clips are made ahead of time.** The language sentences are read by mp3 files in `audio/`, made once with `tools/make_audio.py` (it needs internet and gTTS). A new or changed sentence needs the script run again, or an mp3 put in `audio/` by hand, before you type its path in the admin form. The clips use Google's computer voice, not a real teacher.
 - **Some language sentences are short.** Many Medium and Hard sentences are the start of the translation, as the students wrote them, not the whole sentence.
 - **Five Sports challenges have no activities yet:** Beginner Fitness, Fat Burning, Daily 10,000 Steps, Flexibility & Stretching and Yoga for Beginners.
+- **The fitness level and the 7-day meal plan are not saved.** They are worked out on the page each time. The meal plan has three versions (Underweight, Normal, Overweight), so a BMI of 30 or more gets the Overweight one.
 - **Progress is simple.** You can tick activities, log each exercise once a day and keep quiz scores, but there are no reminders or day-in-a-row streaks.

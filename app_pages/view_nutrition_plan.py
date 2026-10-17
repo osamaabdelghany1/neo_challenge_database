@@ -11,7 +11,7 @@ st.caption("Meal plans for every BMI category")
 weight = st.number_input("Enter your weight (kg)", min_value=20.0, max_value=200.0, step=0.5)
 height = st.number_input("Enter your height (cm)", min_value=100.0, max_value=220.0, step=0.5)
 
-if st.button("Get My Weekly Plan"):
+if st.button("Get my weekly plan", type="primary", width="stretch"):
 
     height_m = height / 100
     bmi = weight / (height_m ** 2)
@@ -22,7 +22,7 @@ if st.button("Get My Weekly Plan"):
     if bmi < 18.5:
         st.session_state.bmi_result = "Underweight"
         st.warning("Category: Underweight")
-        plan = {
+        week_plan = {
             "Saturday": ["Oats + milk + nuts", "Rice + chicken + vegetables", "Eggs + bread"],
             "Sunday": ["Peanut butter sandwich + banana", "Pasta + meat", "Yogurt + honey"],
             "Monday": ["Eggs + cheese + bread", "Rice + fish", "Milk + dates"],
@@ -35,7 +35,7 @@ if st.button("Get My Weekly Plan"):
     elif 18.5 <= bmi < 25:
         st.session_state.bmi_result = "Normal"
         st.success("Category: Normal Weight")
-        plan = {
+        week_plan = {
             "Saturday": ["Eggs + toast", "Grilled chicken + rice + salad", "Yogurt + fruit"],
             "Sunday": ["Oats + fruit", "Fish + vegetables", "Boiled eggs"],
             "Monday": ["Cheese sandwich", "Chicken + potatoes", "Yogurt"],
@@ -48,7 +48,7 @@ if st.button("Get My Weekly Plan"):
     else:
         st.session_state.bmi_result = "Overweight"
         st.error("Category: Overweight")
-        plan = {
+        week_plan = {
             "Saturday": ["Oats (low fat milk)", "Grilled chicken + vegetables", "Salad + yogurt"],
             "Sunday": ["Boiled eggs + cucumber", "Fish + salad", "Apple"],
             "Monday": ["Oats + fruit", "Chicken + vegetables", "Yogurt"],
@@ -57,6 +57,13 @@ if st.button("Get My Weekly Plan"):
             "Thursday": ["Boiled eggs", "Chicken + steamed vegetables", "Yogurt"],
             "Friday": ["Fruit + yogurt", "Fish + vegetables", "Salad"]
         }
+
+    # Show the 7 days as a table: one row per day with its three meals.
+    rows = []
+    for day in week_plan:
+        meals = week_plan[day]
+        rows.append({"Day": day, "Breakfast": meals[0], "Lunch": meals[1], "Dinner": meals[2]})
+    st.table(rows)
 
 
 

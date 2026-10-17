@@ -83,9 +83,9 @@ neo_challenge_database/
 │   ├── challenge_details.py    # One challenge: join it, activities by level
 │   ├── general_knowledge.py    # Quiz: level, 10 random questions, score
 │   ├── workout.py              # Pick your equipment
-│   ├── view_exercise.py / exercise_details.py   # Exercises + video
+│   ├── view_exercise.py / exercise_details.py   # Fitness level, exercises + video
 │   ├── view_muscles.py         # Muscles with anatomy facts
-│   ├── view_nutrition_plan.py  # Nutrition plans, choose your plan
+│   ├── view_nutrition_plan.py  # BMI weekly plan, nutrition plans, choose your plan
 │   ├── my_challenges.py        # What you joined and your plan
 │   ├── login.py / sign_up.py / logout.py
 │   ├── view_users.py           # Admin: everyone who signed up
@@ -111,11 +111,11 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | File | Purpose | Lines of Code |
 |------|---------|:-------------:|
 | app.py | Creates the tables, fills an empty database with our content, and builds the menu: Log in / Sign up when logged out, My challenges / Log out when logged in, Admin only for the admin. | 82 |
-| app_pages/challenge_details.py | The busiest screen. Shows one challenge, counts its activities, lets a logged-in student join it, filters the activities by Easy / Medium / Hard, and plays the audio clip of each language sentence. | 150 |
+| app_pages/challenge_details.py | The busiest screen. Shows one challenge, counts its activities, lets a logged-in student join it, filters the activities by Easy / Medium / Hard, and plays the audio clip of each language sentence. | 151 |
 | app_pages/general_knowledge.py | The quiz. Picks 10 random questions for the chosen level, shows them one at a time with right or wrong straight away, then the score and a ✅ / ❌ review, and saves the round for logged-in students. | 132 |
-| app_pages/view_nutrition_plan.py | Nutrition plans by BMI; a logged-in student can choose one plan. | 57 |
+| app_pages/view_nutrition_plan.py | Works out your BMI from weight and height and shows a 7-day meal plan for your category, then lists the nutrition plans by BMI; a logged-in student can choose one plan. | 120 |
 | app_pages/sign_up.py | Creates an account. Checks for empty fields and a used email; the very first person to sign up becomes the admin. | 49 |
-| app_pages/view_exercise.py | The exercise library, filtered by equipment, level and muscle. | 62 |
+| app_pages/view_exercise.py | A fitness level calculator (push-ups, squats and plank), then the exercise library, filtered by equipment, level and muscle. | 93 |
 | app_pages/workout.py | Four equipment cards that open the filtered exercise library. | 26 |
 | database/schema.sql | The 12 tables with their foreign keys and `CHECK` rules. | 131 |
 
@@ -134,9 +134,9 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | 5 | Language challenges | English for Beginners, French Conversation and German For Beginner, each with 30 sentences (10 Easy, 10 Medium, 10 Hard) written by our team, and an audio clip that reads each sentence aloud. | ✅ |
 | 6 | General knowledge quiz | Choose a level, then answer 10 random questions one at a time with a progress bar; each answer shows right or wrong straight away, and the end shows the score and a ✅ / ❌ review. | ✅ |
 | 7 | Workout by equipment | Machines, Free weights, Bodyweight and Cables cards that open the matching exercises. | ✅ |
-| 8 | Exercise library with videos | All 60 exercises have a picture taken from their video, a demonstration video, the muscle they train, the equipment and the difficulty; filter by equipment, level and muscle. | ✅ |
+| 8 | Exercise library with videos | All 60 exercises have a picture taken from their video, a demonstration video, the muscle they train, the equipment and the difficulty; filter by equipment, level and muscle. Above the library, a fitness level calculator turns your push-ups, squats and plank time into Easy, Medium or Hard. | ✅ |
 | 9 | Muscle explorer | 15 muscles with pictures and an "Anatomy facts" section (Latin name, location, what it does, and more). | ✅ |
-| 10 | Nutrition plans | 15 plans across Underweight, Normal, Overweight and Obese with calories, meals and water; a student can choose one. | ✅ |
+| 10 | Nutrition plans | Type your weight and height to get your BMI and a 7-day meal plan (breakfast, lunch and dinner). Below it, 15 plans across Underweight, Normal, Overweight and Obese with calories, meals and water; a student can choose one. | ✅ |
 | 11 | My challenges (progress) | A dashboard: a progress bar for every joined challenge, exercises done this week, best quiz score per level, recent rounds and the chosen nutrition plan. | ✅ |
 | 12 | Sign up / log in / log out | Student accounts; the menu changes to show only what you can open. | ✅ |
 | 13 | Admin pages | The first person to sign up is the admin and can see all users and add challenges, activities, exercises, muscles and nutrition plans. | ✅ |
@@ -147,7 +147,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 
 > Status: ✅ Complete | ⏳ In Progress | ❌ Not Started
 
-**Known limitations** (the full list is in `README.md` under Limits): passwords are stored in plain text; the app has no error-handling code beyond friendly checks for empty fields and used emails or names; progress has no reminders or day-in-a-row streaks yet; the language audio is made ahead of time with a computer voice; and the app is not deployed publicly.
+**Known limitations** (the full list is in `README.md` under Limits): passwords are stored in plain text; the app has no error-handling code beyond friendly checks for empty fields and used emails or names; progress has no reminders or day-in-a-row streaks yet; the language audio is made ahead of time with a computer voice; the fitness level and the 7-day meal plan are not saved, and the meal plan has three versions (a BMI of 30 or more gets the Overweight one); and the app is not deployed publicly.
 
 ### User Flow | رحلة المستخدم
 
@@ -188,10 +188,10 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | Challenge | app_pages/challenge_details.py | Picture, metrics, description, join button, activities by level, audio for language sentences | Quiz (General Knowledge only) |
 | General knowledge quiz | app_pages/general_knowledge.py | Level pills, one question at a time, score and review | Play again on the same screen |
 | Workout | app_pages/workout.py | Four equipment cards | Exercises (filtered) |
-| Exercises | app_pages/view_exercise.py | Equipment and level pills, muscle filter, picture cards | Exercise |
+| Exercises | app_pages/view_exercise.py | Fitness level calculator, equipment and level pills, muscle filter, picture cards | Exercise |
 | Exercise | app_pages/exercise_details.py | Muscle, equipment, difficulty, description and video | Exercises |
 | Muscles | app_pages/view_muscles.py | Muscle pictures with "Anatomy facts" | Workout |
-| Nutrition plans | app_pages/view_nutrition_plan.py | Plan cards with meals; "Choose this plan" when logged in | Stays on the page |
+| Nutrition plans | app_pages/view_nutrition_plan.py | BMI form with a 7-day meal plan, plan cards with meals; "Choose this plan" when logged in | Stays on the page |
 | My challenges | app_pages/my_challenges.py | Progress dashboard: challenges, workouts, quiz scores, nutrition plan | Challenge |
 | Log in / Sign up / Log out | app_pages/login.py, sign_up.py, logout.py | Accounts | The menu changes |
 | Users, Create … (admin) | app_pages/view_users.py, create_*.py | User list and forms to add content | — |
@@ -210,7 +210,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | Exercises | Exercise video |
 |-----------|----------------|
 | ![Exercises](screenshots/03_exercises.jpg) | ![Exercise video](screenshots/04_exercise_video.jpg) |
-| Filter pills for equipment and level, a muscle filter, and a picture from each video. | The muscle trained, the equipment, the difficulty, a coaching tip and the video. |
+| The fitness level calculator (here: Medium), then filter pills for equipment and level, a muscle filter, and a picture from each video. | The muscle trained, the equipment, the difficulty, a coaching tip and the video. |
 
 | Muscles | Language challenges |
 |---------|---------------------|
@@ -225,7 +225,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | Quiz result | Nutrition plans |
 |-------------|-----------------|
 | ![Quiz result](screenshots/09_quiz_result.jpg) | ![Nutrition plans](screenshots/10_nutrition.jpg) |
-| The score and a review of every answer. | Calories, water and meals, with the student's chosen plan marked. |
+| The score and a review of every answer. | Your BMI and a 7-day meal plan from your weight and height, then the plan cards with the student's chosen plan marked. |
 
 | My challenges | All challenges |
 |---------------|----------------|
