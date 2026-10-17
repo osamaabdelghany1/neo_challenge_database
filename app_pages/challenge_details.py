@@ -40,7 +40,8 @@ col1.metric("Category", challenge["category"])
 col2.metric("Activities", len(activities))
 col3.metric("Duration", f"{challenge['duration']} days")
 st.write(challenge["description"])
-
+       
+       
 # Joining saves the challenge to your account, so you need to be logged in.
 joined = False
 done_ids = []
