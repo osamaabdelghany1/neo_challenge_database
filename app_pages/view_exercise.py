@@ -5,6 +5,37 @@ from assets.config import DATABASE_PATH, LEVEL_ICONS
 EQUIPMENT_CHOICES = ["All", "Machine", "Free Weights", "Bodyweight", "Cable"]
 LEVEL_CHOICES = ["All", "Easy", "Medium", "Hard"]
 
+
+
+
+st.title("Fitness Level Calculator")
+
+
+st.write("Enter the number of reps or duration you can do:")
+
+pushups = st.number_input("Push-ups (reps)", min_value=0, max_value=100, step=1)
+squats = st.number_input("Squats (reps)", min_value=0, max_value=200, step=1)
+plank = st.number_input("Plank hold (seconds)", min_value=0, max_value=600, step=5)
+
+if st.button("Calculate Fitness Level"):
+
+    
+    score = pushups + squats + (plank // 10)
+
+    if score < 50:
+        level = "Easy"
+        st.warning(f"Your Fitness Level: {level}")
+    elif 50 <= score < 120:
+        level = "Medium"
+        st.success(f"Your Fitness Level: {level}")
+    else:
+        level = "Hard"
+        st.success(f"Your Fitness Level: {level}")
+
+
+
+
+
 st.title("🎥 Exercises")
 st.caption("Every exercise has a demonstration video")
 
