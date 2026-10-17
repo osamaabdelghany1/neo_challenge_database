@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NEO Challenge Poster</title>
+<!-- Printed size: 1000 x 2000 mm, plus 5 mm extra on each edge for trimming. Build the PDF with: python docs/build.py poster -->
+<!-- Text with a ✏️ in front is for the student to write. Replace the whole todo span (the ✏️ text) with your words. -->
+<link rel="stylesheet" href="../assets/brand.css">
+<style>
+  @page { size: 1010mm 2010mm; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--paper); }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; font-family: var(--sans); color: var(--ink); }
+  .poster { position: relative; width: 1010mm; height: 2010mm; overflow: hidden; background: var(--paper);
+            background-image:
+              linear-gradient(rgba(22,52,69,0.035) 0.6mm, transparent 0.6mm),
+              linear-gradient(90deg, rgba(22,52,69,0.035) 0.6mm, transparent 0.6mm);
+            background-size: 20mm 20mm; }
+
+  /* ---------- hero (read from far away) ---------- */
+  .hero { position: absolute; left: 0; top: 0; width: 1010mm; height: 455mm; background: var(--ink); overflow: hidden; }
+  .hero .texture { position: absolute; inset: 0; padding: 12mm 18mm; display: flex; flex-wrap: wrap; align-content: flex-start;
+                   justify-content: space-between; column-gap: 14mm; row-gap: 4mm; color: var(--accent); opacity: 0.10; }
+  .hero .texture span { font-size: 30mm; line-height: 1.4; }
+  .hero .texture .en { font-family: var(--display); }
+  .hero .texture .ar { font-family: var(--arabic); font-weight: 700; font-size: 30mm; }
+  .hero .glow { position: absolute; right: 40mm; top: 35mm; width: 380mm; height: 380mm; border-radius: 50%;
+                background: radial-gradient(circle, rgba(242,165,65,0.30) 0%, rgba(61,129,151,0.22) 52%, rgba(61,129,151,0) 72%); }
+  .hero .mark { position: absolute; left: 665mm; top: 75mm; width: 300mm; height: 300mm; padding: 14mm; background: var(--paper); border-radius: 46mm;
+               box-shadow: 0 0 0 4mm rgba(242,165,65,0.35); }
+  .hero .text { position: absolute; left: 60mm; top: 100mm; width: 580mm; }
+  .hero .kicker { font-family: var(--mono); font-weight: 700; font-size: 14mm; letter-spacing: 0.22em; color: var(--accent); text-transform: uppercase; }
+  .hero h1 { font-family: var(--display); font-weight: 400; font-size: 118mm; line-height: 0.92; color: var(--paper);
+             margin: 14mm 0 12mm -3mm; letter-spacing: 0.01em; white-space: nowrap; }
+  .hero h1 .dot { color: var(--accent); }
+  .hero .tagline { font-family: var(--display); font-size: 46mm; line-height: 1.02; color: var(--accent); }
+  .hero .promise { font-size: 19mm; line-height: 1.32; color: var(--paper); opacity: 0.94; margin-top: 14mm; max-width: 560mm; }
+  .hero .todo { font-family: var(--sans); font-size: 15mm; line-height: 1.45; font-weight: 500; }
+
+  /* a row of "pixels" between the dark top and the light body */
+  .band { position: absolute; left: 0; top: 455mm; width: 1010mm; height: 20mm;
+          background:
+            linear-gradient(90deg, var(--accent) 33.3%, var(--warm-2) 33.3%, var(--warm-2) 66.6%, #E4EFF2 66.6%) 0 0 / 60mm 20mm repeat-x; }
+
+  /* ---------- body (read up close) ---------- */
+  .body { position: absolute; left: 35mm; top: 510mm; width: 940mm; }
+  h2 { font-family: var(--sans); font-weight: 700; font-size: 40mm; line-height: 1.05; color: var(--ink); margin-bottom: 10mm; letter-spacing: -0.02em; }
+  h2 .num { font-family: var(--display); font-weight: 400; font-size: 13mm; color: var(--accent-dark); letter-spacing: 0.08em; margin-right: 8mm; vertical-align: 0.45em; }
+  h2 .ar { font-size: 16mm; font-weight: 600; color: var(--ink-soft); margin-left: 6mm; vertical-align: 0.3em; }
+  h2 .todo { font-size: 17mm; font-weight: 500; vertical-align: 0.35em; letter-spacing: 0; }
+  section { margin-bottom: 18mm; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20mm; }
+  .card { background: var(--white); border: 0.8mm solid var(--line); border-radius: 6mm; padding: 14mm 16mm; }
+  .card.hot { border: 1.2mm solid var(--accent); background: #FFF8EC; }
+  .card h3 { font-size: 17mm; font-weight: 700; margin-bottom: 6mm; }
+  .card p { font-size: 12.5mm; line-height: 1.4; color: var(--ink-soft); }
+  .label { font-family: var(--mono); font-weight: 700; font-size: 9mm; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 4mm; }
+
+  .demo { display: grid; grid-template-columns: 560mm 1fr; gap: 18mm; align-items: start; }
+  .shot { border: 0.8mm solid rgba(22,52,69,0.25); border-radius: 5mm; overflow: hidden; background: #fff; }
+  .shot img { display: block; width: 100%; object-fit: cover; object-position: top left; }
+  .demo .shot img { height: 318mm; object-position: 100% 34%; }
+  .caption { font-size: 10mm; color: var(--ink-soft); margin-top: 5mm; line-height: 1.35; }
+  ul.features { list-style: none; display: grid; gap: 7.5mm; }
+  ul.features li { display: flex; gap: 6mm; align-items: flex-start; }
+  ul.features .dot { flex: none; width: 7mm; height: 7mm; margin-top: 3.5mm; background: var(--accent); }
+  ul.features strong { font-size: 13mm; font-weight: 700; display: block; }
+  ul.features span.d { font-size: 10.5mm; color: var(--ink-soft); line-height: 1.3; display: block; margin-top: 1mm; }
+  .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14mm; margin-top: 14mm; }
+  .thumbs .shot img { height: 150mm; object-position: 30% top; }
+  .thumbs .caption { margin-top: 3mm; }
+
+  .how { display: grid; grid-template-columns: 1fr 1fr; gap: 16mm; }
+  .how .card { padding: 11mm 12mm 12mm; }
+  .how img { display: block; width: 100%; border-radius: 3mm; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16mm; margin-top: 16mm; }
+  .stat { border-top: 1.2mm solid var(--ink); padding-top: 5mm; }
+  .stat b { font-family: var(--display); font-weight: 400; font-size: 52mm; line-height: 1; color: var(--accent); display: block; }
+  .stat span { font-size: 11mm; color: var(--ink-soft); line-height: 1.3; }
+
+  .foot { position: absolute; left: 35mm; top: 1800mm; width: 940mm; border-top: 0.8mm solid var(--ink);
+          padding-top: 10mm; display: flex; justify-content: space-between; align-items: flex-start; }
+  .chips { display: flex; gap: 4mm; margin: 4mm 0 9mm; }
+  .chips span { font-family: var(--mono); font-size: 10mm; border: 0.6mm solid var(--ink); padding: 1.5mm 4mm; background: #fff; }
+  .who { font-size: 15mm; font-weight: 700; }
+  .who .todo { font-size: 11mm; font-weight: 500; }
+  .meta { font-size: 11mm; margin-top: 3mm; color: var(--ink-soft); }
+  .meta .todo { font-size: 10mm; }
+  .note { font-size: 10mm; color: var(--accent-dark); margin-top: 6mm; font-family: var(--mono); }
+  .qr { text-align: center; }
+  .qr .code { background: #fff; padding: 4mm; border: 0.8mm solid var(--ink); display: inline-block; }
+  .qr img { display: block; width: 120mm; height: 120mm; image-rendering: pixelated; }
+  .qr p { font-family: var(--mono); font-size: 8.5mm; color: var(--ink-soft); margin-top: 4mm; line-height: 1.4; }
+  .qr p b { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <div class="hero">
+    <div class="texture">
+      <span class="en">TRAIN</span><span class="ar">تمرين</span><span class="en">BONJOUR</span><span class="ar">تعلّم</span><span class="en">QUIZ</span>
+      <span class="ar">عادة</span><span class="en">HALLO</span><span class="ar">يومي</span><span class="en">SQUAT</span><span class="ar">سؤال</span>
+      <span class="en">HELLO</span><span class="ar">عضلة</span><span class="en">DAILY</span><span class="ar">تحدّي</span><span class="en">LEARN</span>
+      <span class="ar">لغة</span><span class="en">MERCI</span><span class="ar">رياضة</span><span class="en">HABIT</span><span class="ar">معرفة</span>
+      <span class="en">TRAIN</span><span class="ar">تمرين</span><span class="en">BONJOUR</span><span class="ar">تعلّم</span><span class="en">QUIZ</span>
+      <span class="ar">عادة</span><span class="en">HALLO</span><span class="ar">يومي</span><span class="en">SQUAT</span><span class="ar">سؤال</span>
+    </div>
+    <div class="glow"></div>
+    <img class="mark" src="../../assets/logo_mark.png" alt="NEO Challenge logo mark">
+    <div class="text">
+      <div class="kicker">Sports · Languages · Quiz</div>
+      <h1>NE<span class="dot">O</span> CHALLENGE</h1>
+      <div class="tagline">One app, three daily habits.</div>
+      <p class="promise">Train your body, grow your languages and sharpen your mind: pick a challenge, do one short activity, and come back tomorrow.</p>
+    </div>
+  </div>
+  <div class="band"></div>
+
+  <div class="body">
+    <section>
+      <h2><span class="num">01 · WHY</span>Three habits, three adult apps.<span class="ar">لماذا؟</span></h2>
+      <div class="two">
+        <div class="card">
+          <div class="label">The problem <span class="ar">المشكلة</span></div>
+          <h3>Too many apps, made for adults</h3>
+          <p>Teenagers spread their effort across a fitness tracker, a language app and a quiz app. Most are built for adults, full of ads or paywalls, and none helps a young person keep a small daily habit going.</p>
+        </div>
+        <div class="card hot">
+          <div class="label">Our solution <span class="ar">الحل</span></div>
+          <h3>One free place for all three</h3>
+          <p>NEO Challenge puts sports challenges, language activities and a general knowledge quiz in one free web app for students aged 12–18. Join a challenge, tick off short activities, and watch the progress bar fill.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">02 · SEE IT</span>Pick it. Do it. Tick it.<span class="ar">اختر، نفّذ، أنجز</span></h2>
+      <div class="demo">
+        <div>
+          <div class="shot"><img src="../screenshots/07_challenge_details.jpg" alt="French Conversation Challenge page"></div>
+          <p class="caption">The French Conversation Challenge: joined, 9 of 30 sentences done, and a player under each sentence that reads it aloud.</p>
+        </div>
+        <ul class="features">
+          <li><span class="dot"></span><div><strong>Three habits, one home</strong><span class="d">12 challenges: 8 Sports, 3 Language and 1 General Knowledge.</span></div></li>
+          <li><span class="dot"></span><div><strong>Join and tick</strong><span class="d">“Start challenge”, then tick each activity Done. A progress bar shows how far you are.</span></div></li>
+          <li><span class="dot"></span><div><strong>Hear every sentence</strong><span class="d">English, French and German: 30 sentences each at Easy, Medium and Hard, with 90 audio clips.</span></div></li>
+          <li><span class="dot"></span><div><strong>A quiz, one question at a time</strong><span class="d">10 random questions per level, right or wrong straight away, and your score is saved.</span></div></li>
+          <li><span class="dot"></span><div><strong>60 exercise videos</strong><span class="d">Filter by equipment, level and muscle, then log “I did this today”.</span></div></li>
+          <li><span class="dot"></span><div><strong>Muscles and meals</strong><span class="d">15 muscles with anatomy facts and 15 nutrition plans by BMI.</span></div></li>
+        </ul>
+      </div>
+      <div class="thumbs">
+        <div><div class="shot"><img src="../screenshots/01_home.jpg" alt="Home screen"></div><p class="caption">Home: the three habits, one button each.</p></div>
+        <div><div class="shot"><img src="../screenshots/08_quiz.jpg" alt="Quiz screen"></div><p class="caption">Quiz: right or wrong straight away.</p></div>
+        <div><div class="shot"><img src="../screenshots/11_my_challenges.jpg" alt="My challenges screen"></div><p class="caption">My challenges: progress, workouts and best scores.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">03 · HOW</span>Plain Python, plain SQL.<span class="ar">بايثون و SQL ببساطة</span></h2>
+      <div class="how">
+        <div class="card">
+          <div class="label">How a challenge fills up</div>
+          <img src="../diagrams/flow.png" alt="Student flow and challenge progress diagram">
+        </div>
+        <div class="card">
+          <div class="label">Who sees which page</div>
+          <img src="../diagrams/page-access.png" alt="Page access by role diagram">
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>1</b><span>library to install: Streamlit</span></div>
+        <div class="stat"><b>108</b><span>activities, 90 of them read aloud</span></div>
+        <div class="stat"><b>60</b><span>exercise videos, each linked to a muscle</span></div>
+        <div class="stat"><b>12</b><span>SQLite tables, from users to quiz scores</span></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <div>
+      <div class="label">Built with</div>
+      <div class="chips"><span>Python</span><span>Streamlit</span><span>SQLite</span><span>gTTS</span></div>
+      <div class="who">Mohamed Abd Al Ghany · Osama Abd Alghany</div>
+      <div class="meta">NEO Team · Techno Future KFS · Afro-Asian Tech Forum 2026</div>
+      <div class="note">A school project: passwords are stored as plain text, so never use a real one.</div>
+    </div>
+    <div class="qr">
+      <div class="code"><img src="../assets/qr-app.svg" alt="QR code for neo-challenge.streamlit.app"></div>
+      <p>Scan to try it<br><b>neo-challenge.streamlit.app</b></p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+/* NEO Challenge brand: colours and fonts shared by the poster, slides, diagrams and documentation.
+   The teal colours come from the app's theme in .streamlit/config.toml; amber is the one accent.
+   Diagrams also use these hex values directly in SVG attributes, so change them there too:
+   #163445 ink · #F2A541 accent · #A86200 accent-dark · #254B62 warm (the app's primary teal) · #3D8197 warm-2 · #F3F8F9 paper */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap');
+
+:root {
+  --ink: #163445;        /* a deeper version of the app's text teal: text and the dark hero */
+  --ink-2: #1F4257;
+  --ink-soft: #3E5C6E;
+  --accent: #F2A541;     /* amber: the one warm colour, for highlights */
+  --accent-dark: #A86200;
+  --warm: #254B62;       /* the app's primary teal (buttons) */
+  --warm-2: #3D8197;
+  --paper: #F3F8F9;      /* the app's background */
+  --white: #FFFFFF;
+  --line: rgba(22, 52, 69, 0.14);
+  --todo-bg: #FFF1A8;    /* student placeholder highlight */
+  --todo-line: #D9A400;
+
+  --display: 'Bebas Neue', 'Space Grotesk', sans-serif;   /* tall, condensed and sporty, like a scoreboard */
+  --sans: 'Space Grotesk', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --arabic: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+.ar { font-family: var(--arabic); direction: rtl; unicode-bidi: isolate; }
+
+/* Student placeholder: plain text with a pen in front. Replace the whole <span class="todo">…</span> with your own words before printing. */
+.todo { font-style: normal; }
+.todo::before { content: "✏️ "; }
+.todo.block { display: block; }

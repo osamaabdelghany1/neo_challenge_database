@@ -23,3 +23,11 @@ LEVEL_ICONS = {
     "Medium": "🟡",
     "Hard": "🔴",
 }
+
+# The gTTS voice for each language challenge, found by the language in the challenge name (like CHALLENGE_IMAGES).
+# Only tools/make_audio.py uses it; the app just plays the mp3 files it made.
+LANGUAGE_CODES = {
+    "English": "en",
+    "French": "fr",
+    "German": "de",
+}
