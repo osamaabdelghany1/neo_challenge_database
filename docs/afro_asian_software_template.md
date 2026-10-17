@@ -29,7 +29,7 @@
 | streamlit | 1.64.0 | Creates responsive web pages with easy user experience and multi-page navigation |
 
 
-![alt text](screenshots/01_home.png)
+![alt text](screenshots/01_home.jpg)
 
 ---
 
@@ -98,10 +98,13 @@ neo-challange_database/
 ├── README.md            
 ├── .streamlit/          
 └── .gitignore          
+```
 
 ### Architecture Diagram | مخطط البنية
 
-
+```
+[Student] → [Streamlit Browser] → [Python Backend] → [SQLite Database]
+```
 
 ### Key Files | الملفات الرئيسية
 
@@ -113,17 +116,7 @@ neo-challange_database/
 | assets/config.py | Shared configuration - database path, category images, level icons used across pages | ~26 |
 | app_pages/view_challenges.py | Challenges browser - displays all challenges in a grid layout with activity counts | ~36 |
 
-<details>
-
-
-### Architecture Diagram
-
-```
-[Student] → [Streamlit Browser] → [Python Backend] → [SQLite Database]
-                    
-
-
-
+---
 
 ## 4. Features & User Flow | الميزات وتدفق المستخدم
 
@@ -200,37 +193,37 @@ neo-challange_database/
 ### Screenshots | لقطات الشاشة
 
 <!-- Screenshot: Landing page -->
-**Landing Page**: ![alt text](screenshots/01_home.png)
+**Landing Page**: ![alt text](screenshots/01_home.jpg)
 
 <!-- Screenshot: Main dashboard -->
-**Challenges View**: ![alt text](screenshots/12_all_challenges.png)
+**Challenges View**: ![alt text](screenshots/12_all_challenges.jpg)
 
 <!-- Screenshot: Key feature screen -->
-**Nutrition Plans**: ![alt text](screenshots/10_nutrition.png)
+**Nutrition Plans**: ![alt text](screenshots/10_nutrition.jpg)
 
 <!-- Screenshot: Workout page -->
-**Workout**: ![alt text](screenshots/02_workout.png)
+**Workout**: ![alt text](screenshots/02_workout.jpg)
 
 <!-- Screenshot: Exercises view -->
-**Exercises**: ![alt text](screenshots/03_exercises.png)
+**Exercises**: ![alt text](screenshots/03_exercises.jpg)
 
 <!-- Screenshot: Language challenge -->
-**Language Challenge**: ![alt text](screenshots/06_language.png)
+**Language Challenge**: ![alt text](screenshots/06_language.jpg)
 
 <!-- Screenshot: Quiz -->
-**Quiz**: ![alt text](screenshots/08_quiz.png)
+**Quiz**: ![alt text](screenshots/08_quiz.jpg)
 
 <!-- Screenshot: My challenges -->
-**My Challenges**: ![alt text](screenshots/11_my_challenges.png)
+**My Challenges**: ![alt text](screenshots/11_my_challenges.jpg)
 
 <!-- Screenshot: Muscles -->
-**Muscles**: ![alt text](screenshots/05_muscles.png)
+**Muscles**: ![alt text](screenshots/05_muscles.jpg)
 
 <!-- Screenshot: Challenge details -->
-**Challenge Details**: ![alt text](screenshots/07_challenge_details.png)
+**Challenge Details**: ![alt text](screenshots/07_challenge_details.jpg)
 
 <!-- Screenshot: Quiz result -->
-**Quiz Result**: ![alt text](screenshots/09_quiz_result.png)
+**Quiz Result**: ![alt text](screenshots/09_quiz_result.jpg)
 
 ### Design System
 

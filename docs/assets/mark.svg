@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <!-- The NEO Challenge mark: one teal circle, three arcs for the three daily habits (body, languages, mind),
+       and an amber dot in the middle for today's challenge. -->
+  <circle cx="8" cy="8" r="7.6" fill="#254B62"/>
+  <g fill="none" stroke-width="1.7" stroke-linecap="round">
+    <path d="M9.137,3.440 A4.7,4.7 0 0 1 12.518,9.295" stroke="#F2A541"/>
+    <path d="M11.381,11.265 A4.7,4.7 0 0 1 4.619,11.265" stroke="#F3F8F9"/>
+    <path d="M3.482,9.295 A4.7,4.7 0 0 1 6.863,3.440" stroke="#8FC3D1"/>
+  </g>
+  <circle cx="8" cy="8" r="1.55" fill="#F2A541"/>
+</svg>

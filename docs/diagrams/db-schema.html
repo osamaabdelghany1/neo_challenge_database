@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Database Schema</title>
+<!-- Made by make_schema.py. Edit the look here; edit the layout with POSITIONS in make_schema.py. -->
+<link rel="stylesheet" href="../assets/brand.css">
+<style>
+  html, body { margin: 0; background: var(--white); }
+  .canvas { position: relative; width: 2060px; height: 1372px; font-family: var(--mono); color: var(--ink); }
+  svg { position: absolute; inset: 0; }
+  svg path { fill: none; stroke: var(--accent-dark); stroke-width: 2.5; }
+  .table { position: absolute; background: #fff; border: 2.5px solid var(--ink); border-radius: 12px; overflow: hidden; }
+  .head { height: 52px; box-sizing: border-box; padding: 0 18px; display: flex; align-items: center;
+          background: var(--ink); color: #fff; font: 700 21px var(--mono); }
+  .col { height: 30px; box-sizing: border-box; padding: 0 18px; display: flex; justify-content: space-between; align-items: center;
+         font-size: 16px; border-top: 1px solid rgba(22,52,69,0.07); }
+  .col em { font-style: normal; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink-soft); }
+  .col.pk span { font-weight: 700; }
+  .col.pk em { color: var(--warm); }
+  .col.fk span, .col.fk em { color: var(--accent-dark); font-weight: 700; }
+  .col.ts { color: var(--ink-soft); font-size: 13px; background: #F7F8FA; }
+  .legend { position: absolute; left: 40px; bottom: 40px; right: 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .legend div { background: #F7F8FA; border: 2px solid rgba(22,52,69,0.10); border-radius: 12px; padding: 14px 18px; }
+  .legend b { display: block; font-size: 13px; letter-spacing: 0.14em; color: var(--ink-soft); margin-bottom: 6px; }
+  .legend span { font-size: 16px; }
+  .key { position: absolute; left: 40px; bottom: 150px; font-size: 15px; color: var(--ink-soft); }
+  .key i { display: inline-block; width: 26px; height: 3px; background: var(--accent-dark); vertical-align: middle; margin-right: 8px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+<svg width="2060" height="1372">
+  <defs>
+    <marker id="pk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#A86200" stroke="none"/></marker>
+    <marker id="fk" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6"><circle cx="5" cy="5" r="4" fill="#fff" stroke="#A86200" stroke-width="2"/></marker>
+  </defs>
+<path d="M860,137 C820,137 830,547 790,547" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M860,257 C820,257 830,107 790,107" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M860,477 C820,477 830,547 790,547" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M1200,877 C1440,877 1440,827 1680,827" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M860,907 C820,907 830,547 790,547" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M1610,637 C1650,637 1640,827 1680,827" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M1610,667 C1650,667 1640,107 1680,107" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M450,137 C410,137 420,107 380,107" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M1610,107 C1650,107 1640,827 1680,827" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M1270,137 C1230,137 1240,107 1200,107" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M1200,1067 C1440,1067 1440,827 1680,827" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M860,1097 C820,1097 830,107 790,107" marker-start="url(#fk)" marker-end="url(#pk)"/>
+<path d="M1610,357 C1650,357 1640,827 1680,827" marker-start="url(#fk)" marker-end="url(#pk)"/>
+</svg>
+<div class="table" style="left:1680px;top:760px;width:340px"><div class="head">users</div><div class="col pk"><span>id</span><em>PK</em></div><div class="col "><span>username</span><em></em></div><div class="col "><span>email</span><em>UNIQUE</em></div><div class="col "><span>password</span><em></em></div><div class="col "><span>birth_date</span><em></em></div><div class="col "><span>height</span><em></em></div><div class="col "><span>weight</span><em></em></div><div class="col "><span>phone</span><em></em></div><div class="col "><span>ssn</span><em></em></div><div class="col "><span>is_admin</span><em></em></div><div class="col ts"><span>created_at</span></div></div>
+<div class="table" style="left:450px;top:480px;width:340px"><div class="head">challenges</div><div class="col pk"><span>id</span><em>PK</em></div><div class="col "><span>name</span><em>UNIQUE</em></div><div class="col "><span>category</span><em>CHECK</em></div><div class="col "><span>duration</span><em></em></div><div class="col "><span>description</span><em></em></div><div class="col ts"><span>created_at</span></div></div>
+<div class="table" style="left:860px;top:40px;width:340px"><div class="head">activities</div><div class="col pk"><span>id</span><em>PK</em></div><div class="col fk"><span>challenge_id</span><em>FK</em></div><div class="col "><span>name</span><em></em></div><div class="col "><span>description</span><em></em></div><div class="col "><span>difficulty</span><em>CHECK</em></div><div class="col fk"><span>exercise_id</span><em>FK</em></div><div class="col "><span>audio_url</span><em></em></div><div class="col ts"><span>created_at</span></div></div>
+<div class="table" style="left:860px;top:380px;width:340px"><div class="head">questions</div><div class="col pk"><span>id</span><em>PK</em></div><div class="col fk"><span>challenge_id</span><em>FK</em></div><div class="col "><span>question</span><em></em></div><div class="col "><span>option_a</span><em></em></div><div class="col "><span>option_b</span><em></em></div><div class="col "><span>option_c</span><em></em></div><div class="col "><span>option_d</span><em></em></div><div class="col "><span>correct_answer</span><em>CHECK</em></div><div class="col "><span>level</span><em>CHECK</em></div><div class="col ts"><span>created_at</span></div></div>
+<div class="table" style="left:860px;top:810px;width:340px"><div class="head">user_challenges</div><div class="col fk"><span>user_id</span><em>FK</em></div><div class="col fk"><span>challenge_id</span><em>FK</em></div><div class="col ts"><span>PRIMARY KEY (user_id, challenge_id)</span></div></div>
+<div class="table" style="left:1680px;top:40px;width:340px"><div class="head">nutrition_plans</div><div class="col pk"><span>id</span><em>PK</em></div><div class="col "><span>bmi</span><em></em></div><div class="col "><span>category</span><em>CHECK</em></div><div class="col "><span>goal</span><em>CHECK</em></div><div class="col "><span>calories</span><em></em></div><div class="col "><span>breakfast</span><em></em></div><div class="col "><span>lunch</span><em></em></div><div class="col "><span>dinner</span><em></em></div><div class="col "><span>water_intake</span><em></em></div><div class="col ts"><span>created_at</span></div></div>
+<div class="table" style="left:1270px;top:570px;width:340px"><div class="head">user_nutrition_plans</div><div class="col pk"><span>user_id</span><em>FK · PK</em></div><div class="col fk"><span>nutrition_plan_id</span><em>FK</em></div><div class="col ts"><span></span></div></div>
+<div class="table" style="left:40px;top:40px;width:340px"><div class="head">muscles</div><div class="col pk"><span>id</span><em>PK</em></div><div class="col "><span>name</span><em>UNIQUE</em></div><div class="col "><span>latin_name</span><em></em></div><div class="col "><span>description</span><em></em></div><div class="col "><span>muscle_group</span><em>CHECK</em></div><div class="col "><span>location</span><em></em></div><div class="col "><span>function</span><em></em></div><div class="col "><span>origin</span><em></em></div><div class="col "><span>insertion</span><em></em></div><div class="col "><span>muscle_type</span><em></em></div><div class="col "><span>difficulty_to_train</span><em>CHECK</em></div><div class="col "><span>image_url</span><em></em></div><div class="col "><span>video_url</span><em></em></div><div class="col ts"><span>created_at · updated_at</span></div></div>
+<div class="table" style="left:450px;top:40px;width:340px"><div class="head">exercises</div><div class="col pk"><span>id</span><em>PK</em></div><div class="col fk"><span>muscle_id</span><em>FK</em></div><div class="col "><span>name</span><em></em></div><div class="col "><span>description</span><em></em></div><div class="col "><span>equipment</span><em>CHECK</em></div><div class="col "><span>difficulty</span><em>CHECK</em></div><div class="col "><span>video_url</span><em></em></div><div class="col "><span>thumbnail_url</span><em></em></div><div class="col ts"><span></span></div></div>
+<div class="table" style="left:1270px;top:40px;width:340px"><div class="head">user_activities</div><div class="col fk"><span>user_id</span><em>FK</em></div><div class="col fk"><span>activity_id</span><em>FK</em></div><div class="col "><span>done_at</span><em></em></div><div class="col ts"><span>PRIMARY KEY (user_id, activity_id)</span></div></div>
+<div class="table" style="left:860px;top:1000px;width:340px"><div class="head">exercise_logs</div><div class="col fk"><span>user_id</span><em>FK</em></div><div class="col fk"><span>exercise_id</span><em>FK</em></div><div class="col "><span>done_on</span><em></em></div><div class="col ts"><span>PRIMARY KEY (user_id, exercise_id, done_on)</span></div></div>
+<div class="table" style="left:1270px;top:260px;width:340px"><div class="head">quiz_results</div><div class="col pk"><span>id</span><em>PK</em></div><div class="col fk"><span>user_id</span><em>FK</em></div><div class="col "><span>level</span><em>CHECK</em></div><div class="col "><span>score</span><em></em></div><div class="col "><span>total</span><em></em></div><div class="col "><span>played_at</span><em></em></div><div class="col ts"><span></span></div></div>
+<div class="key"><i></i>each line goes from a foreign key (○) to the id it points at (▶)</div>
+<!-- One card per CHECK list worth explaining. -->
+<div class="legend">
+  <div><b>CHALLENGES.CATEGORY</b><span>Sports · Language · General Knowledge</span></div>
+  <div><b>DIFFICULTY · LEVEL</b><span>Easy · Medium · Hard</span></div>
+  <div><b>EXERCISES.EQUIPMENT</b><span>Machine · Bodyweight · Free Weights · Cable</span></div>
+  <div><b>MUSCLES.MUSCLE_GROUP</b><span>Upper Body · Core · Lower Body</span></div>
+</div>
+</div>
+</body>
+</html>

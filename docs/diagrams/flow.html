@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NEO Challenge Flow</title>
+<!-- How a student moves through the app, and how a joined challenge fills up. The .canvas size is the PNG size. -->
+<link rel="stylesheet" href="../assets/brand.css">
+<style>
+  html, body { margin: 0; background: var(--white); }
+  .canvas { width: 1600px; height: 900px; }
+  svg { display: block; }
+  .chip { font: 700 13px var(--mono); letter-spacing: 0.12em; }
+  .title { font: 600 25px var(--sans); fill: var(--ink); }
+  .sub { font: 400 16px var(--mono); fill: var(--ink-soft); }
+  .lane { font: 700 14px var(--mono); letter-spacing: 0.16em; fill: var(--ink-soft); }
+  .small { font: 500 15px var(--mono); fill: var(--ink-soft); }
+  .row { font: 500 18px var(--sans); fill: var(--ink); }
+  .row-code { font: 500 16px var(--mono); fill: var(--accent-dark); }
+  .state { font: 700 21px var(--mono); }
+</style>
+</head>
+<body>
+<div class="canvas">
+<svg width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#163445"/>
+    </marker>
+    <marker id="arrow-hot" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#A86200"/>
+    </marker>
+  </defs>
+
+  <!-- lane 1: the student's screens -->
+  <rect x="20" y="20" width="1560" height="470" rx="18" fill="#F7FAFB" stroke="rgba(22,52,69,0.10)" stroke-width="2"/>
+  <text x="48" y="58" class="lane">STUDENT · FROM HOME TO A HABIT</text>
+
+  <g>
+    <rect x="50" y="90" width="260" height="120" rx="12" fill="#fff" stroke="#163445" stroke-width="2.5"/>
+    <rect x="70" y="106" width="86" height="24" rx="5" fill="none" stroke="#3E5C6E" stroke-width="1.5"/>
+    <text x="113" y="123" class="chip" fill="#3E5C6E" text-anchor="middle">SCREEN</text>
+    <text x="180" y="165" class="title" text-anchor="middle">Home</text>
+    <text x="180" y="192" class="sub" text-anchor="middle">3 habit cards</text>
+  </g>
+  <g>
+    <rect x="360" y="90" width="260" height="120" rx="12" fill="#fff" stroke="#163445" stroke-width="2.5"/>
+    <rect x="380" y="106" width="86" height="24" rx="5" fill="none" stroke="#3E5C6E" stroke-width="1.5"/>
+    <text x="423" y="123" class="chip" fill="#3E5C6E" text-anchor="middle">SCREEN</text>
+    <text x="490" y="165" class="title" text-anchor="middle">Challenges</text>
+    <text x="490" y="192" class="sub" text-anchor="middle">all · language</text>
+  </g>
+  <g>
+    <rect x="670" y="90" width="260" height="120" rx="12" fill="#fff" stroke="#163445" stroke-width="2.5"/>
+    <rect x="690" y="106" width="86" height="24" rx="5" fill="none" stroke="#3E5C6E" stroke-width="1.5"/>
+    <text x="733" y="123" class="chip" fill="#3E5C6E" text-anchor="middle">SCREEN</text>
+    <text x="800" y="165" class="title" text-anchor="middle">Challenge</text>
+    <text x="800" y="192" class="sub" text-anchor="middle">levels · audio</text>
+  </g>
+  <g>
+    <rect x="980" y="90" width="260" height="120" rx="12" fill="#FFF6E8" stroke="#F2A541" stroke-width="3"/>
+    <rect x="1000" y="106" width="86" height="24" rx="5" fill="#F2A541"/>
+    <text x="1043" y="123" class="chip" fill="#163445" text-anchor="middle">ACTION</text>
+    <text x="1110" y="165" class="title" text-anchor="middle">Start · tick Done</text>
+    <text x="1110" y="192" class="sub" text-anchor="middle">logged in only</text>
+  </g>
+  <g>
+    <rect x="1290" y="90" width="260" height="120" rx="12" fill="#fff" stroke="#163445" stroke-width="2.5"/>
+    <rect x="1310" y="106" width="86" height="24" rx="5" fill="none" stroke="#3E5C6E" stroke-width="1.5"/>
+    <text x="1353" y="123" class="chip" fill="#3E5C6E" text-anchor="middle">SCREEN</text>
+    <text x="1420" y="165" class="title" text-anchor="middle">My challenges</text>
+    <text x="1420" y="192" class="sub" text-anchor="middle">progress bars</text>
+  </g>
+
+  <line x1="312" y1="150" x2="356" y2="150" stroke="#163445" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="622" y1="150" x2="666" y2="150" stroke="#163445" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="932" y1="150" x2="976" y2="150" stroke="#163445" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="1242" y1="150" x2="1286" y2="150" stroke="#163445" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="334" y="80" class="small" text-anchor="middle">pick a habit</text>
+  <text x="644" y="80" class="small" text-anchor="middle">Open</text>
+
+  <!-- the other two habits, under home -->
+  <rect x="50" y="260" width="570" height="200" rx="12" fill="#fff" stroke="rgba(22,52,69,0.25)" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="70" y="292" class="lane">THE OTHER DOORS FROM HOME</text>
+  <text x="70" y="332" class="row">🧠 Quiz: 10 random questions</text>
+  <text x="600" y="332" class="row-code" text-anchor="end">quiz_results</text>
+  <text x="70" y="372" class="row">💪 Workout → exercise video</text>
+  <text x="600" y="372" class="row-code" text-anchor="end">exercise_logs</text>
+  <text x="70" y="412" class="row">🥗 Nutrition: choose one plan</text>
+  <text x="600" y="412" class="row-code" text-anchor="end">user_nutrition_plans</text>
+  <text x="70" y="444" class="small">each one also shows up on My challenges</text>
+  <line x1="180" y1="212" x2="180" y2="256" stroke="#3E5C6E" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+
+  <!-- what a challenge page shows -->
+  <rect x="670" y="260" width="260" height="200" rx="12" fill="#fff" stroke="rgba(22,52,69,0.25)" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="690" y="292" class="lane">ON THE PAGE</text>
+  <text x="690" y="332" class="row">🟢 🟡 🔴 level pills</text>
+  <text x="690" y="372" class="row">🔊 sentence read aloud</text>
+  <text x="690" y="412" class="row">▶ watch the video</text>
+  <text x="690" y="444" class="small">🔊 language · ▶ sports</text>
+  <line x1="800" y1="212" x2="800" y2="256" stroke="#3E5C6E" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+
+  <!-- what gets saved -->
+  <rect x="980" y="260" width="570" height="200" rx="12" fill="#fff" stroke="#F2A541" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="1000" y="292" class="lane">SAVED FOR THIS STUDENT</text>
+  <text x="1000" y="332" class="row">“Start challenge”: you joined it</text>
+  <text x="1530" y="332" class="row-code" text-anchor="end">user_challenges</text>
+  <text x="1000" y="372" class="row">“Done” ticked: one activity finished</text>
+  <text x="1530" y="372" class="row-code" text-anchor="end">user_activities</text>
+  <text x="1000" y="412" class="row">Untick: the row is deleted again</text>
+  <text x="1530" y="412" class="row-code" text-anchor="end">delete</text>
+  <text x="1000" y="444" class="small">guests see “Log in to join this challenge.”</text>
+  <line x1="1110" y1="212" x2="1110" y2="256" stroke="#A86200" stroke-width="2.5" marker-end="url(#arrow-hot)"/>
+
+  <!-- lane 2: a joined challenge's progress -->
+  <rect x="20" y="540" width="1560" height="340" rx="18" fill="#F7FAFB" stroke="rgba(22,52,69,0.10)" stroke-width="2"/>
+  <text x="270" y="578" class="lane">A CHALLENGE'S PROGRESS · COUNTED WITH SQL, NEVER STORED</text>
+
+  <path d="M1265,460 V515 H200 V616" fill="none" stroke="#A86200" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#arrow-hot)"/>
+  <text x="732" y="507" class="small" text-anchor="middle" fill="#A86200">every challenge starts here</text>
+
+  <rect x="70" y="620" width="260" height="70" rx="35" fill="#F3F8F9" stroke="#3E5C6E" stroke-width="3"/>
+  <text x="200" y="663" class="state" fill="#3E5C6E" text-anchor="middle">not joined</text>
+  <rect x="470" y="620" width="260" height="70" rx="35" fill="#E4EFF2" stroke="#254B62" stroke-width="3"/>
+  <text x="600" y="663" class="state" fill="#254B62" text-anchor="middle">joined · 0 of 30</text>
+  <rect x="870" y="620" width="260" height="70" rx="35" fill="#FFF6E8" stroke="#F2A541" stroke-width="3"/>
+  <text x="1000" y="663" class="state" fill="#A86200" text-anchor="middle">9 of 30 done</text>
+  <rect x="1270" y="620" width="260" height="70" rx="35" fill="#E9F7EE" stroke="#1E8E4E" stroke-width="3"/>
+  <text x="1400" y="663" class="state" fill="#16673A" text-anchor="middle">finished 🎈</text>
+
+  <line x1="332" y1="655" x2="466" y2="655" stroke="#163445" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="732" y1="655" x2="866" y2="655" stroke="#163445" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="1132" y1="655" x2="1266" y2="655" stroke="#163445" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="399" y="640" class="small" text-anchor="middle">Start</text>
+  <text x="799" y="640" class="small" text-anchor="middle">tick Done</text>
+  <text x="1199" y="640" class="small" text-anchor="middle">last one</text>
+  <path d="M1000,692 V770 H600 V694" fill="none" stroke="#3E5C6E" stroke-width="2.5" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+  <text x="800" y="795" class="small" text-anchor="middle">untick: the count goes down again</text>
+
+  <text x="48" y="860" class="small">The bar on the Challenge page and on My challenges is “ticked activities ÷ all activities”. Balloons fly once, when the last one is ticked.</text>
+</svg>
+</div>
+</body>
+</html>
