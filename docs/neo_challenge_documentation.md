@@ -65,7 +65,7 @@ neo_challenge_database/
 ├── README.md                   # How it works, how to run it, Limits
 ├── .streamlit/config.toml      # The app's colours
 ├── assets/
-│   ├── config.py               # Database path, pictures, level icons
+│   ├── config.py               # Database path, pictures, level icons, voice languages
 │   ├── thumbnails/             # A picture from each exercise video
 │   └── *.jpg / *.png / *.webp  # Category, flag, muscle and equipment pictures
 ├── app_pages/                  # 21 screens, one plain script each
@@ -87,6 +87,9 @@ neo_challenge_database/
 │   ├── schema.sql              # The 12 tables, with their rules
 │   └── insert_*.sql            # Our starting content
 ├── videos/                     # 60 exercise demonstration clips (.mp4)
+├── audio/                      # 90 clips that read the language sentences aloud (.mp3)
+├── tools/
+│   └── make_audio.py           # Makes the audio clips once with gTTS (not part of the app)
 └── docs/
     ├── neo_challenge_documentation.md
     └── screenshots/            # 12 screenshots used in this document
@@ -121,7 +124,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | File | Purpose | Lines of Code |
 |------|---------|:-------------:|
 | app.py | Creates the tables, fills an empty database with our content, and builds the menu: Log in / Sign up when logged out, My challenges / Log out when logged in, Admin only for the admin. | 82 |
-| app_pages/challenge_details.py | The busiest screen. Shows one challenge, counts its activities, lets a logged-in student join it, and filters the activities by Easy / Medium / Hard. | 85 |
+| app_pages/challenge_details.py | The busiest screen. Shows one challenge, counts its activities, lets a logged-in student join it, filters the activities by Easy / Medium / Hard, and plays the audio clip of each language sentence. | 150 |
 | app_pages/general_knowledge.py | The quiz. Picks 10 random questions for the chosen level, shows them one at a time with right or wrong straight away, then the score and a ✅ / ❌ review, and saves the round for logged-in students. | 132 |
 | app_pages/view_nutrition_plan.py | Nutrition plans by BMI; a logged-in student can choose one plan. | 57 |
 | app_pages/sign_up.py | Creates an account. Checks for empty fields and a used email; the very first person to sign up becomes the admin. | 49 |
@@ -138,10 +141,10 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | # | Feature | Description | Status |
 |---|---------|-------------|:------:|
 | 1 | Home hub | One landing screen with three habit cards (Sports, Language, General knowledge) and shortcuts to Workout and Exercises. | ✅ |
-| 2 | Challenge browser | All 7 challenges as cards with category, duration and a live count of their activities. | ✅ |
+| 2 | Challenge browser | All 12 challenges as cards with category, duration and a live count of their activities. | ✅ |
 | 3 | Challenge page with level filter | Details, metrics and the challenge's activities, filtered by All / Easy / Medium / Hard. | ✅ |
 | 4 | Join a challenge | A logged-in student presses "Start challenge" to save it; logged-out visitors see "Log in to join this challenge." | ✅ |
-| 5 | Language challenges | English for Beginners, French Conversation and German Grammar, each with 6 levelled activities. | ✅ |
+| 5 | Language challenges | English for Beginners, French Conversation and German Grammar, each with 30 sentences (10 Easy, 10 Medium, 10 Hard) written by our team, and an audio clip that reads each sentence aloud. | ✅ |
 | 6 | General knowledge quiz | Choose a level, then answer 10 random questions one at a time with a progress bar; each answer shows right or wrong straight away, and the end shows the score and a ✅ / ❌ review. | ✅ |
 | 7 | Workout by equipment | Machines, Free weights, Bodyweight and Cables cards that open the matching exercises. | ✅ |
 | 8 | Exercise library with videos | All 60 exercises have a picture taken from their video, a demonstration video, the muscle they train, the equipment and the difficulty; filter by equipment, level and muscle. | ✅ |
@@ -152,12 +155,12 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | 13 | Admin pages | The first person to sign up is the admin and can see all users and add challenges, activities, exercises, muscles and nutrition plans. | ✅ |
 | 14 | Password hashing | Passwords are stored in plain text today. | ⏳ |
 | 15 | Progress tracking | Tick activities Done on a joined challenge, log an exercise once a day, and save every quiz round. | ✅ |
-| 16 | Activities for Sports challenges | 6 activities per Sports challenge; the workout ones open the matching exercise video. | ✅ |
+| 16 | Activities for Sports challenges | 6 activities in each of the first 3 Sports challenges; the workout ones open the matching exercise video. The 5 newer Sports challenges have none yet. | ⏳ |
 | 17 | Public deployment | Putting the app online so any school can open it without installing Python. | ⏳ |
 
 > Status: ✅ Complete | ⏳ In Progress | ❌ Not Started
 
-**Known limitations** (the full list is in `README.md` under Limits): passwords are stored in plain text; the app has no error-handling code beyond friendly checks for empty fields and used emails or names; progress has no reminders or day-in-a-row streaks yet; and the app is not deployed publicly.
+**Known limitations** (the full list is in `README.md` under Limits): passwords are stored in plain text; the app has no error-handling code beyond friendly checks for empty fields and used emails or names; progress has no reminders or day-in-a-row streaks yet; the language audio is made ahead of time with a computer voice; and the app is not deployed publicly.
 
 ### User Flow
 
@@ -193,7 +196,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 | Home | app_pages/home.py | "Daily Challenge" headline, three habit cards, "More ways to train" | All challenges, Language challenges, Quiz, Workout, Exercises |
 | All challenges | app_pages/view_challenges.py | Every challenge with category, duration and activity count | Challenge |
 | Language challenges | app_pages/language_challenge.py | English, French and German challenge cards with flags | Challenge |
-| Challenge | app_pages/challenge_details.py | Picture, metrics, description, join button, activities by level | Quiz (General Knowledge only) |
+| Challenge | app_pages/challenge_details.py | Picture, metrics, description, join button, activities by level, audio for language sentences | Quiz (General Knowledge only) |
 | General knowledge quiz | app_pages/general_knowledge.py | Level pills, one question at a time, score and review | Play again on the same screen |
 | Workout | app_pages/workout.py | Four equipment cards | Exercises (filtered) |
 | Exercises | app_pages/view_exercise.py | Equipment and level pills, muscle filter, picture cards | Exercise |
@@ -234,7 +237,7 @@ In plain words: one Python process serves every screen. `app.py` sets everything
 
 ![Language challenges](screenshots/06_language.png)
 
-**Challenge**: metrics, the description, the joined message and the activities with their level.
+**Challenge**: metrics, the description, the joined message and the activities with their level. A language activity shows the English sentence, the same sentence in the language you learn, and a player that reads it aloud.
 
 ![Challenge](screenshots/07_challenge_details.png)
 
@@ -290,7 +293,7 @@ The colours are set once in `.streamlit/config.toml`, so every screen matches wi
 | Source | Type | Description |
 |--------|------|-------------|
 | `database/database.db` | SQLite Database | Created by the app when it starts; holds everything below |
-| `database/insert_*.sql` | Static (SQL files) | Our starting content: 7 challenges, 36 activities (18 language, 18 sports), 60 trivia questions, 15 muscles, 60 exercises, 15 nutrition plans |
+| `database/insert_*.sql` | Static (SQL files) | Our starting content: 12 challenges, 108 activities (90 language, 18 sports), 60 trivia questions, 15 muscles, 60 exercises, 15 nutrition plans |
 | Sign up form | User Input | Username, email, password, phone, date of birth, height, weight |
 | Start challenge / Choose this plan | User Input | Saved in `user_challenges` and `user_nutrition_plans` |
 | Admin forms | User Input | New challenges, activities, exercises, muscles and nutrition plans |
@@ -305,8 +308,8 @@ There are **no external APIs**: no accounts to create, no keys to store, and not
 | Table | Columns | Description |
 |-------|---------|-------------|
 | `users` | id, username, email, password, birth_date, height, weight, phone, ssn, is_admin, created_at | Student accounts; email is unique; the first account has `is_admin = 1` |
-| `challenges` | id, name, category, duration, description, created_at | 7 challenges: 3 Sports, 3 Language, 1 General Knowledge |
-| `activities` | id, challenge_id, name, description, difficulty, exercise_id, created_at | 36 activities, 6 per challenge; 12 workout activities link to a video exercise |
+| `challenges` | id, name, category, duration, description, created_at | 12 challenges: 8 Sports, 3 Language, 1 General Knowledge |
+| `activities` | id, challenge_id, name, description, difficulty, exercise_id, audio_url, created_at | 108 activities: 30 per language challenge (each with an mp3 in `audio_url`) and 18 Sports ones; 12 workout activities link to a video exercise |
 | `questions` | id, challenge_id, question, option_a…option_d, correct_answer, level, created_at | 60 trivia questions (10 Easy, 20 Medium, 30 Hard) |
 | `user_challenges` | user_id, challenge_id | Who joined what; one row per user and challenge |
 | `nutrition_plans` | id, bmi, category, goal, calories, breakfast, lunch, dinner, water_intake, created_at | 15 plans across 4 BMI categories |
@@ -341,7 +344,7 @@ By the end of this project, the student will be able to:
 1. **Build a multi-screen Python web app with Streamlit**: 21 short screens joined by one menu that changes depending on who is logged in.
 2. **Design a relational database that protects itself**: 12 SQLite tables with primary keys, foreign keys with cascade deletes, two join tables and `CHECK` rules.
 3. **Manage app state and navigation**: use `st.session_state` to remember the logged-in user, the selected challenge or exercise, and the current quiz.
-4. **Organise and load real content**: write SQL seed files for 7 challenges, 60 exercises with 60 videos, 60 trivia questions, 15 muscles and 15 nutrition plans that link to each other by name.
+4. **Organise and load real content**: write SQL seed files for 12 challenges, 108 activities, 60 exercises with 60 videos, 60 trivia questions, 15 muscles and 15 nutrition plans that link to each other by name.
 5. **Write code other people can read**: keep every file short and plain, explain the "why" in comments, and list every trade-off honestly.
 
 ### Cultural / Historical Context
@@ -446,7 +449,7 @@ language activity or a short quiz every day.
 | Screen Name | What the user sees/does | How to get here |
 |-------------|------------------------|-----------------|
 | Home | Three habit cards and shortcuts | Opens first |
-| All challenges | All 7 challenges with activity counts | Home → Start sports challenge |
+| All challenges | All 12 challenges with activity counts | Home → Start sports challenge |
 | Challenge | Details, join button, activities by level | Any challenge card → Open |
 | Language challenges | English, French and German challenges | Home → Start language challenge |
 | General knowledge quiz | One question at a time, then score and review | Home → Start the quiz |
@@ -464,10 +467,10 @@ language activity or a short quiz every day.
 | Feature | What it does | Status |
 |---------|-------------|:------:|
 | Home hub | Three habits on one screen | ✅ |
-| Challenges | Browse 7 challenges with live activity counts | ✅ |
+| Challenges | Browse 12 challenges with live activity counts | ✅ |
 | Level filter | Show only Easy, Medium or Hard activities | ✅ |
 | Join a challenge | Saves the challenge to the logged-in student | ✅ |
-| Language challenges | English, French, German with 6 activities each | ✅ |
+| Language challenges | English, French, German with 30 sentences each, read aloud | ✅ |
 | General knowledge quiz | 10 random questions, one at a time, right or wrong straight away | ✅ |
 | Workout and exercises | 60 exercises with videos, filtered by equipment | ✅ |
 | Muscle explorer | 15 muscles with pictures and anatomy facts | ✅ |
@@ -489,12 +492,13 @@ From our own SQL files. We wrote `insert_challenges.sql`, `insert_activities.sql
 `insert_general_knowledge.sql`, `insert_muscles.sql`, `insert_exercise.sql` and
 `insert_nutrition_plan.sql`. When the app starts on an empty database, it creates the tables
 from `schema.sql` and loads these files by itself. The exercise videos are 60 `.mp4` clips
-we collected and stored in `videos/`. There are no external APIs, so the app works with no
-internet connection.
+we collected and stored in `videos/`. The 90 language audio clips in `audio/` were made once
+with gTTS by `tools/make_audio.py`; the app only plays the saved files. There are no external
+APIs, so the app works with no internet connection.
 
 **What data is stored?**
 
-12 SQLite tables: 7 challenges (3 Sports, 3 Language, 1 General Knowledge), 36
+12 SQLite tables: 12 challenges (8 Sports, 3 Language, 1 General Knowledge), 108
 activities, 60 trivia questions, 15 muscles, 60 exercises each linked to a muscle and a video,
 15 nutrition plans, the users who sign up, which challenges they joined and which nutrition
 plan they chose, and their progress: ticked activities, exercises done each day and every

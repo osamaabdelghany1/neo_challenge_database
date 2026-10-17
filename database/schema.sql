@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS activities (
     difficulty TEXT NOT NULL CHECK (difficulty IN ('Easy', 'Medium', 'Hard')),
     -- The video exercise this activity uses, if any. If that exercise is deleted, the link is cleared.
     exercise_id INTEGER REFERENCES exercises(id) ON DELETE SET NULL,
+    -- The mp3 that reads the description aloud, e.g. audio/french_easy_01.mp3 (only language activities have one).
+    audio_url TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 

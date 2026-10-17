@@ -25,7 +25,8 @@ conn = sqlite3.connect(DATABASE_PATH)
 conn.execute("PRAGMA foreign_keys = ON")
 conn.row_factory = sqlite3.Row
 challenge = conn.execute("select * from challenges where id = ?", (challenge_id,)).fetchone()
-activities = conn.execute("select * from activities where challenge_id = ? order by name", (challenge_id,)).fetchall()
+# Keep the order the activities were written in, so the lessons go Easy, then Medium, then Hard.
+activities = conn.execute("select * from activities where challenge_id = ? order by id", (challenge_id,)).fetchall()
 conn.close()
 
 if challenge is None:
@@ -112,6 +113,9 @@ for activity in activities:
     with st.container(border=True):
         st.markdown(f"**{activity['name']}** · {LEVEL_ICONS[activity['difficulty']]} {activity['difficulty']}")
         st.caption(activity["description"])
+        # Language activities have a clip that reads the sentence aloud.
+        if activity["audio_url"]:
+            st.audio(activity["audio_url"])
 
         if joined:
             was_done = activity["id"] in done_ids

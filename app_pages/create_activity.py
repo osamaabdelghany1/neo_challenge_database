@@ -30,16 +30,24 @@ with col2:
     difficulty = st.selectbox("Difficulty", ["Easy", "Medium", "Hard"])
     exercise_name = st.selectbox("Video exercise (optional)", list(exercise_ids.keys()))
 description = st.text_area("Description", height=150)
+audio_url = st.text_input(
+    "Audio file path (optional)",
+    placeholder="audio/french_easy_11.mp3",
+    help="Put the mp3 in the audio folder first, then type its path here.",
+)
 
 if st.button("Create activity", type="primary", width="stretch"):
     if challenge_name is None or name == "" or description == "":
         st.error("Please fill in every field.")
     else:
+        # An empty box means this activity has no clip.
+        if audio_url == "":
+            audio_url = None
         conn = sqlite3.connect(DATABASE_PATH)
         conn.execute("PRAGMA foreign_keys = ON")
         conn.execute(
-            "insert into activities (challenge_id, name, description, difficulty, exercise_id) values (?, ?, ?, ?, ?)",
-            (challenge_ids[challenge_name], name, description, difficulty, exercise_ids[exercise_name]),
+            "insert into activities (challenge_id, name, description, difficulty, exercise_id, audio_url) values (?, ?, ?, ?, ?, ?)",
+            (challenge_ids[challenge_name], name, description, difficulty, exercise_ids[exercise_name], audio_url),
         )
         conn.commit()
         conn.close()

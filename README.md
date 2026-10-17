@@ -5,7 +5,7 @@ One app, three daily habits: train your body, grow your languages, sharpen your 
 NEO Challenge is a small web app for students aged 12–18. You can:
 
 - browse **challenges** (Sports, Language, General Knowledge) and join the ones you like,
-- learn **English, French or German** with activities from Easy to Hard,
+- learn **English, French or German** with 30 sentences from Easy to Hard, each one read aloud by a short audio clip,
 - play a **general knowledge quiz**: 10 random questions, one at a time, with right or wrong straight away,
 - find a **workout** for the equipment you have and watch a **video** for each of the 60 exercises,
 - read about the **muscles** you train,
@@ -31,6 +31,8 @@ app_pages/              one file per screen
 assets/config.py        settings shared by screens (database path, pictures, level icons)
 assets/*.jpg, *.png     pictures
 videos/                 60 exercise videos
+audio/                  90 mp3 clips that read the language sentences aloud
+tools/make_audio.py     makes those clips (run by hand, not by the app)
 database/schema.sql     the tables
 database/insert_*.sql   the starting content
 .streamlit/config.toml  the app's colours
@@ -49,6 +51,14 @@ Run it from this folder (the app finds its files with paths like `database/...` 
 Your browser opens the app. Sign up first: the first account becomes the admin.
 
 To start over with a fresh database, stop the app, delete `database/database.db`, and start it again.
+
+The audio clips are already in `audio/`. If you add or change a language sentence, make its clip again
+(this needs internet, and gTTS only for this script):
+
+```bash
+pip install gTTS==2.5.4
+python3 tools/make_audio.py
+```
 
 ## Deploy it
 
@@ -69,4 +79,7 @@ We kept the app simple on purpose. These are the trade-offs we chose:
 - **Some database columns are not used by any screen yet:** `users.ssn`, `muscles.video_url` and `muscles.updated_at`.
 - **Admin forms take file paths as text.** To add an exercise video, its thumbnail picture or a muscle picture, put the file in `videos/` or `assets/` first, then type its path.
 - **New database columns need a fresh database.** The app creates missing tables but never changes existing ones, so after a schema change delete `database/database.db` once (this resets accounts).
+- **Audio clips are made ahead of time.** The language sentences are read by mp3 files in `audio/`, made once with `tools/make_audio.py` (it needs internet and gTTS). A new or changed sentence needs the script run again, or an mp3 put in `audio/` by hand, before you type its path in the admin form. The clips use Google's computer voice, not a real teacher.
+- **Some language sentences are short.** Many Medium and Hard sentences are the start of the translation, as the students wrote them, not the whole sentence.
+- **Five Sports challenges have no activities yet:** Beginner Fitness, Fat Burning, Daily 10,000 Steps, Flexibility & Stretching and Yoga for Beginners.
 - **Progress is simple.** You can tick activities, log each exercise once a day and keep quiz scores, but there are no reminders or day-in-a-row streaks.

@@ -122,3 +122,15 @@ Status: closed
 - **Sports activities:** 18 new activities for the 3 Sports challenges; the 12 workout ones link to a video exercise (new `activities.exercise_id` column).
 - **New tables:** `user_activities`, `exercise_logs`, `quiz_results`.
 Status: closed
+
+## #17 [feature] Student language data and spoken sentences
+The students sent 90 language activities (English, French, German; 10 per level), 5 new Sports challenges and a gTTS snippet that reads each sentence aloud. Their SQL used columns we don't have and hard-coded ids.
+Fix:
+- **Data:** their 90 rows replace the 18 old language activities, linked by challenge name; the 5 Sports challenges are added with no activities yet. Our General Knowledge file stays (theirs had a wrong French Revolution answer).
+- **Audio:** new `activities.audio_url` column. `tools/make_audio.py` (gTTS, not an app dependency) makes `audio/<language>_<level>_<NN>.mp3` once from each description; the files are committed.
+- **Screens:** challenge details lists activities in seed order and plays the sentence; the admin activity form gets an optional audio path.
+Status: open
+
+## #18 [feature] Activities for the 5 new Sports challenges
+Beginner Fitness, Fat Burning, Daily 10,000 Steps, Flexibility & Stretching and Yoga for Beginners have no activities yet.
+Status: open
