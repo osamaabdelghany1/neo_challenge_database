@@ -2,7 +2,9 @@
 
 *One app, three daily habits: train your body, grow your languages, sharpen your mind.*
 
-Software project documentation · Afro-Asian Tech Forum · Software Category · 2026
+<p align="center"><img src="assets/partners.png" alt="AFFIAT and Techno Future Kafr El Sheikh" width="320"></p>
+
+Software project documentation · AFFIAT · Afro-Asian Forum for Innovation and Technology · Aswan Finals 2026 · Software Category
 
 By Mohamed Abd Al Ghany and Osama Abd Alghany · NEO Team · Techno Future KFS
 
@@ -356,7 +358,7 @@ By the end of this project, the student will be able to:
 
 ### Promotion Ideas | أفكار الترويج
 
-1. **Live demo** at the Afro-Asian Tech Forum and at the school science fair: run the quiz with the audience and show one exercise video.
+1. **Live demo** at the AFFIAT Aswan Finals 2026 and at the school science fair: run the quiz with the audience and show one exercise video.
 2. **Short demo video** (about a minute) showing the quiz and one workout video.
 3. **Instagram / TikTok posts** with screenshots and a weekly "challenge of the week".
 4. **Poster with the tagline** "One app, three daily habits" in school corridors, at the sports club and in the language centre.
@@ -443,5 +445,5 @@ finished quiz round.
 
 <div class="session-footer">
   <p>Techno Kids, Techno Future — Software Documentation Template</p>
-  <p>Afro-Asian Tech Forum · Software Category · 2026</p>
+  <p>AFFIAT · Afro-Asian Forum for Innovation and Technology · Aswan Finals 2026 · Software Category</p>
 </div>
