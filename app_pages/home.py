@@ -9,7 +9,7 @@ with col1:
     st.image("assets/sport_challenge.png", width="stretch", caption="Stay fit and active")
     st.write("Daily physical activities to boost your energy and improve your fitness level.")
     if st.button("Start sports challenge", type="primary", width="stretch"):
-        st.switch_page("app_pages/view_challenges.py")
+        st.switch_page("app_pages/workout.py")
 with col2:
     st.subheader("🗣️ Language")
     st.image("assets/language_challenge.png", width="stretch", caption="Expand your vocabulary")
